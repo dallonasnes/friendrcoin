@@ -52,7 +52,7 @@
     "theme": "yarn workspace @scaffold-eth/react-app theme",
     "watch-theme": "yarn workspace @scaffold-eth/react-app watch",
     "postinstall": "husky install",
-    "lint:fix": "./node_modules/.bin/prettier --write contracts/**/*.sol"
+    "lint:fix": "./node_modules/.bin/prettier --write packages/hardhat/contracts/**/*.sol"
   },
   "workspaces": {
     "packages": [
