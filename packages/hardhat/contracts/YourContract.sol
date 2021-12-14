@@ -4,6 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
+import "./Token.sol";
 
 contract YourContract {
     event messageSent(address sender, address receiver, uint256 messageIdx);
@@ -45,7 +46,6 @@ contract YourContract {
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
     uint256 private _publicMessageIdx;
 
-    // TODO: Before deploying this contract, need to deploy the TinderCoin and set liquidity for it on Uniswap
     IERC20 private tinderCoin;
 
     address public profile;
@@ -55,16 +55,9 @@ contract YourContract {
         "This is the beginning of your message history.";
 
     constructor() {
-        // what should we do on deploy?
-        // TODO: we shoudl initialize the token and create an initial supply sent to this contract's address
-        // Using USDC for testing...
-        // QUESTIONS - 1) how to deploy ERC20PresetFixedSupply and have it mint to this contract
-        // if this contract needs to be deployed after the token in order to instantiate this private token var?
-        // -- ANSWER - my wallet will be deployer, so i can mint to the deployer wallet and then transfer
-        // -- CAN even use a multi sig for security but not needed imo
-        // - 2) how to call the mint function on an ERC20 to mint new tokens to the user (if we haven't exceeded limit?)
-        // -- ANSWER -- can either mint all ever needed on deploy, or use minterSupplier token but then need a committee/assurance that won't mint more at will
-        tinderCoin = IERC20(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48);
+        tinderCoin = new Token("TINDERCOIN", "TC", 10000000, address(this));
+        // Need to approve this contract's address to transact
+        tinderCoin.approve(address(this), 10000000);
         _accountIdx = 0; // Init to 0
         _publicMessageIdx = 0; // Init to 0
     }
