@@ -55,16 +55,15 @@ contract TinderChain is Ownable {
 
     IERC20 private tinderCoin;
 
-    uint256 private initTokenReward = 10;
-    uint256 private defaultApprovalAmt = 1000;
-    string public defaultMessageText =
-        "This is the beginning of your message history.";
+    uint256 private initTokenReward;
+    uint256 private defaultApprovalAmt;
+    string public defaultMessageText;
 
     uint256 public profileCount;
     uint256 public publicMessageCount;
 
-    uint256 private oneBillion = 1000 * 1000 * 1000;
-    uint256 private twoHundredMillion = oneBillion / 5;
+    uint256 private constant oneBillion = 1000 * 1000 * 1000;
+    uint256 private constant twoHundredMillion = oneBillion / 5;
 
     constructor() {
         tinderCoin = new ERC20PresetFixedSupply(
@@ -79,6 +78,9 @@ contract TinderChain is Ownable {
         tinderCoin.transferFrom(address(this), owner(), twoHundredMillion);
         profileCount = 0; // Init to 0
         publicMessageCount = 0; // Init to 0
+        initTokenReward = 10;
+        defaultApprovalAmt = 1000;
+        defaultMessageText = "This is the beginning of your message history.";
     }
 
     /**
