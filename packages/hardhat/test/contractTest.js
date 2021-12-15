@@ -6,12 +6,11 @@ use(solidity);
 
 describe("TinderChain", function () {
   let myContract;
-  let owner;
-  let addr1;
+  let owner, addr1, addr2, addr3;
 
-  const name1 = "addr1";
+  const [name1, name2, name3] = ["addr1", "addr2", "addr3"];
   const [img1, img2, img3] = ["img1", "img2", "img3"];
-  const bio1 = "bio";
+  const [bio1, bio2, bio3] = ["bio1", "bio2", "bio3"];
 
   // quick fix to let gas reporter fetch data from gas station & coinmarketcap
   before((done) => {
@@ -21,7 +20,7 @@ describe("TinderChain", function () {
   beforeEach(async () => {
     const TinderChain = await ethers.getContractFactory("TinderChain");
     myContract = await TinderChain.deploy();
-    [owner, addr1, addr2] = await ethers.getSigners();
+    [owner, addr1, addr2, addr3] = await ethers.getSigners();
   });
 
   describe("Deployment", () => {
@@ -73,6 +72,7 @@ describe("TinderChain", function () {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       expect(await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(10);
       expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800 - 10);
+
     });
 
     it("should prevent an existing user from signing up again", async () => {
@@ -190,6 +190,39 @@ describe("TinderChain", function () {
 
   describe("Queue and Swipe Flow", () => {
     it("should fetch only not-yet-swiped profiles for logged in user", async () => {
+      // create 3 accounts
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
+
+      // each account should see only other 2 accounts in the queue
+      let [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0);
+      let [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0);
+      let [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0);
+
+      expect(acct1UnseenProfiles.map((profile) => profile._address)).to.eql([addr2.address, addr3.address]);
+      expect(acct1Offset).to.equal(3);
+
+      expect(acct2UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address, addr3.address]);
+      expect(acct2Offset).to.equal(3);
+
+      expect(acct3UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address, addr2.address]);
+      expect(acct3Offset).to.equal(3);
+
+      // acct1 swipes on acct2 and acct3
+      const acct1TokenBalance = await myContract.getTokenBalanceOfUser(addr1.address);
+      expect(acct1TokenBalance).to.equal(10);
+      await myContract.connect(addr1).swipeLeft(addr1.address, addr2.address);
+      expect(acct1TokenBalance).to.equal(10);
+      // await myContract.connect(addr1).swipeRight(addr1.address, addr3.address);
+      // // there should be no unseen profiles left
+      // [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0);
+      // expect(acct1UnseenProfiles.length).to.equal(0);
+      // expect(acct1Offset).to.equal(3);
+
+      // acct2 swipes on acct1
+
+      // acct3 doesn't swipe
 
     });
 
@@ -221,9 +254,13 @@ describe("TinderChain", function () {
 
     });
 
-    // it("should allow only the contract owner to swipe for a different account", async () => {
+    it("should allow only the contract owner to swipe for a different account", async () => {
 
-    // });
+    });
+
+    it("should allow only the contract owner to view the unseen profile queue different account", async () => {
+
+    });
   });
 
   describe("Messaging flow", () => {
@@ -307,16 +344,16 @@ describe("TinderChain", function () {
   });
 
   describe("Setters and getters", () => {
-    // it("should only allow contract owner to read and write init token reward", async () => {
+    it("should only allow contract owner to read and write init token reward", async () => {
 
-    // });
+    });
 
-    // it("should only allow contract owner to read and write default approval limit", async () => {
+    it("should only allow contract owner to read and write default approval limit", async () => {
 
-    // });
+    });
 
-    // it("should only allow contract owner to write default message text", async () => {
+    it("should only allow contract owner to write default message text", async () => {
 
-    // });
+    });
   });
 });

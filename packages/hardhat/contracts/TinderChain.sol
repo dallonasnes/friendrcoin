@@ -115,7 +115,7 @@ contract TinderChain is Ownable {
             "Cannot fetch profiles indexed beyond those that exist in system"
         );
         uint256 profileRtnCount = 0;
-        Profile[] memory profilesToRtn = new Profile[](limit);
+        Profile[] memory profiles = new Profile[](limit);
         while (profileRtnCount < limit && offset < profileCount) {
             // get account at index offset
             address currAcct = _accounts[offset];
@@ -128,13 +128,19 @@ contract TinderChain is Ownable {
                     Profile memory profToShowInQueue = _profiles[currAcct];
                     // if profToShowInQueue is not deleted, then add it to rtnList
                     if (profToShowInQueue.deleted_ts == 0) {
-                        profilesToRtn[profileRtnCount] = profToShowInQueue;
+                        profiles[profileRtnCount] = profToShowInQueue;
                         profileRtnCount++;
                     }
                 }
             }
 
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        Profile[] memory profilesToRtn = new Profile[](profileRtnCount);
+        for (uint256 i = 0; i < profileRtnCount; i++) {
+            profilesToRtn[i] = profiles[i];
         }
 
         return (profilesToRtn, offset);
