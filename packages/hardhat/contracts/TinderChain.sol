@@ -42,9 +42,7 @@ contract TinderChain is Ownable {
     mapping(bytes => mapping(uint256 => Message)) private _messages; // message history by address pair packed into bytes using map for lookups
     mapping(bytes => uint256) private _messages_count; // count of messages by message pair used for lookups in _messages
     mapping(uint256 => address) private _accounts; // indexed list of all accounts in the contract
-    uint256 public profileCount;
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
-    uint256 public publicMessageCount;
 
     IERC20 private tinderCoin;
 
@@ -53,15 +51,23 @@ contract TinderChain is Ownable {
     string public defaultMessageText =
         "This is the beginning of your message history.";
 
+    uint256 public profileCount;
+    uint256 public publicMessageCount;
+
+    uint256 private oneBillion = 1000 * 1000 * 1000;
+    uint256 private twoHundredMillion = oneBillion / 5;
+
     constructor() {
         tinderCoin = new ERC20PresetFixedSupply(
             "TINDERCOIN",
             "TC",
-            10000000,
+            oneBillion,
             address(this)
         );
         // Need to approve this contract's address to transact
-        tinderCoin.approve(address(this), 10000000);
+        tinderCoin.approve(address(this), oneBillion);
+        // Transfer 20% of tokens to dev team
+        tinderCoin.transferFrom(address(this), owner(), twoHundredMillion);
         profileCount = 0; // Init to 0
         publicMessageCount = 0; // Init to 0
     }
