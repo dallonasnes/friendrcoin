@@ -37,7 +37,7 @@ contract TinderChain is Ownable {
     modifier onlySenderOrOwner(address _profile) {
         require(
             _profile == _msgSender() || owner() == _msgSender(),
-            "Ownable: caller is not the owner"
+            "Caller is neither the target address or owner."
         );
         _;
     }
