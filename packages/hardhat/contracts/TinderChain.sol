@@ -4,9 +4,9 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
-import "./Token.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract YourContract {
+contract TinderChain is Ownable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
 
@@ -42,25 +42,33 @@ contract YourContract {
     mapping(bytes => mapping(uint256 => Message)) private _messages; // message history by address pair packed into bytes using map for lookups
     mapping(bytes => uint256) private _messages_count; // count of messages by message pair used for lookups in _messages
     mapping(uint256 => address) private _accounts; // indexed list of all accounts in the contract
-    uint256 private _accountIdx;
+    uint256 public profileCount;
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
-    uint256 private _publicMessageIdx;
+    uint256 public publicMessageCount;
 
     IERC20 private tinderCoin;
 
-    address public profile;
     uint256 private initTokenReward = 10;
     uint256 private defaultApprovalAmt = 1000;
-    string private defaultMessageText =
+    string public defaultMessageText =
         "This is the beginning of your message history.";
 
     constructor() {
-        tinderCoin = new Token("TINDERCOIN", "TC", 10000000, address(this));
+        tinderCoin = new ERC20PresetFixedSupply(
+            "TINDERCOIN",
+            "TC",
+            10000000,
+            address(this)
+        );
         // Need to approve this contract's address to transact
         tinderCoin.approve(address(this), 10000000);
-        _accountIdx = 0; // Init to 0
-        _publicMessageIdx = 0; // Init to 0
+        profileCount = 0; // Init to 0
+        publicMessageCount = 0; // Init to 0
     }
+
+    /**
+     * Public Read APIs
+     */
 
     // Used by FE login flow to determine if wallet user has already created a profile
     // If Profile object created_ts == 0, then it is a default profile (not yet created)
@@ -74,63 +82,18 @@ contract YourContract {
         return _profiles[_profile];
     }
 
-    // TODO: how can I assert that this can only be called by the FE that I deploy
-    // And not any other methods on chain?
-    // Used by FE to
-    function createUserProfileFlow(
-        address _profile,
-        string memory name,
-        string memory _image0,
-        string memory _image1,
-        string memory _image2,
-        string memory bio
-    ) public {
-        // This function adds tokens to the profile upon creation
-        // So require that a profile cannot already exist for the given address
-        // Use updateUserProfile method to update existing profile (it does not pay tokens)
-        require(
-            _profiles[_profile].created_ts == 0,
-            "Cannot create a profile that already exists."
-        );
-        // QUESTION - can I access profile by reference and change its fields?
-        // Or do i need to overwrite the fields in the mapping?
-        // Or can I just create and write a new object
-        _profiles[_profile].name = name;
-        _profiles[_profile]._address = _profile;
-        _profiles[_profile].images[0] = _image0;
-        _profiles[_profile].images[1] = _image1;
-        _profiles[_profile].images[2] = _image2;
-        _profiles[_profile].bio = bio;
-        _profiles[_profile].created_ts = block.timestamp;
-
-        // Add profile to indexed list of accounts and increment counter
-        _accounts[_accountIdx] = _profile;
-        _accountIdx++;
-
-        // Approve this contract to spend tokens for _profile's wallet
-        tinderCoin.approve(_profile, defaultApprovalAmt);
-
-        // TODO: do i need to require balance of this address > 10?
-        // Now send tokens from this contract's wallet to _profile's wallet
-        tinderCoin.transferFrom(address(this), _profile, initTokenReward);
-    }
-
-    function getNumberOfProfiles() public view returns (uint256) {
-        return _accountIdx;
-    }
-
     function getUnseenProfiles(
         address _profile,
         uint256 limit,
         uint256 offset
     ) public view returns (Profile[] memory, uint256) {
         require(
-            offset < _accountIdx,
+            offset < profileCount,
             "Cannot fetch profiles indexed beyond those that exist in system"
         );
         uint256 profileRtnCount = 0;
         Profile[] memory profilesToRtn = new Profile[](limit);
-        while (profileRtnCount < limit && offset < _accountIdx) {
+        while (profileRtnCount < limit && offset < profileCount) {
             // get account at index offset
             address currAcct = _accounts[offset];
             // see if currAcct was already swiped by _profile
@@ -150,16 +113,145 @@ contract YourContract {
         return (profilesToRtn, offset);
     }
 
-    function swipeLeft(address _userProfile, address _swipedProfile) public {
-        _swipedAddresses[_userProfile][_swipedProfile] = true;
+    // This endpoint serves the messages loading page to see all people with whom there were recent messages
+    // It returns profiles to display on the page that a user can click into to see message history
+    // As well as a new offset for pagination purposes
+    // TODO: modify this to return most recent page of conversations
+    function getRecentMatches(
+        address _profile,
+        uint256 limit,
+        uint256 offset
+    ) public view returns (Profile[] memory, uint256) {
+        // Fetch a page of matches
+        uint256 matchesCount = _matches_count[_profile];
+        require(
+            offset < matchesCount,
+            "Cannot read matches indexed beyond total number of matches for this user"
+        );
+
+        uint256 profileRtnCount = 0;
+        Profile[] memory profilesToRtn = new Profile[](limit);
+
+        while (profileRtnCount < limit && offset < matchesCount) {
+            address _match = _matches[_profile][offset];
+            Profile memory _match_profile = _profiles[_match];
+            if (_match_profile.deleted_ts == 0) {
+                profilesToRtn[profileRtnCount] = _match_profile;
+                profileRtnCount++;
+            }
+            offset++;
+        }
+
+        return (profilesToRtn, offset);
     }
 
-    function buildAddressKeyPair(address _userProfile, address _swipedProfile)
-        private
-        pure
-        returns (bytes memory)
+    // Called when user clicks into a conversation with a match
+    function getRecentMessagesForMatch(
+        address _address1,
+        address _address2,
+        uint256 limit,
+        uint256 offset
+    ) public view returns (Message[] memory, uint256) {
+        // Note that matchKeyPair can be address1:address2 or address2:address1 depending on order of creation
+        // So need to try other order pair if first try returns 0 matches (all matches have at least 1 match bc of default match)
+        bytes memory matchKeyPair = fetchMessageKeyPair(_address1, _address2);
+        uint256 messageCount = _messages_count[matchKeyPair];
+
+        require(
+            offset < messageCount,
+            "Cannot read messages indexed beyond total number of messages for this pair"
+        );
+
+        Message[] memory messagesToRtn = new Message[](limit);
+        uint256 messagesToRtnCount = 0;
+        while (messagesToRtnCount < limit && offset < messageCount) {
+            Message memory message = _messages[matchKeyPair][offset];
+            if (message.deleted_ts == 0) {
+                messagesToRtn[messagesToRtnCount] = message;
+                messagesToRtnCount++;
+            }
+            offset++;
+        }
+
+        return (messagesToRtn, offset);
+    }
+
+    // Called on public message dashboard load
+    // TODO: figure out how to sort these by vote
+    function getPublicMessages(uint256 limit, uint256 offset)
+        public
+        view
+        returns (PublicMessage[] memory, uint256)
     {
-        return abi.encodePacked(_userProfile, _swipedProfile);
+        require(
+            offset < publicMessageCount,
+            "Cannot read public messages indexed beyond total number of public messages that exist"
+        );
+
+        PublicMessage[] memory messagesToRtn = new PublicMessage[](limit);
+        uint256 messagesToRtnCount = 0;
+        while (messagesToRtnCount < limit && offset < publicMessageCount) {
+            PublicMessage memory message = _public_messages[offset];
+            messagesToRtn[messagesToRtnCount] = message;
+            messagesToRtnCount++;
+            offset++;
+        }
+
+        return (messagesToRtn, offset);
+    }
+
+    // Gets balance of token for given wallet
+    function getTokenBalanceOfUser(address _profile)
+        public
+        view
+        returns (uint256)
+    {
+        return tinderCoin.balanceOf(_profile);
+    }
+
+    /**
+     * Public Write APIs
+     */
+
+    function createUserProfileFlow(
+        address _profile,
+        string memory name,
+        string memory _image0,
+        string memory _image1,
+        string memory _image2,
+        string memory bio
+    ) public {
+        // This function adds tokens to the profile upon creation
+        // So require that a profile cannot already exist for the given address
+        // Use updateUserProfile method to update existing profile (it does not pay tokens)
+        Profile storage profile = _profiles[_profile];
+        require(
+            profile.created_ts == 0,
+            "Cannot create a profile that already exists."
+        );
+
+        profile.name = name;
+        profile._address = _profile;
+        profile.images[0] = _image0;
+        profile.images[1] = _image1;
+        profile.images[2] = _image2;
+        profile.bio = bio;
+        profile.created_ts = block.timestamp;
+
+        // Add profile to indexed list of accounts and increment counter
+        _accounts[profileCount] = _profile;
+        profileCount++;
+
+        // Approve this contract to spend tokens for _profile's wallet
+        tinderCoin.approve(_profile, defaultApprovalAmt);
+
+        // Now send tokens from this contract's wallet to _profile's wallet
+        // Be sure that we only transfer after setting profile.created_ts because otherwise vulnerable to reentrancy attack
+        tinderCoin.transferFrom(address(this), _profile, initTokenReward);
+    }
+
+    function swipeLeft(address _userProfile, address _swipedProfile) public {
+        _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
     function swipeRight(address _userProfile, address _swipedProfile)
@@ -215,93 +307,8 @@ contract YourContract {
             tinderCoin.transferFrom(_userProfile, address(this), 1);
         }
 
-        // QUESTION: will this line properly reflect the transfer that happens earlier in the function? or does that take some time?
         bool canContinueSwiping = tinderCoin.balanceOf(_userProfile) > 0;
         return (isMatch, canContinueSwiping);
-    }
-
-    // This endpoint serves the messages loading page to see all people with whom there were recent messages
-    // It returns profiles to display on the page that a user can click into to see message history
-    // As well as a new offset for pagination purposes
-    // TODO: modify this to return most recent page of conversations
-    function fetchRecentMatches(
-        address _profile,
-        uint256 limit,
-        uint256 offset
-    ) public view returns (Profile[] memory, uint256) {
-        // Fetch a page of matches
-        uint256 matchesCount = _matches_count[_profile];
-        require(
-            offset < matchesCount,
-            "Cannot read matches indexed beyond total number of matches for this user"
-        );
-
-        uint256 profileRtnCount = 0;
-        Profile[] memory profilesToRtn = new Profile[](limit);
-
-        while (profileRtnCount < limit && offset < matchesCount) {
-            address _match = _matches[_profile][offset];
-            Profile memory _match_profile = _profiles[_match];
-            if (_match_profile.deleted_ts == 0) {
-                profilesToRtn[profileRtnCount] = _match_profile;
-                profileRtnCount++;
-            }
-            offset++;
-        }
-
-        return (profilesToRtn, offset);
-    }
-
-    // Helper method to determine correct ordering of address1:address2 vs address2:address1 for storing messages
-    function fetchMessageKeyPair(address _address1, address _address2)
-        private
-        view
-        returns (bytes memory)
-    {
-        bytes memory matchKeyPair = buildAddressKeyPair(_address1, _address2);
-        uint256 messageCount = _messages_count[matchKeyPair];
-        if (messageCount == 0) {
-            // Try other pair ordering
-            matchKeyPair = buildAddressKeyPair(_address2, _address1);
-            messageCount = _messages_count[matchKeyPair];
-            // If message count is still 0, then we have an issue
-            require(
-                messageCount > 0,
-                "Profile pair doesn't have any messages, perhaps match was never initialized"
-            );
-        }
-        return matchKeyPair;
-    }
-
-    // Called when user clicks into a conversation with a match
-    function fetchRecentMessagesForMatch(
-        address _address1,
-        address _address2,
-        uint256 limit,
-        uint256 offset
-    ) public view returns (Message[] memory, uint256) {
-        // Note that matchKeyPair can be address1:address2 or address2:address1 depending on order of creation
-        // So need to try other order pair if first try returns 0 matches (all matches have at least 1 match bc of default match)
-        bytes memory matchKeyPair = fetchMessageKeyPair(_address1, _address2);
-        uint256 messageCount = _messages_count[matchKeyPair];
-
-        require(
-            offset < messageCount,
-            "Cannot read messages indexed beyond total number of messages for this pair"
-        );
-
-        Message[] memory messagesToRtn = new Message[](limit);
-        uint256 messagesToRtnCount = 0;
-        while (messagesToRtnCount < limit && offset < messageCount) {
-            Message memory message = _messages[matchKeyPair][offset];
-            if (message.deleted_ts == 0) {
-                messagesToRtn[messagesToRtnCount] = message;
-                messagesToRtnCount++;
-            }
-            offset++;
-        }
-
-        return (messagesToRtn, offset);
     }
 
     function sendMessage(
@@ -332,44 +339,20 @@ contract YourContract {
                 message: message,
                 votes: 0,
                 author: _sender,
-                idx: _publicMessageIdx
+                idx: publicMessageCount
             });
-            _public_messages[_publicMessageIdx] = publicMessage;
-            // emit event before incrementing _publicMessageIdx index so that event points to the most recent message
-            emit publicMessageSent(_sender, _publicMessageIdx);
-            _publicMessageIdx++;
+            _public_messages[publicMessageCount] = publicMessage;
+            // emit event before incrementing publicMessageCount index so that event points to the most recent message
+            emit publicMessageSent(_sender, publicMessageCount);
+            publicMessageCount++;
         }
-    }
-
-    // Called on public message dashboard load
-    // TODO: figure out how to sort these by vote
-    function fetchPublicMessages(uint256 limit, uint256 offset)
-        public
-        view
-        returns (PublicMessage[] memory, uint256)
-    {
-        require(
-            offset < _publicMessageIdx,
-            "Cannot read public messages indexed beyond total number of public messages that exist"
-        );
-
-        PublicMessage[] memory messagesToRtn = new PublicMessage[](limit);
-        uint256 messagesToRtnCount = 0;
-        while (messagesToRtnCount < limit && offset < _publicMessageIdx) {
-            PublicMessage memory message = _public_messages[offset];
-            messagesToRtn[messagesToRtnCount] = message;
-            messagesToRtnCount++;
-            offset++;
-        }
-
-        return (messagesToRtn, offset);
     }
 
     function voteOnPublicMessage(uint256 publicMessageIdx, bool isUpvote)
         public
     {
         require(
-            publicMessageIdx < _publicMessageIdx,
+            publicMessageIdx < publicMessageCount,
             "Cannot vote on a message that is beyond bounds of public message list"
         );
         if (isUpvote) {
@@ -430,7 +413,7 @@ contract YourContract {
         _profiles[_profile].bio = _bio;
     }
 
-    function editProfilename(address _profile, string memory _name) public {
+    function editProfileName(address _profile, string memory _name) public {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
@@ -438,50 +421,63 @@ contract YourContract {
         _profiles[_profile].name = _name;
     }
 
-    // Gets balance of token for given wallet
-    function getTokenBalanceOfUser(address _profile)
-        public
-        view
-        returns (uint256)
+    /**
+     * Helper methods
+     */
+
+    function buildAddressKeyPair(address _userProfile, address _swipedProfile)
+        private
+        pure
+        returns (bytes memory)
     {
-        return tinderCoin.balanceOf(_profile);
+        return abi.encodePacked(_userProfile, _swipedProfile);
     }
 
-    // TODO: how do I make sure this can only be set by me?
-    // Do I use the contract's address to call this? (how can I use the contract's address?)
-    // Or do I add my personal wallet to allow list?
-    function setInitTokenReward(uint256 _newReward) public {
+    // Helper method to determine correct ordering of address1:address2 vs address2:address1 for storing messages
+    function fetchMessageKeyPair(address _address1, address _address2)
+        private
+        view
+        returns (bytes memory)
+    {
+        bytes memory matchKeyPair = buildAddressKeyPair(_address1, _address2);
+        uint256 messageCount = _messages_count[matchKeyPair];
+        if (messageCount == 0) {
+            // Try other pair ordering
+            matchKeyPair = buildAddressKeyPair(_address2, _address1);
+            messageCount = _messages_count[matchKeyPair];
+            // If message count is still 0, then we have an issue
+            require(
+                messageCount > 0,
+                "Profile pair doesn't have any messages, perhaps match was never initialized"
+            );
+        }
+        return matchKeyPair;
+    }
+
+    /**
+     * Owner-only getters and setters
+     */
+
+    function setInitTokenReward(uint256 _newReward) public onlyOwner {
         initTokenReward = _newReward;
     }
 
-    // TODO: access control
-    // TODO: do I need a getter here? or is it auto-gen'd?
-    function getInitTokenReward() public view returns (uint256) {
+    function getInitTokenReward() public view onlyOwner returns (uint256) {
         return initTokenReward;
     }
 
-    // TODO: access control
-    function setDefaultApprovalAmt(uint256 _newDefaultApprovalAmt) public {
+    function setDefaultApprovalAmt(uint256 _newDefaultApprovalAmt)
+        public
+        onlyOwner
+    {
         defaultApprovalAmt = _newDefaultApprovalAmt;
     }
 
-    // TODO: access control
-    function getDefaultApprovalAmt() public view returns (uint256) {
+    function getDefaultApprovalAmt() public view onlyOwner returns (uint256) {
         return defaultApprovalAmt;
     }
 
-    // TODO: access control
-    function setDefaultMessageText(string memory _text) public {
+    function setDefaultMessageText(string memory _text) public onlyOwner {
         defaultMessageText = _text;
-    }
-
-    // TODO: access control
-    function getDefaultMessageText() public view returns (string memory) {
-        return defaultMessageText;
-    }
-
-    // TODO: access control
-    function getNumberOfPublicMessage() public view returns (uint256) {
-        return _publicMessageIdx;
     }
 }

@@ -12,7 +12,7 @@ import { ethers } from "ethers";
 function Home({ yourLocalBalance, readContracts }) {
   // you can also use hooks locally in your component of choice
   // in this case, let's keep track of 'purpose' variable from our contract
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  const purpose = useContractReader(readContracts, "TinderChain", "purpose");
 
   return (
     <div>
