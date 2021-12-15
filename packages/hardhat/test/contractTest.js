@@ -4,8 +4,16 @@ const { solidity } = require("ethereum-waffle");
 
 use(solidity);
 
+
+
 describe("TinderChain", function () {
   let myContract;
+  let owner;
+  let addr1;
+
+  const name1 = "addr1";
+  const [img1, img2, img3] = ["img1", "img2", "img3"];
+  const bio1 = "bio";
 
   // quick fix to let gas reporter fetch data from gas station & coinmarketcap
   before((done) => {
@@ -15,46 +23,58 @@ describe("TinderChain", function () {
   beforeEach(async () => {
     const TinderChain = await ethers.getContractFactory("TinderChain");
     myContract = await TinderChain.deploy();
+    [owner, addr1] = await ethers.getSigners();
   });
 
   describe("Deployment", () => {
     it("should deploy with correct values", async () => {
-      // assert that contract is approved to transact
-      // assert that init values in constructor are correct
+      expect(await myContract.profileCount()).to.equal(0);
+      expect(await myContract.publicMessageCount()).to.equal(0);
+      expect(await myContract.getInitTokenReward()).to.equal(10);
+      expect(await myContract.getDefaultApprovalAmt()).to.equal(1000);
+      expect(await myContract.defaultMessageText()).to.equal("This is the beginning of your message history.");
     });
 
     it("should give contract owner 20% of tokens", async () => {
-      // assert that contract is approved to transact
-      // assert that the contract wallet has 800million tokens
-      // assert that deployer wallet has 200million tokens
+      expect(await myContract.getTokenBalanceOfUser(owner.address)).to.equal(1000*1000*200);
     });
 
     it("should give contract wallet 80% of tokens", async () => {
-      // assert that contract is approved to transact
-      // assert that the contract wallet has 800million tokens
-      // assert that deployer wallet has 200million tokens
+      expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800);
+
     });
   });
 
   describe("Onboarding Flow", () => {
     it("should allow a new user to sign up", async () => {
-      // pass in args
+      await myContract.createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      const profile = await myContract.getUserProfile(addr1.address);
+      expect(profile.name).to.equal(name1);
+      expect(profile.bio).to.equal(bio1);
+      expect(profile._address).to.equal(addr1.address);
+      expect(profile.images).to.eql([img1, img2, img3]);
+      expect(Number(profile.created_ts)).to.be.greaterThan(0);
+      expect(Number(profile.deleted_ts)).to.equal(0);
     });
 
     it("should allow contract to transact on behalf of new user", async () => {
-
+      await myContract.createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      expect(await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(10);
+      expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800 - 10);
     });
 
     it("should prevent an existing user from signing up again", async () => {
-
-    });
-
-    it("should send 10 tokens to a new user's wallet", async () => {
-
+      await myContract.createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.createUserProfileFlow(owner.address, name1, img1, img2, img3, bio1);
+      await expect(myContract.createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1)).to.be.revertedWith("Cannot create a profile that already exists.");
     });
 
     it("should increase the total number of profiles on each new user signup", async () => {
-
+      expect(await myContract.profileCount()).to.equal(0);
+      await myContract.createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      expect(await myContract.profileCount()).to.equal(1);
+      await myContract.createUserProfileFlow(owner.address, name1, img1, img2, img3, bio1);
+      expect(await myContract.profileCount()).to.equal(2);
     });
   });
 
