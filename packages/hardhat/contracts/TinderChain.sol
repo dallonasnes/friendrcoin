@@ -119,17 +119,21 @@ contract TinderChain is Ownable {
         while (profileRtnCount < limit && offset < profileCount) {
             // get account at index offset
             address currAcct = _accounts[offset];
-            // see if currAcct was already swiped by _profile
-            bool alreadySwiped = _swipedAddresses[_profile][currAcct];
-            if (!alreadySwiped) {
-                // get profile for currAcct
-                Profile memory profToShowInQueue = _profiles[currAcct];
-                // if profToShowInQueue is not deleted, then add it to rtnList
-                if (profToShowInQueue.deleted_ts == 0) {
-                    profilesToRtn[profileRtnCount] = profToShowInQueue;
-                    profileRtnCount++;
+            // skip if _profile is the same as currAct
+            if (_profile != currAcct) {
+                // see if currAcct was already swiped by _profile
+                bool alreadySwiped = _swipedAddresses[_profile][currAcct];
+                if (!alreadySwiped) {
+                    // get profile for currAcct
+                    Profile memory profToShowInQueue = _profiles[currAcct];
+                    // if profToShowInQueue is not deleted, then add it to rtnList
+                    if (profToShowInQueue.deleted_ts == 0) {
+                        profilesToRtn[profileRtnCount] = profToShowInQueue;
+                        profileRtnCount++;
+                    }
                 }
             }
+
             offset++;
         }
 
