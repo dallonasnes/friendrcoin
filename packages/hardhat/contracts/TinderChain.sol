@@ -34,6 +34,14 @@ contract TinderChain is Ownable {
         uint256 idx;
     }
 
+    modifier onlySenderOrOwner(address _profile) {
+        require(
+            _profile == _msgSender() || owner() == _msgSender(),
+            "Ownable: caller is not the owner"
+        );
+        _;
+    }
+
     mapping(address => Profile) private _profiles; // profile for an address
     mapping(address => mapping(address => bool)) private _swipedAddresses; // addresses swiped on by address (value indexed by address for lookup)
     mapping(address => mapping(address => bool)) private _swipedRightAddresses; // addresses swiped right on by address (value indexed by address for lookup)
@@ -83,6 +91,7 @@ contract TinderChain is Ownable {
     function getUserProfile(address _profile)
         public
         view
+        onlySenderOrOwner(_profile)
         returns (Profile memory)
     {
         return _profiles[_profile];
@@ -92,7 +101,12 @@ contract TinderChain is Ownable {
         address _profile,
         uint256 limit,
         uint256 offset
-    ) public view returns (Profile[] memory, uint256) {
+    )
+        public
+        view
+        onlySenderOrOwner(_profile)
+        returns (Profile[] memory, uint256)
+    {
         require(
             offset < profileCount,
             "Cannot fetch profiles indexed beyond those that exist in system"
@@ -127,7 +141,12 @@ contract TinderChain is Ownable {
         address _profile,
         uint256 limit,
         uint256 offset
-    ) public view returns (Profile[] memory, uint256) {
+    )
+        public
+        view
+        onlySenderOrOwner(_profile)
+        returns (Profile[] memory, uint256)
+    {
         // Fetch a page of matches
         uint256 matchesCount = _matches_count[_profile];
         require(
@@ -157,7 +176,12 @@ contract TinderChain is Ownable {
         address _address2,
         uint256 limit,
         uint256 offset
-    ) public view returns (Message[] memory, uint256) {
+    )
+        public
+        view
+        onlySenderOrOwner(_address1)
+        returns (Message[] memory, uint256)
+    {
         // Note that matchKeyPair can be address1:address2 or address2:address1 depending on order of creation
         // So need to try other order pair if first try returns 0 matches (all matches have at least 1 match bc of default match)
         bytes memory matchKeyPair = fetchMessageKeyPair(_address1, _address2);
@@ -210,6 +234,7 @@ contract TinderChain is Ownable {
     function getTokenBalanceOfUser(address _profile)
         public
         view
+        onlySenderOrOwner(_profile)
         returns (uint256)
     {
         return tinderCoin.balanceOf(_profile);
@@ -226,7 +251,7 @@ contract TinderChain is Ownable {
         string memory _image1,
         string memory _image2,
         string memory bio
-    ) public {
+    ) public onlySenderOrOwner(_profile) {
         // This function adds tokens to the profile upon creation
         // So require that a profile cannot already exist for the given address
         // Use updateUserProfile method to update existing profile (it does not pay tokens)
@@ -256,12 +281,16 @@ contract TinderChain is Ownable {
         tinderCoin.transferFrom(address(this), _profile, initTokenReward);
     }
 
-    function swipeLeft(address _userProfile, address _swipedProfile) public {
+    function swipeLeft(address _userProfile, address _swipedProfile)
+        public
+        onlySenderOrOwner(_userProfile)
+    {
         _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
     function swipeRight(address _userProfile, address _swipedProfile)
         public
+        onlySenderOrOwner(_userProfile)
         returns (bool, bool)
     {
         require(
@@ -322,7 +351,7 @@ contract TinderChain is Ownable {
         address _receiver,
         string memory _text,
         bool _isPublic
-    ) public {
+    ) public onlySenderOrOwner(_sender) {
         bytes memory matchKeyPair = fetchMessageKeyPair(_sender, _receiver);
         uint256 messageCount = _messages_count[matchKeyPair];
 
@@ -385,7 +414,7 @@ contract TinderChain is Ownable {
         address _profile,
         uint256 _index,
         string memory _image
-    ) public {
+    ) public onlySenderOrOwner(_profile) {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
@@ -399,6 +428,7 @@ contract TinderChain is Ownable {
 
     function deleteProfileImageAtIndex(address _profile, uint256 _index)
         public
+        onlySenderOrOwner(_profile)
     {
         require(
             _profiles[_profile].created_ts > 0,
@@ -411,7 +441,10 @@ contract TinderChain is Ownable {
         _profiles[_profile].images[_index] = "";
     }
 
-    function editProfileBio(address _profile, string memory _bio) public {
+    function editProfileBio(address _profile, string memory _bio)
+        public
+        onlySenderOrOwner(_profile)
+    {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
@@ -419,7 +452,10 @@ contract TinderChain is Ownable {
         _profiles[_profile].bio = _bio;
     }
 
-    function editProfileName(address _profile, string memory _name) public {
+    function editProfileName(address _profile, string memory _name)
+        public
+        onlySenderOrOwner(_profile)
+    {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
