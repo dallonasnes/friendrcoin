@@ -51,6 +51,7 @@ contract TinderChain is Ownable {
     mapping(bytes => uint256) private _messages_count; // count of messages by message pair used for lookups in _messages
     mapping(uint256 => address) private _accounts; // indexed list of all accounts in the contract
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
+    mapping(address => mapping(uint256 => bool)) _votes_cast_by_user; // tracking which public messages a user has already voted on
 
     IERC20 private tinderCoin;
 
@@ -390,23 +391,29 @@ contract TinderChain is Ownable {
             publicMessageIdx < publicMessageCount,
             "Cannot vote on a message that is beyond bounds of public message list"
         );
+        PublicMessage storage message = _public_messages[publicMessageIdx];
+        require(
+            _msgSender() != message.author,
+            "Cannot vote on your own message"
+        );
+
+        require(
+            !didAlreadyVoteOnMessage(_msgSender(), publicMessageIdx),
+            "Can only vote on a message once."
+        );
+
+        // Now they're voting on this message
+        _votes_cast_by_user[_msgSender()][publicMessageIdx] = true;
+
         if (isUpvote) {
-            _public_messages[publicMessageIdx].votes++;
-            tinderCoin.transferFrom(
-                address(this),
-                _public_messages[publicMessageIdx].author,
-                1
-            );
+            message.votes++;
+            tinderCoin.transferFrom(address(this), message.author, 1);
         } else {
-            if (_public_messages[publicMessageIdx].votes > 0) {
+            if (message.votes > 0) {
                 // Can only transfer tokens away from author of publicMessage if vote count is positive
-                tinderCoin.transferFrom(
-                    _public_messages[publicMessageIdx].author,
-                    address(this),
-                    1
-                );
+                tinderCoin.transferFrom(message.author, address(this), 1);
             }
-            _public_messages[publicMessageIdx].votes--;
+            message.votes--;
         }
     }
 
@@ -494,6 +501,14 @@ contract TinderChain is Ownable {
             );
         }
         return matchKeyPair;
+    }
+
+    function didAlreadyVoteOnMessage(address voter, uint256 publicMessageIdx)
+        private
+        view
+        returns (bool)
+    {
+        return _votes_cast_by_user[voter][publicMessageIdx];
     }
 
     /**
