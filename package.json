@@ -68,21 +68,23 @@
     ]
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.0"
+    "@openzeppelin/contracts": "^4.4.0",
+    "js-sha3": "^0.8.0",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "husky": "^7.0.4",
     "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.3.4",
-    "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.5.2",
-    "hardhat": "^2.7.1",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-prettier": "^3.1.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.2",
+    "hardhat": "^2.7.1",
+    "husky": "^7.0.4",
     "prettier": "^2.5.0",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.6",
