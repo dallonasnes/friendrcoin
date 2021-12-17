@@ -12,6 +12,8 @@
 1. Buy matchcoin.io domain
 2. Setup single page HTML + timer + logging user info (matchcoin.io)
 3. Figure out how to log traffic to IG/social media accounts using bit.ly redirects
+    a. we want to identify which redirect by queryString (eg user came from Laura's profile)
+    b. we also want general volume from each medium (eg from IG or from tinder or from twitter)
 
 #### Marketing (Dec 20 - infinity)
 -- Owned by Laura
