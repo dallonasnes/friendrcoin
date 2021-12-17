@@ -26,6 +26,9 @@
 -- Owned by Edo
 1. YouTube video + jingle? and/or more good ideas?
 
+-- Owned by Kelly
+1. Shill coin in DAOs
+
 
 #### Web App middleware P0 for launch (target Dec 22)
 -- Owned by Dallon
@@ -46,6 +49,8 @@
 2. Write copy for about us, how it works, contact pages
 3. Setup Figma + implement css for about us, how it works, contact pages
 
+
+## Docs
 
 [Design doc](https://docs.google.com/document/d/1dK7VgTm8u8EnxTcnLr6IJ1oO5Dabo6-Zlrjw39kxWdQ/edit?usp=sharing)
 
