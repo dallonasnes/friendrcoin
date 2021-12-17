@@ -1,8 +1,8 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { LoggedInButton } from "./Button";
-import { ButtonLink } from "./Links"
+import { ButtonLink } from "./Links";
 
 // TODO(@kk) - can use "antd" library for styling
 
@@ -25,17 +25,13 @@ const getLoggedInButtons = () => {
 // TODO: can change isLoggedIn between true and false for testing views
 export default function Header({ isLoggedIn }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }} >
+    <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
       <a href="https://github.com/dallonasnes/tinder-chain" target="_blank" rel="noopener noreferrer">
         Matchcoin
         <img alt="Matchcoin Logo" src={"../../logo-matchcoin.svg"} />
       </a>
-      <div>
-       {isLoggedIn ? getLoggedInButtons() : getNotLoggedInButtons()}
-      </div>
-      <div>
-
-      </div>
+      <div>{isLoggedIn ? getLoggedInButtons() : getNotLoggedInButtons()}</div>
+      <div></div>
     </div>
   );
 }

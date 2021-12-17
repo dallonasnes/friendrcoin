@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const LoggedInButton = styled.button`
   width: 200px;
@@ -14,7 +14,6 @@ export const LoggedInButton = styled.button`
   color: #000000;
 
   &:hover {
-    background: #DBA38B;
-;
+    background: #dba38b;
   }
-`
+`;

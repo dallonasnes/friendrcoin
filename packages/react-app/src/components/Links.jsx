@@ -7,4 +7,4 @@ export const ButtonLink = styled.a`
     color: #000;
     transform: scale(1.1);
   }
-`
+`;

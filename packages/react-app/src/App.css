@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Nova+Flat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nova+Flat&display=swap");
 
 .App {
-  font-family: 'Nova Flat', cursive;
+  font-family: "Nova Flat", cursive;
   text-align: center;
   position: relative;
-  background: linear-gradient(180deg, #E0BFA0 0%, #C84E4E 100%);
+  background: linear-gradient(180deg, #e0bfa0 0%, #c84e4e 100%);
   height: 100vh;
   width: 100%;
 }

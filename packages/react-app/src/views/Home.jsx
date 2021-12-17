@@ -6,7 +6,6 @@ import { Address, Balance, Events } from "../components";
 import { BoxH2 } from "../components/H2";
 import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
 
-
 const fakeInputData = [
   {
     idx: 1,
