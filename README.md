@@ -7,6 +7,7 @@
 1. Finish unit tests for tinderCoin
 2. Launch tinderCoin on an exchange
 3. Setup liquidity pool for tinderCoin (and find liquidity providers)
+
 -- Owned by Sushant
 1. Buy matchcoin.io domain
 2. Setup single page HTML + timer + logging user info (matchcoin.io)
@@ -15,10 +16,13 @@
 #### Marketing (Dec 20 - infinity)
 -- Owned by Laura
 1. Create accounts + content for IG + Twitter, shill coin + networking shill coin
+
 -- Owned by Dallon
 1. Run dating app bot to market links to IG
+
 -- Owned by Jon
 1. Shill coin in crypto groups
+
 -- Owned by Edo
 1. YouTube video + jingle? and/or more good ideas?
 
@@ -49,4 +53,4 @@
 
 [Figma](https://www.figma.com/file/AQxlyKqiQvVT5SKpTLV2js/Tinder-Chain?node-id=8%3A233)
 
-[Token distribution on team doc]()
+[Token distribution on team doc](https://docs.google.com/document/d/1f3RNjkwcN7BnwA6OC5enuIrjpGIM5xQIfvhXvkeH9YQ/edit?usp=sharing)
