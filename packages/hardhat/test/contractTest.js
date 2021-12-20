@@ -518,15 +518,33 @@ describe("TinderChain", function () {
 
   describe("Setters and getters", () => {
     it("should only allow contract owner to read and write init token reward", async () => {
+      // owner can read init token reward
+      await myContract.getInitTokenReward();
+      // owner can write init token reward
+      await myContract.setInitTokenReward(2);
 
+      // profile cannot read
+      await expect(myContract.connect(addr1).getInitTokenReward()).to.be.revertedWith("Ownable: caller is not the owner");
+      // profile cannot write
+      await expect(myContract.connect(addr1).setInitTokenReward(2)).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
     it("should only allow contract owner to read and write default approval limit", async () => {
+      // owner can
+      await myContract.getDefaultApprovalAmt();
+      await myContract.setDefaultApprovalAmt(2);
 
+      // profile cannot
+      await expect(myContract.connect(addr1).getDefaultApprovalAmt()).to.be.revertedWith("Ownable: caller is not the owner");
+      await expect(myContract.connect(addr1).setDefaultApprovalAmt(2)).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
     it("should only allow contract owner to write default message text", async () => {
+      // owner can write
+      await myContract.setDefaultMessageText("hello world");
 
+      // profile cannot write
+      await expect(myContract.connect(addr1).setDefaultMessageText("hello world")).to.be.revertedWith("Ownable: caller is not the owner");
     });
   });
 });
