@@ -12,6 +12,17 @@ describe("TinderChain", function () {
   const [img1, img2, img3] = ["img1", "img2", "img3"];
   const [bio1, bio2, bio3] = ["bio1", "bio2", "bio3"];
 
+  // helper methods in scope
+  const generateMatch = async () => {
+    await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+    await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+    // acct1 swipes right on acct2 and acct1 is charged one token
+    await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
+  
+    // acct2 swipes right on acct1, then both have original number of tokens
+    await myContract.connect(addr2).swipeRight(addr2.address, addr1.address);
+  }
+
   // quick fix to let gas reporter fetch data from gas station & coinmarketcap
   before((done) => {
     setTimeout(done, 2000);
@@ -357,43 +368,113 @@ describe("TinderChain", function () {
 
   describe("Messaging flow", () => {
     it("should allow user to fetch all recent matches", async () => {
-
+      await generateMatch();
+      const [profiles, offset] = await myContract.connect(addr1).getRecentMatches(addr1.address, 10, 0);
+      expect(profiles.length).to.equal(1);
+      expect(profiles[0]._address).to.equal(addr2.address);
+      expect(offset).to.equal(1);
     });
 
     it("should only allow contract owner to fetch someone else's matches", async () => {
-
+      await generateMatch();
+      // works for owner
+      await myContract.getRecentMatches(addr1.address, 10, 0);
+      // not for someone else
+      await expect(myContract.connect(addr2).getRecentMatches(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
-    it("should allow user to message a match", async () => {
+    it("should allow user to message and receive message a match", async () => {
+      await generateMatch();
 
+      // addr1 sends a message
+      await myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false);
+
+      // addr2 can fetch the message
+      let [message1, offset] = await myContract.connect(addr2).getRecentMessagesForMatch(addr2.address, addr1.address, 10, 0);
+      // note that the default message is message 1
+      expect(message1.length).to.equal(2);
+      expect(offset).to.equal(2);
+      expect(message1[1].text).to.equal("hello world");
+      expect(message1[1].sender).to.equal(addr1.address);
+      expect(message1[1].isPublic).to.equal(false);
+      expect(Number(message1[1].created_ts)).to.be.greaterThan(0);
+      expect(Number(message1[1].deleted_ts)).to.equal(0);
+
+      // addr1 can fetch see the message
+      [message1, offset] = await myContract.connect(addr1).getRecentMessagesForMatch(addr1.address, addr2.address, 10, 0);
+      expect(message1.length).to.equal(2);
+      expect(offset).to.equal(2);
+      expect(message1[1].text).to.equal("hello world");
+      expect(message1[1].sender).to.equal(addr1.address);
+      expect(message1[1].isPublic).to.equal(false);
+      expect(Number(message1[1].created_ts)).to.be.greaterThan(0);
+      expect(Number(message1[1].deleted_ts)).to.equal(0);
     });
 
     it("should register a messageSent event when a message is sent", async () => {
+      await generateMatch();
+
+      await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false))
+        .to.emit(myContract, "messageSent")
+        .withArgs(addr1.address, addr2.address, 1);
+    });
+
+    it("should not allow anyone to message someone they haven't matched with", async () => {
+      await generateMatch();
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name1, img1, img2, img3, bio1);
+
+      // owner fails to message between addr3 and addr2
+      await expect(myContract.sendMessage(addr3.address, addr2.address, "hello world", false)).to.be.revertedWith("Profile pair doesn't have any messages, perhaps match was never initialized");
+
+      // addr1 fails to send message to addr3 without a match
+      await expect(myContract.connect(addr1).sendMessage(addr1.address, addr3.address, "hello world", false)).to.be.revertedWith("Profile pair doesn't have any messages, perhaps match was never initialized");
 
     });
 
-    it("should user to receive a message from a match", async () => {
+    it("should allow only owner to send messages to a match on behalf of someone else", async () => {
+      await generateMatch();
 
-    });
+      // works for owner
+      await myContract.sendMessage(addr2.address, addr1.address, "hello world", false);
 
-    it("should not allow someone to message someone they haven't matched with", async () => {
-
+      // doesn't work for non owner
+      await expect(myContract.connect(addr1).sendMessage(addr2.address, addr1.address, "hello world", false)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
     it("should not increase publicMessageCount if a private message is sent", async () => {
-
+      await generateMatch();
+      expect(await myContract.publicMessageCount()).to.equal(0);
+      await myContract.sendMessage(addr2.address, addr1.address, "hello world", false);
+      expect(await myContract.publicMessageCount()).to.equal(0);
     });
 
     it("should increase publicMessageCount if a public message is sent", async () => {
-
+      await generateMatch();
+      expect(await myContract.publicMessageCount()).to.equal(0);
+      await myContract.sendMessage(addr2.address, addr1.address, "hello world", true);
+      expect(await myContract.publicMessageCount()).to.equal(1);
     });
 
     it("should register a publicMessageSent event if a public message is sent", async () => {
+      await generateMatch();
 
+      await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", true))
+        .to.emit(myContract, "publicMessageSent")
+        .withArgs(addr1.address, 0);
     });
 
     it("should not register a publicMessageSent event if a private message is sent", async () => {
-
+      // send a private and public message
+      await generateMatch();
+      await myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false);
+      // verify that the index of private message is 2
+      await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false))
+        .to.emit(myContract, "messageSent")
+        .withArgs(addr1.address, addr2.address, 2);
+      // verify that the index of public message is 0
+      await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", true))
+      .to.emit(myContract, "publicMessageSent")
+      .withArgs(addr1.address, 0);
     });
   });
 

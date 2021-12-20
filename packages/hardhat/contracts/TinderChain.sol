@@ -169,16 +169,22 @@ contract TinderChain is Ownable {
         );
 
         uint256 profileRtnCount = 0;
-        Profile[] memory profilesToRtn = new Profile[](limit);
+        Profile[] memory profiles = new Profile[](limit);
 
         while (profileRtnCount < limit && offset < matchesCount) {
             address _match = _matches[_profile][offset];
             Profile memory _match_profile = _profiles[_match];
             if (_match_profile.deleted_ts == 0) {
-                profilesToRtn[profileRtnCount] = _match_profile;
+                profiles[profileRtnCount] = _match_profile;
                 profileRtnCount++;
             }
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        Profile[] memory profilesToRtn = new Profile[](profileRtnCount);
+        for (uint256 i = 0; i < profileRtnCount; i++) {
+            profilesToRtn[i] = profiles[i];
         }
 
         return (profilesToRtn, offset);
@@ -196,6 +202,10 @@ contract TinderChain is Ownable {
         onlySenderOrOwner(_address1)
         returns (Message[] memory, uint256)
     {
+        require(
+            _address1 != _address2,
+            "Cannot send/receive messages to/from self."
+        );
         // Note that matchKeyPair can be address1:address2 or address2:address1 depending on order of creation
         // So need to try other order pair if first try returns 0 matches (all matches have at least 1 match bc of default match)
         bytes memory matchKeyPair = fetchMessageKeyPair(_address1, _address2);
@@ -206,15 +216,21 @@ contract TinderChain is Ownable {
             "Cannot read messages indexed beyond total number of messages for this pair"
         );
 
-        Message[] memory messagesToRtn = new Message[](limit);
+        Message[] memory messages = new Message[](limit);
         uint256 messagesToRtnCount = 0;
         while (messagesToRtnCount < limit && offset < messageCount) {
             Message memory message = _messages[matchKeyPair][offset];
             if (message.deleted_ts == 0) {
-                messagesToRtn[messagesToRtnCount] = message;
+                messages[messagesToRtnCount] = message;
                 messagesToRtnCount++;
             }
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        Message[] memory messagesToRtn = new Message[](messagesToRtnCount);
+        for (uint256 i = 0; i < messagesToRtnCount; i++) {
+            messagesToRtn[i] = messages[i];
         }
 
         return (messagesToRtn, offset);
