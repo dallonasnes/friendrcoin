@@ -296,12 +296,22 @@ describe("TinderChain", function () {
       expect(startTokenCount2).to.equal(endTokenCount2);
     });
 
-    it("should not charge a token for a right swipe that immediately results in a match", async () => {
+    it("should not charge a token for a right swipe that immediately results in a match and returns token to original swiper in match", async () => {
+      // create two profiles
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
 
-    });
+      const startTokenBalance = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
 
-    it("should return a token to original right-swiper wallet if they later match with that profile", async () => {
+      // acct1 swipes right on acct2 and acct1 is charged one token
+      await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
+      expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance - 1);
 
+      // acct2 swipes right on acct1, then both have original number of tokens
+      await myContract.connect(addr2).swipeRight(addr2.address, addr1.address);
+
+      expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance);
+      expect(await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)).to.equal(startTokenBalance);
     });
 
     it("should not allow someone with no tokens to swipe right", async () => {

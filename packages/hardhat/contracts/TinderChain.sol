@@ -317,6 +317,7 @@ contract TinderChain is Ownable {
             "User doesn't have enough tokens to swipe right"
         );
         _swipedAddresses[_userProfile][_swipedProfile] = true;
+        _swipedRightAddresses[_userProfile][_swipedProfile] = true;
 
         // Performance optimization is to first check if match before transferring
         // That way don't need to transfer and then transfer back in case of match
