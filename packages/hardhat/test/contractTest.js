@@ -326,13 +326,18 @@ describe("TinderChain", function () {
       await expect(myContract.connect(addr1).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("User doesn't have enough tokens to swipe right");
     });
 
-    it.skip("should allow only the contract owner to swipe for a different account", async () => {
+    it("should allow only the contract owner to swipe for a different account", async () => {
       // create two profiles
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
 
+      const startTokenBalance = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      // owner can swipe and cause charge to swiper
+      await myContract.swipeRight(addr1.address, addr2.address);
+      expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance - 1);
       
-      // TODO: do this for right swipe to assert who gets charged when contract owner swipes for a different account
+      // fails if addr1 tries to swipe for addr2
+      await expect(myContract.connect(addr2).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
     it("should allow only the contract owner to view the unseen profile queue different account", async () => {
