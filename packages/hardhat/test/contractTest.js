@@ -315,10 +315,23 @@ describe("TinderChain", function () {
     });
 
     it("should not allow someone with no tokens to swipe right", async () => {
+      // set init token reward to 0
+      await myContract.setInitTokenReward(0);
 
+      // create two profiles
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+
+      // try to swipe right on one, expect out of tokens failure
+      await expect(myContract.connect(addr1).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("User doesn't have enough tokens to swipe right");
     });
 
-    it("should allow only the contract owner to swipe for a different account", async () => {
+    it.skip("should allow only the contract owner to swipe for a different account", async () => {
+      // create two profiles
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+
+      
       // TODO: do this for right swipe to assert who gets charged when contract owner swipes for a different account
     });
 
