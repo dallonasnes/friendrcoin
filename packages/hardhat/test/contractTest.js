@@ -209,25 +209,32 @@ describe("TinderChain", function () {
       expect(acct3UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address, addr2.address]);
       expect(acct3Offset).to.equal(3);
 
-      // acct1 swipes on acct2 and acct3
-      const acct1TokenBalance = await myContract.getTokenBalanceOfUser(addr1.address);
-      expect(acct1TokenBalance).to.equal(10);
+      // acct1 swipes left on acct2 and acct3
       await myContract.connect(addr1).swipeLeft(addr1.address, addr2.address);
-      expect(acct1TokenBalance).to.equal(10);
-      // await myContract.connect(addr1).swipeRight(addr1.address, addr3.address);
-      // // there should be no unseen profiles left
-      // [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0);
-      // expect(acct1UnseenProfiles.length).to.equal(0);
-      // expect(acct1Offset).to.equal(3);
+      await myContract.connect(addr1).swipeLeft(addr1.address, addr3.address);
+      // there should be no unseen profiles left
+      [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0);
+      expect(acct1UnseenProfiles.length).to.equal(0);
+      expect(acct1Offset).to.equal(3);
 
       // acct2 swipes on acct1
+      await myContract.connect(addr2).swipeLeft(addr2.address, addr1.address);
+      // there should be only one unseen profile left (addr3)
+      [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0);
+      expect(acct2UnseenProfiles.length).to.equal(1);
+      expect(acct2UnseenProfiles[0]._address).to.equal(addr3.address);
+      expect(acct2Offset).to.equal(3);
 
       // acct3 doesn't swipe
+      [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0);
+      expect(acct3UnseenProfiles.length).to.equal(2);
+      expect(acct3UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address, addr2.address]);
+      expect(acct3Offset).to.equal(3);
 
     });
 
-    it("should not fetch deleted profiles for the queue", async () => {
-
+    it.skip("should not fetch deleted profiles for the queue", async () => {
+      // TODO: setup endpoint for deleted profile
     });
 
     it("should fetch distinct pages of unseen profiles", async () => {
@@ -235,7 +242,7 @@ describe("TinderChain", function () {
     });
 
     it("should charge a token for a right swipe that does not immediately result in a match", async () => {
-
+      // await myContract.connect(addr1).swipeRight(addr1.address, addr3.address);
     });
 
     it("should not charge a token for a left swipe", async () => {
