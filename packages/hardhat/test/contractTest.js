@@ -238,6 +238,23 @@ describe("TinderChain", function () {
     });
 
     it("should fetch distinct pages of unseen profiles", async () => {
+      // create 3 accounts
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
+
+      // get page 1 of unseen profiles
+      const [firstPageUnseenProfiles, firstPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, 0);
+      // get page 2 of unseen profiles
+      const [secondPageUnseenProfiles, secondPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, firstPageOffset);
+
+      // each page should have exactly one profile
+      expect(firstPageUnseenProfiles.length).to.equal(1);
+      expect(secondPageUnseenProfiles.length).to.equal(1);
+      // there should be no intersection between the pages
+      expect(secondPageUnseenProfiles.filter((profile) => profile._address === firstPageUnseenProfiles[0]._address).length === 0);
+      // expect secondPageOffset to be 3 because we should have skipped over addr1 self address in queue
+      expect(secondPageOffset).to.equal(3);
 
     });
 
@@ -246,7 +263,24 @@ describe("TinderChain", function () {
     });
 
     it("should not charge a token for a left swipe", async () => {
+      // create two profiles
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
 
+      // get start token count for first two profiles
+      const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      const startTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+
+
+      // use first profile to swipe left
+      await myContract.connect(addr1).swipeLeft(addr1.address, addr2.address);
+
+      // assert both swiper and swipee still have same number of tokens
+      const endTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      const endTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+      
+      expect(startTokenCount1).to.equal(endTokenCount1);
+      expect(startTokenCount2).to.equal(endTokenCount2);
     });
 
     it("should not charge a token for a right swipe that immediately results in a match", async () => {
@@ -262,11 +296,21 @@ describe("TinderChain", function () {
     });
 
     it("should allow only the contract owner to swipe for a different account", async () => {
-
+      // TODO: do this for right swipe to assert who gets charged when contract owner swipes for a different account
     });
 
     it("should allow only the contract owner to view the unseen profile queue different account", async () => {
+      // create two accounts
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
 
+      // owner can fetch for addr1
+      const [unseenProfiles, firstPageOffset] = await myContract.getUnseenProfiles(addr1.address, 10, 0);
+      expect(unseenProfiles.length).to.equal(1);
+      expect(firstPageOffset).to.equal(2);
+
+      // addr2 cannot fetch for addr1
+      await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
   });
 
