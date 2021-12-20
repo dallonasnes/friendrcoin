@@ -13,7 +13,7 @@ describe("TinderChain", function () {
   const [bio1, bio2, bio3] = ["bio1", "bio2", "bio3"];
 
   // helper methods in scope
-  const generateMatch = async () => {
+  const setupMatch = async () => {
     await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
     await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
     // acct1 swipes right on acct2 and acct1 is charged one token
@@ -21,6 +21,13 @@ describe("TinderChain", function () {
   
     // acct2 swipes right on acct1, then both have original number of tokens
     await myContract.connect(addr2).swipeRight(addr2.address, addr1.address);
+  }
+
+  const setupPublicMessages = async (count) => {
+    await setupMatch();
+    for (let i = 0; i < count; i++){
+      await myContract.sendMessage(addr2.address, addr1.address, "hello world", true);
+    }
   }
 
   // quick fix to let gas reporter fetch data from gas station & coinmarketcap
@@ -368,7 +375,7 @@ describe("TinderChain", function () {
 
   describe("Messaging flow", () => {
     it("should allow user to fetch all recent matches", async () => {
-      await generateMatch();
+      await setupMatch();
       const [profiles, offset] = await myContract.connect(addr1).getRecentMatches(addr1.address, 10, 0);
       expect(profiles.length).to.equal(1);
       expect(profiles[0]._address).to.equal(addr2.address);
@@ -376,7 +383,7 @@ describe("TinderChain", function () {
     });
 
     it("should only allow contract owner to fetch someone else's matches", async () => {
-      await generateMatch();
+      await setupMatch();
       // works for owner
       await myContract.getRecentMatches(addr1.address, 10, 0);
       // not for someone else
@@ -384,7 +391,7 @@ describe("TinderChain", function () {
     });
 
     it("should allow user to message and receive message a match", async () => {
-      await generateMatch();
+      await setupMatch();
 
       // addr1 sends a message
       await myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false);
@@ -412,7 +419,7 @@ describe("TinderChain", function () {
     });
 
     it("should register a messageSent event when a message is sent", async () => {
-      await generateMatch();
+      await setupMatch();
 
       await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false))
         .to.emit(myContract, "messageSent")
@@ -420,7 +427,7 @@ describe("TinderChain", function () {
     });
 
     it("should not allow anyone to message someone they haven't matched with", async () => {
-      await generateMatch();
+      await setupMatch();
       await myContract.connect(addr3).createUserProfileFlow(addr3.address, name1, img1, img2, img3, bio1);
 
       // owner fails to message between addr3 and addr2
@@ -432,7 +439,7 @@ describe("TinderChain", function () {
     });
 
     it("should allow only owner to send messages to a match on behalf of someone else", async () => {
-      await generateMatch();
+      await setupMatch();
 
       // works for owner
       await myContract.sendMessage(addr2.address, addr1.address, "hello world", false);
@@ -442,21 +449,21 @@ describe("TinderChain", function () {
     });
 
     it("should not increase publicMessageCount if a private message is sent", async () => {
-      await generateMatch();
+      await setupMatch();
       expect(await myContract.publicMessageCount()).to.equal(0);
       await myContract.sendMessage(addr2.address, addr1.address, "hello world", false);
       expect(await myContract.publicMessageCount()).to.equal(0);
     });
 
     it("should increase publicMessageCount if a public message is sent", async () => {
-      await generateMatch();
+      await setupMatch();
       expect(await myContract.publicMessageCount()).to.equal(0);
       await myContract.sendMessage(addr2.address, addr1.address, "hello world", true);
       expect(await myContract.publicMessageCount()).to.equal(1);
     });
 
     it("should register a publicMessageSent event if a public message is sent", async () => {
-      await generateMatch();
+      await setupMatch();
 
       await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", true))
         .to.emit(myContract, "publicMessageSent")
@@ -465,7 +472,7 @@ describe("TinderChain", function () {
 
     it("should not register a publicMessageSent event if a private message is sent", async () => {
       // send a private and public message
-      await generateMatch();
+      await setupMatch();
       await myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false);
       // verify that the index of private message is 2
       await expect(myContract.connect(addr1).sendMessage(addr1.address, addr2.address, "hello world", false))
@@ -480,22 +487,47 @@ describe("TinderChain", function () {
 
   describe("Message Voting Flow", () => {
     it("should allow a user to vote on a public message", async () => {
+      await setupPublicMessages(1);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
 
+      // upvote the first public message
+      await myContract.connect(addr3).voteOnPublicMessage(0, true);
     });
 
     it("should correctly reflect a message's vote count following a vote", async () => {
+      await setupPublicMessages(2);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
 
+      // upvote the first public message twice
+      await myContract.connect(addr3).voteOnPublicMessage(0, true);
+      await myContract.connect(addr1).voteOnPublicMessage(0, true);
+
+      // downvote the second public message
+      await myContract.connect(addr3).voteOnPublicMessage(1, false);
+
+      // assert we have two total messages
+      const [messages, offset] = await myContract.connect(addr3).getPublicMessages(10, 0);
+      expect(messages.length).to.equal(2);
+      expect(offset).to.equal(2);
+
+      // assert the first public message has count +2
+      expect(messages[0].votes).to.equal(2);
+      expect(messages[0].author).to.equal(addr2.address);
+
+      // assert second public message has count -1
+      expect(messages[1].votes).to.equal(-1);
+      expect(messages[1].author).to.equal(addr2.address);
     });
 
     it("should corrrectly update a public message's vote count following a vote", async () => {
 
     });
 
-    it("should not allow a user to vote on their own public message", async () => {
+    it("should only allow owner to vote on their own public message", async () => {
 
     });
 
-    it("should not allow a user to vote more than once on a single public message", async () => {
+    it("should only allow owner to vote more than once on a single public message", async () => {
 
     });
 

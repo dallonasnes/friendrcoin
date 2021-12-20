@@ -30,7 +30,7 @@ contract TinderChain is Ownable {
 
     struct PublicMessage {
         Message message;
-        uint256 votes;
+        int256 votes;
         address author;
         uint256 idx;
     }
@@ -248,13 +248,21 @@ contract TinderChain is Ownable {
             "Cannot read public messages indexed beyond total number of public messages that exist"
         );
 
-        PublicMessage[] memory messagesToRtn = new PublicMessage[](limit);
+        PublicMessage[] memory messages = new PublicMessage[](limit);
         uint256 messagesToRtnCount = 0;
         while (messagesToRtnCount < limit && offset < publicMessageCount) {
             PublicMessage memory message = _public_messages[offset];
-            messagesToRtn[messagesToRtnCount] = message;
+            messages[messagesToRtnCount] = message;
             messagesToRtnCount++;
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        PublicMessage[] memory messagesToRtn = new PublicMessage[](
+            messagesToRtnCount
+        );
+        for (uint256 i = 0; i < messagesToRtnCount; i++) {
+            messagesToRtn[i] = messages[i];
         }
 
         return (messagesToRtn, offset);
@@ -428,12 +436,13 @@ contract TinderChain is Ownable {
         );
         PublicMessage storage message = _public_messages[publicMessageIdx];
         require(
-            _msgSender() != message.author,
+            _msgSender() != message.author || _msgSender() == owner(),
             "Cannot vote on your own message"
         );
 
         require(
-            !didAlreadyVoteOnMessage(_msgSender(), publicMessageIdx),
+            !didAlreadyVoteOnMessage(_msgSender(), publicMessageIdx) ||
+                _msgSender() == owner(),
             "Can only vote on a message once."
         );
 
