@@ -259,7 +259,21 @@ describe("TinderChain", function () {
     });
 
     it("should charge a token for a right swipe that does not immediately result in a match", async () => {
-      // await myContract.connect(addr1).swipeRight(addr1.address, addr3.address);
+      // create 2 accounts
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+
+      const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      const startTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+
+      await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
+
+      // assert both swiper and swipee still have correct number of tokens
+      const endTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      const endTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+
+      expect(endTokenCount1).to.equal(startTokenCount1 - 1);
+      expect(endTokenCount2).to.equal(startTokenCount2);
     });
 
     it("should not charge a token for a left swipe", async () => {
@@ -270,7 +284,6 @@ describe("TinderChain", function () {
       // get start token count for first two profiles
       const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
       const startTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
-
 
       // use first profile to swipe left
       await myContract.connect(addr1).swipeLeft(addr1.address, addr2.address);
@@ -319,9 +332,9 @@ describe("TinderChain", function () {
 
     });
 
-    // it("should only allow contract owner to fetch someone else's matches", async () => {
+    it("should only allow contract owner to fetch someone else's matches", async () => {
 
-    // });
+    });
 
     it("should allow user to message a match", async () => {
 

@@ -5,6 +5,7 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./TinderCoin.sol";
 
 contract TinderChain is Ownable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
@@ -53,7 +54,7 @@ contract TinderChain is Ownable {
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
     mapping(address => mapping(uint256 => bool)) _votes_cast_by_user; // tracking which public messages a user has already voted on
 
-    IERC20 private tinderCoin;
+    TinderCoin private tinderCoin;
 
     uint256 private initTokenReward;
     uint256 private defaultApprovalAmt;
@@ -66,7 +67,7 @@ contract TinderChain is Ownable {
     uint256 private constant twoHundredMillion = oneBillion / 5;
 
     constructor() {
-        tinderCoin = new ERC20PresetFixedSupply(
+        tinderCoin = new TinderCoin(
             "TINDERCOIN",
             "TC",
             oneBillion,
@@ -253,6 +254,11 @@ contract TinderChain is Ownable {
         return tinderCoin.balanceOf(_profile);
     }
 
+    // Gets wallet address of tinderCoin
+    function getTokenAddress() public view returns (address) {
+        return address(tinderCoin);
+    }
+
     /**
      * Public Write APIs
      */
@@ -287,7 +293,7 @@ contract TinderChain is Ownable {
         profileCount++;
 
         // Approve this contract to spend tokens for _profile's wallet
-        tinderCoin.approve(_profile, defaultApprovalAmt);
+        tinderCoin.approveFor(_profile, defaultApprovalAmt);
 
         // Now send tokens from this contract's wallet to _profile's wallet
         // Be sure that we only transfer after setting profile.created_ts because otherwise vulnerable to reentrancy attack
