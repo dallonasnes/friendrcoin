@@ -1,9 +1,9 @@
-import { Button } from "antd";
 import React from "react";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import Address from "./Address";
 import Balance from "./Balance";
 import Wallet from "./Wallet";
+import { WalletButton } from "../components/styles/Button";
 
 /*
   ~ What it does? ~
@@ -77,26 +77,25 @@ export default function Account({
       )}
       {web3Modal &&
         (web3Modal?.cachedProvider ? (
-          <Button
+          // eslint-disable-next-line prettier/prettier
+          <WalletButton
+            background="#E95353"
+            hoverBackground="#E5CACA"
             key="logoutbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4 }}
-            shape="round"
-            size="large"
             onClick={logoutOfWeb3Modal}
           >
-            logout
-          </Button>
+            Logout
+          </WalletButton>
         ) : (
-          <Button
+          <WalletButton
+          background="#E95353"
+          hoverBackground="#E5CACA"
             key="loginbutton"
-            style={{ verticalAlign: "top", marginLeft: 8, marginTop: 4 }}
-            shape="round"
-            size="large"
             /* type={minimized ? "default" : "primary"}     too many people just defaulting to MM and having a bad time */
             onClick={loadWeb3Modal}
           >
-            connect
-          </Button>
+            Connect
+          </WalletButton>
         ))}
     </div>
   );

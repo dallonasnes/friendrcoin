@@ -3,8 +3,11 @@ import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
 import React, { useState } from "react";
 import { Address, Balance, Events } from "../components";
-import { BoxH2 } from "../components/H2";
-import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
+import { H1, BoxH2 } from "../components/styles/Headings";
+import { FakeMessageBox, ChatLog, MessageRow } from "../components/styles/Box";
+import { FlexDiv } from "../components/styles/Div";
+import { Icon, Avatar, DashboardAvatar, LogoImg } from "../components/styles/Img";
+import { MessageBoxButton } from "../components/styles/Button";
 
 const fakeInputData = [
   {
@@ -57,28 +60,28 @@ const populateDashboard = data => {
       // TODO: also this may work better for alignment as a grid or with strict margins per column
       <>
         <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
-          <img alt="avatar" src={row.img} />
+          <FlexDiv>{row.idx}</FlexDiv>
+          <Avatar alt="avatar" src={row.img} />
           <div style={{ display: "inline-block" }}>{row.adr}</div>
           <ChatLog backgroundColor="#E2A8A8">{row.text}</ChatLog>
-          <img alt="thumbUp" src={"../../thumbUp.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up}</div>
-          <img alt="thumbDown" src={"../../thumbDown.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.down}</div>
+          <Icon alt="thumbUp" src={"../../thumbUp.svg"}/>
+          <FlexDiv justifyContent="space-around" marginRight="15px">{row.up}</FlexDiv>
+          <Icon alt="thumbDown" src={"../../thumbDown.svg"} />
+          <FlexDiv justifyContent="space-around">{row.down}</FlexDiv>
         </MessageRow>
         <br />
       </>
     ) : (
       <>
         <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
-          <img alt="avatar" src={row.img} />
+          <FlexDiv>{row.idx}</FlexDiv>
+          <Avatar alt="avatar" src={row.img} />
           <div style={{ display: "inline-block", margin: "5px" }}>{row.adr}</div>
           <ChatLog backgroundColor="#E47B7B">{row.text}</ChatLog>
-          <img alt="thumbUp" src={"../../thumbUp.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up}</div>
-          <img alt="thumbDown" src={"../../thumbDown.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.down}</div>
+          <Icon alt="thumbUp" src={"../../thumbUp.svg"} />
+          <FlexDiv justifyContent="space-around" marginRight="15px">{row.up}</FlexDiv>
+          <Icon alt="thumbDown" src={"../../thumbDown.svg"} />
+          <FlexDiv justifyContent="space-around">{row.down}</FlexDiv>
         </MessageRow>
         <br />
       </>
@@ -88,25 +91,23 @@ const populateDashboard = data => {
 
 const fakeData = () => {
   return (
-    <div>
-      <div
-        style={{ border: "1px solid #cccccc", padding: 16, width: "75%", height: "75%", margin: "auto", marginTop: 64 }}
-      >
+    <FlexDiv>
+      <FlexDiv>
         <h2>Top Voted Messages</h2>
         <Divider />
         {populateDashboard()}
-      </div>
-      <h2>Tokenized Love</h2>
+      </FlexDiv>
+      <H1>Tokenized Love</H1>
       <h4>Reap the rewards of matching and</h4>
       <h4>'Playing the game'</h4>
-    </div>
+    </FlexDiv>
   );
 };
 
 // TODO(@kk) - this should vertically align, i had some trouble with it :/
 const populateRecentMatches = () => {
   return ["../../avatar1.svg", "../../avatar2.svg", "../../avatar3.svg", "../../avatar4.svg"].map(img => {
-    return <img style={{ display: "vertical-align" }} alt="Match avatar" src={img} />;
+    return <Avatar alt="Match avatar" src={img}/>;
   });
 };
 
@@ -115,54 +116,60 @@ const realData = ({ userAddr, userName, balance }) => {
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
 
   return (
-    <div>
-      <div style={{ display: "inline-block", margin: "5px", marginBottom: "10px" }}>
-        <img alt="Profile avatar" src={"../../profileAvatar.svg"} />
-        <div style={{ display: "inline-block", margin: "5px" }}>
-          <BoxH2 style={{ margin: "5px" }}>Hello: {userName}</BoxH2>
-          <div style={{ margin: "5px" }}>Your Balance: {balance}</div>
-        </div>
-        <div style={{ display: "inline-block", marginLeft: "500px", marginRight: "5px" }}>
-          <Button style={{ display: "vertical-align" }}>Explore messages </Button>
-        </div>
-      </div>
+    // Hero box container
+    <FlexDiv flexDirection="column" padding="0 35px" width="100%" alignItems="center">
 
-      <div style={{ display: "inline-block", margin: "5px" }}>
-        <div
-          style={{
-            display: "inline-block",
-            border: "1px solid #cccccc",
-            padding: 16,
-            width: "20%",
-            height: "75%",
-            margin: "auto",
-            marginTop: 64,
-          }}
+      {/* Hero top container */}
+      <FlexDiv width="100%" justifyContent="space-between" alignItems="center" marginBottom="30px">
+
+        <FlexDiv alignItems="center">
+          <DashboardAvatar alt="Profile avatar" src={"../../profileAvatar.svg"} style={{ marginRight: "30px" }}/>
+          <FlexDiv flexDirection="column">
+            <BoxH2>Hello: {userName}</BoxH2>
+            <FlexDiv>Your Balance: {balance}</FlexDiv>
+          </FlexDiv>
+        </FlexDiv>
+
+        <FlexDiv>
+          {/* TODO: Link to messages view */}
+          <BoxH2>Explore messages </BoxH2>
+          <Icon alt="arrow-right" src={"../../arrow-right.svg"} marginLeft="30px" marginRight="30px" />
+        </FlexDiv>
+
+      </FlexDiv>
+
+      <FlexDiv justifyContent="center" alignItems="center" width="100%" marginBottom="15px">
+        <H1 marginRight="30px">Tokenized Love</H1>
+        <BoxH2>Reap the rewards of matching and</BoxH2>
+        <BoxH2>'Playing the game'</BoxH2>
+      </FlexDiv>
+
+      {/* Matches and messages container */}
+      <FlexDiv>
+        <FlexDiv
+          marginRight="50px"
+          flexDirection="column"
+          width="200px"
+          padding="25px"
+          background="#e5caca"
+          alignItems="center"
+          borderRadius="40px"
         >
-          Recent Matches
-        </div>
-        <div>{populateRecentMatches()}</div>
+          <BoxH2 marginBottom="25px">Recent Matches</BoxH2>
+          <FlexDiv flexDirection="column" height="100%" justifyContent="space-between">{populateRecentMatches()}</FlexDiv>
+        </FlexDiv>
+
 
         <FakeMessageBox>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <FlexDiv justifyContent="space-between" marginBottom="25px">
             <BoxH2>Top Voted Messages</BoxH2>
-            <Button onClick={() => setShowGlobalDashboard(!showGlobalDashboard)}>Toggle Personal/Global View</Button>
-          </div>
-          <Divider />
+            <MessageBoxButton onClick={() => setShowGlobalDashboard(!showGlobalDashboard)}>Toggle Personal/Global View</MessageBoxButton>
+          </FlexDiv>
           {populateDashboard(showGlobalDashboard ? fakeInputData : fakeInputData.filter(elem => elem.adr === userAddr))}
         </FakeMessageBox>
-      </div>
-      <div style={{ marginBottom: "10px" }}>
-        <h2>Tokenized Love</h2>
-        <h4>Reap the rewards of matching and</h4>
-        <h4>'Playing the game'</h4>
-      </div>
-    </div>
+      </FlexDiv>
+
+    </FlexDiv>
   );
 };
 
