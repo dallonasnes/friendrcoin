@@ -10,6 +10,7 @@ import "./TinderCoin.sol";
 contract TinderChain is Ownable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
+    event messageVoted(uint256 publicMessageIdx, bool isUpvote);
 
     struct Profile {
         string name;
@@ -30,7 +31,8 @@ contract TinderChain is Ownable {
 
     struct PublicMessage {
         Message message;
-        int256 votes;
+        uint256 upvotes;
+        uint256 downvotes;
         address author;
         uint256 idx;
     }
@@ -331,6 +333,8 @@ contract TinderChain is Ownable {
         _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
+    // TODO: this should emit an event on a match instead of returning bools
+    // Because the transaction dominates this method's return value, as far as I can tell
     function swipeRight(address _userProfile, address _swipedProfile)
         public
         onlySenderOrOwner(_userProfile)
@@ -416,7 +420,8 @@ contract TinderChain is Ownable {
         if (_isPublic) {
             PublicMessage memory publicMessage = PublicMessage({
                 message: message,
-                votes: 0,
+                upvotes: 0,
+                downvotes: 0,
                 author: _sender,
                 idx: publicMessageCount
             });
@@ -450,15 +455,16 @@ contract TinderChain is Ownable {
         _votes_cast_by_user[_msgSender()][publicMessageIdx] = true;
 
         if (isUpvote) {
-            message.votes++;
+            message.upvotes++;
             tinderCoin.transferFrom(address(this), message.author, 1);
         } else {
-            if (message.votes > 0) {
+            if (message.upvotes - message.downvotes > 0) {
                 // Can only transfer tokens away from author of publicMessage if vote count is positive
                 tinderCoin.transferFrom(message.author, address(this), 1);
             }
-            message.votes--;
+            message.downvotes++;
         }
+        emit messageVoted(publicMessageIdx, isUpvote);
     }
 
     function editProfileImageAtIndex(

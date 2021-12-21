@@ -510,41 +510,97 @@ describe("TinderChain", function () {
       expect(messages.length).to.equal(2);
       expect(offset).to.equal(2);
 
-      // assert the first public message has count +2
-      expect(messages[0].votes).to.equal(2);
+      // assert the first public message has count +2 and -0
+      expect(messages[0].upvotes).to.equal(2);
+      expect(messages[0].downvotes).to.equal(0);
       expect(messages[0].author).to.equal(addr2.address);
 
-      // assert second public message has count -1
-      expect(messages[1].votes).to.equal(-1);
+      // assert second public message has count +0 and -1
+      expect(messages[1].upvotes).to.equal(0);
+      expect(messages[1].downvotes).to.equal(1);
       expect(messages[1].author).to.equal(addr2.address);
     });
 
-    it("should corrrectly update a public message's vote count following a vote", async () => {
-
-    });
-
     it("should only allow owner to vote on their own public message", async () => {
+      // works for owner
+      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(owner).swipeRight(owner.address, addr1.address);
+      await myContract.connect(addr1).swipeRight(addr1.address, owner.address);
 
+      await myContract.sendMessage(owner.address, addr1.address, "public message", true);
+      await myContract.connect(addr1).sendMessage(addr1.address, owner.address, "other message", true);
+
+      // works for owner
+      await myContract.voteOnPublicMessage(0, true);
+
+      // fails for addr1
+      await expect(myContract.connect(addr1).voteOnPublicMessage(1, true)).to.be.revertedWith("Cannot vote on your own message");
     });
 
     it("should only allow owner to vote more than once on a single public message", async () => {
+      await setupPublicMessages(1);
+      // voting works for owner multiple times
+      await myContract.voteOnPublicMessage(0, true);
+      await myContract.voteOnPublicMessage(0, false);
+      await myContract.voteOnPublicMessage(0, true);
+      await myContract.voteOnPublicMessage(0, true);
 
+      const [messages, offset] = await myContract.getPublicMessages(10, 0);
+      expect(offset).to.equal(1);
+      expect(messages[0].upvotes).to.equal(3);
+      expect(messages[0].downvotes).to.equal(1);
+
+      // for another user, works once but not twice
+      await myContract.connect(addr1).voteOnPublicMessage(0, true);
+      await expect(myContract.connect(addr1).voteOnPublicMessage(0, true)).to.be.revertedWith("Can only vote on a message once.");
     });
 
     it("should emit a messageVoted event on a public message vote", async () => {
+      await setupPublicMessages(1);
 
+      await expect(myContract.connect(addr1).voteOnPublicMessage(0, true))
+        .to.emit(myContract, "messageVoted")
+        .withArgs(0, true);
     });
 
-    it("should send a token from contract wallet to the vote author's wallet if their message is upvoted", async () => {
+    it("should send a token from contract wallet to the vote author's wallet if their message is upvoted and send it back if the message is downvoted", async () => {
+      await setupPublicMessages(1);
 
-    });
+      const contractTokenBalanceStart = await myContract.getTokenBalanceOfUser(myContract.address);
+      const authorTokenBalanceStart = await myContract.getTokenBalanceOfUser(addr2.address);
 
-    it("should send a token from the vote author's wallet to the contract wallet if their message is downvoted (non-negative)", async () => {
+      // vote
+      await myContract.connect(addr1).voteOnPublicMessage(0, true);
 
+      const contractTokenBalanceEnd = await myContract.getTokenBalanceOfUser(myContract.address);
+      const authorTokenBalanceEnd = await myContract.getTokenBalanceOfUser(addr2.address);
+
+      expect(contractTokenBalanceEnd).to.equal(Number(contractTokenBalanceStart) - 1);
+      expect(authorTokenBalanceEnd).to.equal(Number(authorTokenBalanceStart) + 1);
+
+      await myContract.voteOnPublicMessage(0, false);
+      expect(Number(await myContract.getTokenBalanceOfUser(myContract.address))).to.equal(contractTokenBalanceStart);
+      expect(Number(await myContract.getTokenBalanceOfUser(addr2.address))).to.equal(authorTokenBalanceStart);
     });
 
     it("should not send a token from the vote author's wallet if their message is downvoted below 0", async () => {
+      await setupPublicMessages(1);
 
+      const contractTokenBalanceStart = await myContract.getTokenBalanceOfUser(myContract.address);
+      const authorTokenBalanceStart = await myContract.getTokenBalanceOfUser(addr2.address);
+
+      // downvote
+      await myContract.connect(addr1).voteOnPublicMessage(0, false);
+
+      // but token counts remain the same
+      expect(Number(await myContract.getTokenBalanceOfUser(myContract.address))).to.equal(contractTokenBalanceStart);
+      expect(Number(await myContract.getTokenBalanceOfUser(addr2.address))).to.equal(authorTokenBalanceStart);
+
+      const [messages, offset] = await myContract.getPublicMessages(10, 0);
+      expect(offset).to.equal(1);
+      expect(messages[0].upvotes).to.equal(0);
+      expect(messages[0].downvotes).to.equal(1);
     });
   });
 
