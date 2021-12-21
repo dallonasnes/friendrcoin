@@ -5,10 +5,12 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./TinderCoin.sol";
 
 contract TinderChain is Ownable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
+    event messageVoted(uint256 publicMessageIdx, bool isUpvote);
 
     struct Profile {
         string name;
@@ -29,7 +31,8 @@ contract TinderChain is Ownable {
 
     struct PublicMessage {
         Message message;
-        uint256 votes;
+        uint256 upvotes;
+        uint256 downvotes;
         address author;
         uint256 idx;
     }
@@ -53,7 +56,7 @@ contract TinderChain is Ownable {
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
     mapping(address => mapping(uint256 => bool)) _votes_cast_by_user; // tracking which public messages a user has already voted on
 
-    IERC20 private tinderCoin;
+    TinderCoin private tinderCoin;
 
     uint256 private initTokenReward;
     uint256 private defaultApprovalAmt;
@@ -66,7 +69,7 @@ contract TinderChain is Ownable {
     uint256 private constant twoHundredMillion = oneBillion / 5;
 
     constructor() {
-        tinderCoin = new ERC20PresetFixedSupply(
+        tinderCoin = new TinderCoin(
             "TINDERCOIN",
             "TC",
             oneBillion,
@@ -168,16 +171,22 @@ contract TinderChain is Ownable {
         );
 
         uint256 profileRtnCount = 0;
-        Profile[] memory profilesToRtn = new Profile[](limit);
+        Profile[] memory profiles = new Profile[](limit);
 
         while (profileRtnCount < limit && offset < matchesCount) {
             address _match = _matches[_profile][offset];
             Profile memory _match_profile = _profiles[_match];
             if (_match_profile.deleted_ts == 0) {
-                profilesToRtn[profileRtnCount] = _match_profile;
+                profiles[profileRtnCount] = _match_profile;
                 profileRtnCount++;
             }
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        Profile[] memory profilesToRtn = new Profile[](profileRtnCount);
+        for (uint256 i = 0; i < profileRtnCount; i++) {
+            profilesToRtn[i] = profiles[i];
         }
 
         return (profilesToRtn, offset);
@@ -195,6 +204,10 @@ contract TinderChain is Ownable {
         onlySenderOrOwner(_address1)
         returns (Message[] memory, uint256)
     {
+        require(
+            _address1 != _address2,
+            "Cannot send/receive messages to/from self."
+        );
         // Note that matchKeyPair can be address1:address2 or address2:address1 depending on order of creation
         // So need to try other order pair if first try returns 0 matches (all matches have at least 1 match bc of default match)
         bytes memory matchKeyPair = fetchMessageKeyPair(_address1, _address2);
@@ -205,15 +218,21 @@ contract TinderChain is Ownable {
             "Cannot read messages indexed beyond total number of messages for this pair"
         );
 
-        Message[] memory messagesToRtn = new Message[](limit);
+        Message[] memory messages = new Message[](limit);
         uint256 messagesToRtnCount = 0;
         while (messagesToRtnCount < limit && offset < messageCount) {
             Message memory message = _messages[matchKeyPair][offset];
             if (message.deleted_ts == 0) {
-                messagesToRtn[messagesToRtnCount] = message;
+                messages[messagesToRtnCount] = message;
                 messagesToRtnCount++;
             }
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        Message[] memory messagesToRtn = new Message[](messagesToRtnCount);
+        for (uint256 i = 0; i < messagesToRtnCount; i++) {
+            messagesToRtn[i] = messages[i];
         }
 
         return (messagesToRtn, offset);
@@ -231,13 +250,21 @@ contract TinderChain is Ownable {
             "Cannot read public messages indexed beyond total number of public messages that exist"
         );
 
-        PublicMessage[] memory messagesToRtn = new PublicMessage[](limit);
+        PublicMessage[] memory messages = new PublicMessage[](limit);
         uint256 messagesToRtnCount = 0;
         while (messagesToRtnCount < limit && offset < publicMessageCount) {
             PublicMessage memory message = _public_messages[offset];
-            messagesToRtn[messagesToRtnCount] = message;
+            messages[messagesToRtnCount] = message;
             messagesToRtnCount++;
             offset++;
+        }
+
+        // we want to return an array of the exact correct size
+        PublicMessage[] memory messagesToRtn = new PublicMessage[](
+            messagesToRtnCount
+        );
+        for (uint256 i = 0; i < messagesToRtnCount; i++) {
+            messagesToRtn[i] = messages[i];
         }
 
         return (messagesToRtn, offset);
@@ -251,6 +278,11 @@ contract TinderChain is Ownable {
         returns (uint256)
     {
         return tinderCoin.balanceOf(_profile);
+    }
+
+    // Gets wallet address of tinderCoin
+    function getTokenAddress() public view returns (address) {
+        return address(tinderCoin);
     }
 
     /**
@@ -287,7 +319,7 @@ contract TinderChain is Ownable {
         profileCount++;
 
         // Approve this contract to spend tokens for _profile's wallet
-        tinderCoin.approve(_profile, defaultApprovalAmt);
+        tinderCoin.approveFor(_profile, defaultApprovalAmt);
 
         // Now send tokens from this contract's wallet to _profile's wallet
         // Be sure that we only transfer after setting profile.created_ts because otherwise vulnerable to reentrancy attack
@@ -301,6 +333,8 @@ contract TinderChain is Ownable {
         _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
+    // TODO: this should emit an event on a match instead of returning bools
+    // Because the transaction dominates this method's return value, as far as I can tell
     function swipeRight(address _userProfile, address _swipedProfile)
         public
         onlySenderOrOwner(_userProfile)
@@ -311,6 +345,7 @@ contract TinderChain is Ownable {
             "User doesn't have enough tokens to swipe right"
         );
         _swipedAddresses[_userProfile][_swipedProfile] = true;
+        _swipedRightAddresses[_userProfile][_swipedProfile] = true;
 
         // Performance optimization is to first check if match before transferring
         // That way don't need to transfer and then transfer back in case of match
@@ -385,7 +420,8 @@ contract TinderChain is Ownable {
         if (_isPublic) {
             PublicMessage memory publicMessage = PublicMessage({
                 message: message,
-                votes: 0,
+                upvotes: 0,
+                downvotes: 0,
                 author: _sender,
                 idx: publicMessageCount
             });
@@ -405,12 +441,13 @@ contract TinderChain is Ownable {
         );
         PublicMessage storage message = _public_messages[publicMessageIdx];
         require(
-            _msgSender() != message.author,
+            _msgSender() != message.author || _msgSender() == owner(),
             "Cannot vote on your own message"
         );
 
         require(
-            !didAlreadyVoteOnMessage(_msgSender(), publicMessageIdx),
+            !didAlreadyVoteOnMessage(_msgSender(), publicMessageIdx) ||
+                _msgSender() == owner(),
             "Can only vote on a message once."
         );
 
@@ -418,15 +455,16 @@ contract TinderChain is Ownable {
         _votes_cast_by_user[_msgSender()][publicMessageIdx] = true;
 
         if (isUpvote) {
-            message.votes++;
+            message.upvotes++;
             tinderCoin.transferFrom(address(this), message.author, 1);
         } else {
-            if (message.votes > 0) {
+            if (message.upvotes - message.downvotes > 0) {
                 // Can only transfer tokens away from author of publicMessage if vote count is positive
                 tinderCoin.transferFrom(message.author, address(this), 1);
             }
-            message.votes--;
+            message.downvotes++;
         }
+        emit messageVoted(publicMessageIdx, isUpvote);
     }
 
     function editProfileImageAtIndex(
