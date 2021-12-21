@@ -4,10 +4,9 @@
 
 #### Launch Token (target Dec 19)
 -- Owned by Dallon
-1. Finish unit tests for tinderCoin
-2. Setup proxy pattern for tinderCoin
-3. Launch tinderCoin on an exchange
-4. Setup liquidity pool for tinderCoin (and find liquidity providers)
+1. Setup proxy pattern for tinderCoin
+2. Launch tinderCoin on an exchange
+3. Setup liquidity pool for tinderCoin (and find liquidity providers)
 
 -- Owned by Sushant
 1. Buy matchcoin.io domain
