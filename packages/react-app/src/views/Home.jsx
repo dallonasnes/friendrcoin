@@ -13,6 +13,7 @@ import {
   useOnBlock,
   useUserProviderAndSigner,
 } from "eth-hooks";
+const { ethers } = require("ethers");
 
 const fakeInputData = [
   {
@@ -118,7 +119,9 @@ const populateRecentMatches = () => {
   });
 };
 
-const loadData = ({ readContracts, writeContracts, tx, address }) => {
+const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
+  // TODO: remove me after testing
+  isLoggedIn = false;
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
   const [profile, setProfile] = useState(null); // TODO: use default profile here
   useEffect(() => {
@@ -139,7 +142,25 @@ const loadData = ({ readContracts, writeContracts, tx, address }) => {
   if (profile) {
     if (profile.created_ts._hex === "0x00") {
       console.log("building profile transaction");
+      if (isLoggedIn) {
+        tx(writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"));
+        console.log("real tx done");
+      } else {
+        // load faucet eth and make transaction
+        try {
+          faucetTx({
+            to: address,
+            value: ethers.utils.parseEther("0.01"),
+          });
+          faucetTx(
+            writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"),
+          );
+        } catch (e) {
+          console.log("error:", e);
+        }
 
+        console.log("faucet done");
+      }
       console.log("finished profile transaction");
     } else {
       console.log("need to display profile");
@@ -201,6 +222,6 @@ const loadData = ({ readContracts, writeContracts, tx, address }) => {
   );
 };
 
-export default function Home({ isLoggedIn, readContracts, writeContracts, tx, address }) {
-  return loadData({ readContracts, writeContracts, tx, address });
+export default function Home({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) {
+  return loadData({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address });
 }

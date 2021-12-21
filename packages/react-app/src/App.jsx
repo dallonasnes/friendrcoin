@@ -12,7 +12,7 @@ import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
-import { Account, Header, ThemeSwitch } from "./components";
+import { Account, Header, ThemeSwitch, Faucet, FaucetHint } from "./components";
 import { NETWORKS, ALCHEMY_KEY } from "./constants";
 import externalContracts from "./contracts/external_contracts";
 // contracts
@@ -101,6 +101,7 @@ function App(props) {
 
   // The transactor wraps transactions and provides notificiations
   const tx = Transactor(userSigner, gasPrice);
+  const faucetTx = Transactor(localProvider, gasPrice);
 
   // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
   const yourLocalBalance = useBalance(localProvider, address);
@@ -190,6 +191,7 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
+            faucetTx={faucetTx}
           />
         </Route>
         <Route exact path="/about-us">
@@ -235,6 +237,14 @@ function App(props) {
           />
         </div>
       </div>
+      <Row align="middle" gutter={[4, 4]}>
+        <Col span={24}>
+          {
+            /*  if the local provider has a signer, let's show the faucet:  */
+            faucetAvailable ? <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} /> : ""
+          }
+        </Col>
+      </Row>
       <Footer />
       <br />
     </div>
