@@ -1,10 +1,18 @@
 import { SyncOutlined } from "@ant-design/icons";
 import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Address, Balance, Events } from "../components";
 import { BoxH2 } from "../components/H2";
 import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
+import {
+  useBalance,
+  useContractLoader,
+  useContractReader,
+  useGasPrice,
+  useOnBlock,
+  useUserProviderAndSigner,
+} from "eth-hooks";
 
 const fakeInputData = [
   {
@@ -94,7 +102,7 @@ const fakeData = () => {
       >
         <h2>Top Voted Messages</h2>
         <Divider />
-        {populateDashboard()}
+        {populateDashboard(fakeInputData)}
       </div>
       <h2>Tokenized Love</h2>
       <h4>Reap the rewards of matching and</h4>
@@ -110,17 +118,44 @@ const populateRecentMatches = () => {
   });
 };
 
-// TODO: does this need to be async?
-const realData = ({ userAddr, userName, balance }) => {
+const loadData = ({ readContracts, writeContracts, tx, address }) => {
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
+  const [profile, setProfile] = useState(null); // TODO: use default profile here
+  useEffect(() => {
+    async function getUserProfile() {
+      if (readContracts && readContracts.TinderChain) {
+        try {
+          const res = await readContracts.TinderChain.getUserProfile(address);
+          setProfile(res);
+          console.log("pfoile is set");
+        } catch (e) {
+          console.log("error here:", e);
+        }
+      }
+    }
+    getUserProfile();
+  }, [address, readContracts]);
+
+  if (profile) {
+    if (profile.created_ts._hex === "0x00") {
+      console.log("building profile transaction");
+
+      console.log("finished profile transaction");
+    } else {
+      console.log("need to display profile");
+      // Display profile
+    }
+  } else {
+    return fakeData();
+  }
 
   return (
     <div>
       <div style={{ display: "inline-block", margin: "5px", marginBottom: "10px" }}>
         <img alt="Profile avatar" src={"../../profileAvatar.svg"} />
         <div style={{ display: "inline-block", margin: "5px" }}>
-          <BoxH2 style={{ margin: "5px" }}>Hello: {userName}</BoxH2>
-          <div style={{ margin: "5px" }}>Your Balance: {balance}</div>
+          <BoxH2 style={{ margin: "5px" }}>Hello: Name</BoxH2>
+          <div style={{ margin: "5px" }}>Your Balance: 10</div>
         </div>
         <div style={{ display: "inline-block", marginLeft: "500px", marginRight: "5px" }}>
           <Button style={{ display: "vertical-align" }}>Explore messages </Button>
@@ -166,12 +201,6 @@ const realData = ({ userAddr, userName, balance }) => {
   );
 };
 
-export default function Home({ isLoggedIn, userAddr }) {
-  return (
-    <>
-      {/*TODO: uncomment next line for toggling between logged in/out in test */}
-      {/*isLoggedIn ? realData() : fakeData()*/}
-      {realData({ userAddr, userName: "Fake Name!", balance: "100 million!" })}
-    </>
-  );
+export default function Home({ isLoggedIn, readContracts, writeContracts, tx, address }) {
+  return loadData({ readContracts, writeContracts, tx, address });
 }

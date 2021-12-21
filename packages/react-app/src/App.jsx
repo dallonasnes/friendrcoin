@@ -63,11 +63,6 @@ function App(props) {
   ]);
   const mainnetProvider = useStaticJsonRPC(providers);
 
-  if (DEBUG) console.log(`Using ${selectedNetwork} network`);
-
-  // 🛰 providers
-  if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
-
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider();
     if (injectedProvider && injectedProvider.provider && typeof injectedProvider.provider.disconnect == "function") {
@@ -130,7 +125,7 @@ function App(props) {
 
   // If you want to call a function on a new block
   useOnBlock(mainnetProvider, () => {
-    console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
+    // console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
   });
 
   // Then read your DAI balance like:
@@ -138,69 +133,34 @@ function App(props) {
     "0x34aA3F359A9D614239015126635CE7732c18fDF3",
   ]);
 
-  // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "TinderChain", "purpose");
+  // TODO:
+  // 1. check if logged in
+  // if logged in, check if profile exists
+
+  // if (purpose) debugger;
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
   console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
   */
 
-  //
-  // 🧫 DEBUG 👨🏻‍🔬
-  //
-  useEffect(() => {
-    if (
-      DEBUG &&
-      mainnetProvider &&
-      address &&
-      selectedChainId &&
-      yourLocalBalance &&
-      yourMainnetBalance &&
-      readContracts &&
-      writeContracts &&
-      mainnetContracts
-    ) {
-      console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
-      console.log("🌎 mainnetProvider", mainnetProvider);
-      console.log("🏠 localChainId", localChainId);
-      console.log("👩‍💼 selected address:", address);
-      console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
-      console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
-      console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
-      console.log("📝 readContracts", readContracts);
-      console.log("🌍 DAI contract on mainnet:", mainnetContracts);
-      console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
-      console.log("🔐 writeContracts", writeContracts);
-    }
-  }, [
-    mainnetProvider,
-    address,
-    selectedChainId,
-    yourLocalBalance,
-    yourMainnetBalance,
-    readContracts,
-    writeContracts,
-    mainnetContracts,
-  ]);
-
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
     setInjectedProvider(new ethers.providers.Web3Provider(provider));
 
     provider.on("chainChanged", chainId => {
-      console.log(`chain changed to ${chainId}! updating providers`);
+      // console.log(`chain changed to ${chainId}! updating providers`);
       setInjectedProvider(new ethers.providers.Web3Provider(provider));
     });
 
     provider.on("accountsChanged", () => {
-      console.log(`account changed!`);
+      // console.log(`account changed!`);
       setInjectedProvider(new ethers.providers.Web3Provider(provider));
     });
 
     // Subscribe to session disconnection
     provider.on("disconnect", (code, reason) => {
-      console.log(code, reason);
+      // console.log(code, reason);
       logoutOfWeb3Modal();
     });
   }, [setInjectedProvider]);
@@ -213,6 +173,10 @@ function App(props) {
 
   const faucetAvailable = localProvider && localProvider.connection && targetNetwork.name.indexOf("local") !== -1;
 
+  const isLoggedIn = Boolean(web3Modal && web3Modal.cachedProvider);
+
+  console.log("Is logged in: ", isLoggedIn);
+
   return (
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
@@ -220,7 +184,13 @@ function App(props) {
 
       <Switch>
         <Route exact path="/">
-          <Home isLoggedIn={web3Modal?.cachedProvider} userAddr={address} />
+          <Home
+            isLoggedIn={isLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+          />
         </Route>
         <Route exact path="/about-us">
           <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
