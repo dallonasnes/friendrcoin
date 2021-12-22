@@ -186,7 +186,14 @@ function App(props) {
           <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
         </Route>
         <Route exact path="/queue">
-          <Queue yourLocalBalance={yourLocalBalance} />
+          <Queue
+            isLoggedIn={isLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+          />
         </Route>
         <Route exact path="/profile">
           <Profile yourLocalBalance={yourLocalBalance} readContracts={readContracts} />

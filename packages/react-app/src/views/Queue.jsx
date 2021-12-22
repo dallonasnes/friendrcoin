@@ -12,7 +12,7 @@ const checkForMatch = () => {
 // TODO: can change yourLocalBalance between 0 and 1 to test different views
 // TODO: can test "match" page by clicking on heart button (user must have at least 1 token in yourLocalBalance variable)
 // ^ it uses a timer so shows for 5 seconds with a button to start message, then goes back to match screen
-export default function Queue({ yourLocalBalance }) {
+export default function Queue({ isLoggedIn, address, readContracts, writeContracts, tx, faucetTx }) {
   const [didJustMatch, setDidJustMatch] = useState(false);
   const matchPage = () => {
     setTimeout(() => setDidJustMatch(false), 5000);
@@ -37,7 +37,23 @@ export default function Queue({ yourLocalBalance }) {
     );
   };
 
-  const swipePage = () => {
+  const swipePage = ({ readContracts, address }) => {
+    const [queue, setQueue] = useState([]); // TODO: default shape
+    const limit = 10;
+    let offset = 0;
+    let didFetchLastPage = false;
+    // TODO: is offset the correct re-calc trigger
+    useEffect(() => {
+      if (queue.length <= 2 && !didFetchLastPage) {
+        // have at least two before fetching more
+        const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(address, limit, offset);
+        setQueue(queue.push.apply(nextPage));
+        if (nextOffset === offset || nextPage.length === 0) {
+          didFetchLastPage = true;
+        }
+      }
+    }, [queue]);
+
     return (
       <div>
         {yourLocalBalance ? "Start Swiping, Get Matching" : "Sorry, No Token No Matchy"}
@@ -53,12 +69,15 @@ export default function Queue({ yourLocalBalance }) {
 
         {yourLocalBalance ? (
           <>
-            <Button style={{ backgroundColor: "red" }}>
+            <Button style={{ backgroundColor: "red" }} onClick={() => setQueue(queue.pop(0))}>
               <img alt="x" src={"../../x-mark.svg"} />
             </Button>
             <Button
               style={{ backgroundColor: "red" }}
-              onClick={() => (checkForMatch() ? setDidJustMatch(true) : setDidJustMatch(false))}
+              // TODO: TEST THIS OR operator
+              onClick={() =>
+                setQueue(queue.pop(0)) | checkForMatch() ? setDidJustMatch(true) : setDidJustMatch(false)
+              }
             >
               <img alt="heart" src={"../../heart.svg"} />
             </Button>
@@ -70,5 +89,5 @@ export default function Queue({ yourLocalBalance }) {
     );
   };
 
-  return <>{didJustMatch ? matchPage() : swipePage()}</>;
+  return <>{didJustMatch ? matchPage() : swipePage({ readContracts, address })}</>;
 }
