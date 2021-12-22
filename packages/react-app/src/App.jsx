@@ -82,6 +82,7 @@ function App(props) {
   const userProviderAndSigner = useUserProviderAndSigner(injectedProvider, localProvider);
   const userSigner = userProviderAndSigner.signer;
 
+  // TODO: how to verify that this is a different address for each session??
   useEffect(() => {
     async function getAddress() {
       if (userSigner) {
@@ -94,8 +95,6 @@ function App(props) {
 
   // You can warn the user if you would like them to be on a specific network
   const localChainId = localProvider && localProvider._network && localProvider._network.chainId;
-  const selectedChainId =
-    userSigner && userSigner.provider && userSigner.provider._network && userSigner.provider._network.chainId;
 
   // For more hooks, check out 🔗eth-hooks at: https://www.npmjs.com/package/eth-hooks
 
@@ -119,26 +118,10 @@ function App(props) {
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
   const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
 
-  // EXTERNAL CONTRACT EXAMPLE:
-  //
-  // If you want to bring in the mainnet DAI contract it would look like:
-  const mainnetContracts = useContractLoader(mainnetProvider, contractConfig);
-
   // If you want to call a function on a new block
   useOnBlock(mainnetProvider, () => {
     // console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
   });
-
-  // Then read your DAI balance like:
-  const myMainnetDAIBalance = useContractReader(mainnetContracts, "DAI", "balanceOf", [
-    "0x34aA3F359A9D614239015126635CE7732c18fDF3",
-  ]);
-
-  // TODO:
-  // 1. check if logged in
-  // if logged in, check if profile exists
-
-  // if (purpose) debugger;
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -172,11 +155,7 @@ function App(props) {
     }
   }, [loadWeb3Modal]);
 
-  const faucetAvailable = localProvider && localProvider.connection && targetNetwork.name.indexOf("local") !== -1;
-
   const isLoggedIn = Boolean(web3Modal && web3Modal.cachedProvider);
-
-  console.log("Is logged in: ", isLoggedIn);
 
   return (
     <div className="App">
@@ -237,14 +216,6 @@ function App(props) {
           />
         </div>
       </div>
-      <Row align="middle" gutter={[4, 4]}>
-        <Col span={24}>
-          {
-            /*  if the local provider has a signer, let's show the faucet:  */
-            faucetAvailable ? <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} /> : ""
-          }
-        </Col>
-      </Row>
       <Footer />
       <br />
     </div>

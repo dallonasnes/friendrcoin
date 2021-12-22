@@ -120,10 +120,9 @@ const populateRecentMatches = () => {
 };
 
 const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
-  // TODO: remove me after testing
-  isLoggedIn = false;
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
   const [profile, setProfile] = useState(null); // TODO: use default profile here
+  const [didFetch, setDidFetch] = useState(false);
   useEffect(() => {
     async function getUserProfile() {
       if (readContracts && readContracts.TinderChain) {
@@ -139,11 +138,20 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
     getUserProfile();
   }, [address, readContracts]);
 
-  if (profile) {
+  if (profile && !didFetch) {
     if (profile.created_ts._hex === "0x00") {
       console.log("building profile transaction");
       if (isLoggedIn) {
-        tx(writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"));
+        tx(
+          writeContracts.TinderChain.createUserProfileFlow(
+            address,
+            "This is my test name!",
+            "image1",
+            "image2",
+            "image3",
+            "bio",
+          ),
+        );
         console.log("real tx done");
       } else {
         // load faucet eth and make transaction
@@ -161,10 +169,11 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
 
         console.log("faucet done");
       }
+      setDidFetch(true);
       console.log("finished profile transaction");
     } else {
       console.log("need to display profile");
-      // Display profile
+      // now need to fetch token balance and any other needed data
     }
   } else {
     return fakeData();
@@ -175,7 +184,7 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
       <div style={{ display: "inline-block", margin: "5px", marginBottom: "10px" }}>
         <img alt="Profile avatar" src={"../../profileAvatar.svg"} />
         <div style={{ display: "inline-block", margin: "5px" }}>
-          <BoxH2 style={{ margin: "5px" }}>Hello: Name</BoxH2>
+          <BoxH2 style={{ margin: "5px" }}>Hello: {profile.name}</BoxH2>
           <div style={{ margin: "5px" }}>Your Balance: 10</div>
         </div>
         <div style={{ display: "inline-block", marginLeft: "500px", marginRight: "5px" }}>
@@ -210,7 +219,7 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
             <Button onClick={() => setShowGlobalDashboard(!showGlobalDashboard)}>Toggle Personal/Global View</Button>
           </div>
           <Divider />
-          {populateDashboard(showGlobalDashboard ? fakeInputData : fakeInputData.filter(elem => elem.adr === userAddr))}
+          {populateDashboard(showGlobalDashboard ? fakeInputData : fakeInputData.filter(elem => elem.adr === address))}
         </FakeMessageBox>
       </div>
       <div style={{ marginBottom: "10px" }}>
