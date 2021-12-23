@@ -193,6 +193,7 @@ function App(props) {
             writeContracts={writeContracts}
             tx={tx}
             faucetTx={faucetTx}
+            yourLocalBalance={yourLocalBalance}
           />
         </Route>
         <Route exact path="/profile">
