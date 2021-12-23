@@ -44,15 +44,24 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
     let didFetchLastPage = false;
     // TODO: is offset the correct re-calc trigger
     useEffect(() => {
-      if (queue.length <= 2 && !didFetchLastPage) {
-        // have at least two before fetching more
-        const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(address, limit, offset);
-        setQueue(queue.push.apply(nextPage));
-        if (nextOffset === offset || nextPage.length === 0) {
-          didFetchLastPage = true;
+      async function fetchProfiles() {
+        if (queue.length <= 2 && !didFetchLastPage) {
+          // have at least two before fetching more
+          const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(address, limit, offset);
+          setQueue(queue.push.apply(nextPage));
+          if (nextOffset === offset || nextPage.length === 0) {
+            didFetchLastPage = true;
+          }
         }
       }
+      fetchProfiles();
     }, [queue]);
+
+    const handleSwipe = ({ isRightSwipe }) => {
+      queue.pop(0);
+      setQueue(queue);
+      return isRightSwipe ? checkForMatch() : true;
+    };
 
     return (
       <div>
@@ -69,15 +78,13 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
 
         {yourLocalBalance ? (
           <>
-            <Button style={{ backgroundColor: "red" }} onClick={() => setQueue(queue.pop(0))}>
+            <Button style={{ backgroundColor: "red" }} onClick={() => handleClick({ isRightSwipe: false })}>
               <img alt="x" src={"../../x-mark.svg"} />
             </Button>
             <Button
               style={{ backgroundColor: "red" }}
               // TODO: TEST THIS OR operator
-              onClick={() =>
-                setQueue(queue.pop(0)) | checkForMatch() ? setDidJustMatch(true) : setDidJustMatch(false)
-              }
+              onClick={() => (handleSwipe({ isRightSwipe: true }) ? setDidJustMatch(true) : setDidJustMatch(false))}
             >
               <img alt="heart" src={"../../heart.svg"} />
             </Button>

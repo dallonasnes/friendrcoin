@@ -11,6 +11,7 @@ contract TinderChain is Ownable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
+    event swipeMatch(address swiper, address swipee);
 
     struct Profile {
         string name;
@@ -338,7 +339,6 @@ contract TinderChain is Ownable {
     function swipeRight(address _userProfile, address _swipedProfile)
         public
         onlySenderOrOwner(_userProfile)
-        returns (bool, bool)
     {
         require(
             tinderCoin.balanceOf(_userProfile) > 0,
@@ -386,12 +386,11 @@ contract TinderChain is Ownable {
             uint256 messages_idx = _messages_count[messageMapKey];
             _messages[messageMapKey][messages_idx] = message;
             _messages_count[messageMapKey]++;
+
+            emit swipeMatch(_userProfile, _swipedProfile);
         } else {
             tinderCoin.transferFrom(_userProfile, address(this), 1);
         }
-
-        bool canContinueSwiping = tinderCoin.balanceOf(_userProfile) > 0;
-        return (isMatch, canContinueSwiping);
     }
 
     function sendMessage(

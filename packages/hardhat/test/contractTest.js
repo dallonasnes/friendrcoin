@@ -371,6 +371,18 @@ describe("TinderChain", function () {
       // addr2 cannot fetch for addr1
       await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
+
+    it("should emit a swipeMatch event on a right swipe that results in a match", async () => {
+      // create two accounts
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+
+      // acct1 swipes right on acct2
+      await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
+      await expect(myContract.connect(addr2).swipeRight(addr2.address, addr1.address))
+        .to.emit(myContract, "swipeMatch")
+        .withArgs(addr2.address, addr1.address);
+    });
   });
 
   describe("Messaging flow", () => {
