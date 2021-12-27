@@ -17,7 +17,8 @@ const fetchMessages = async ({
   {
     if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.TinderChain) {
       // have at least two before fetching more
-      const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMatches(address, limit, offset);
+      const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMessagesForMatch(sender, recipient, limit, offset);
+      debugger;
       if (nextPage && nextPage.length > 0) {
         const tmpQueue = queue.concat(nextPage);
         setQueue(tmpQueue);
@@ -31,6 +32,7 @@ const fetchMessages = async ({
 };
 
 const renderMessages = ({ queue }) => {
+    debugger;
   return queue.map(message => {
     return (
       <div style={{ marginTop: "20px" }}>
@@ -43,8 +45,7 @@ const renderMessages = ({ queue }) => {
 
 export default function Messages({ isLoggedIn, sender, readContracts }) {
   const location = useLocation();
-  debugger;
-  const { recipient } = location.state;
+  const recipient = location.search.substring(1);
   const [queue, setQueue] = useState([]); // TODO: default shape
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);

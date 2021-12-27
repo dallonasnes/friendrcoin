@@ -36,7 +36,7 @@ const fetchMatches = async ({
 const renderMatches = ({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) => {
   return queue.map(profile => {
     return (
-      <Link to="/messages" state={{ recipient: profile._address }}>
+      <Link to={"/messages?" + profile._address}>
         <div style={{ marginTop: "20px" }}>
           <img alt="temp" src={"../../queueAvatar.svg"} />
           <p>{profile.name}</p>
