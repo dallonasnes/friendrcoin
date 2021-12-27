@@ -47,6 +47,7 @@ function App(props) {
   const networkOptions = ["localhost", "mainnet", "rinkeby"];
 
   const [injectedProvider, setInjectedProvider] = useState();
+  const [swipeMatch, setSwipeMatch] = useState();
   const [address, setAddress] = useState();
   const [selectedNetwork, setSelectedNetwork] = useState(networkOptions[0]);
   const location = useLocation();
@@ -162,10 +163,13 @@ function App(props) {
 
   const isLoggedIn = Boolean(web3Modal && web3Modal.cachedProvider);
 
+  // TODO: highest level needs to know if profile is created in Home.jsx or not
+  // Eg in queue then can only work if profile is created
+
   return (
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
-      <Header isLoggedIn={web3Modal?.cachedProvider} />
+      <Header isLoggedIn={isLoggedIn} />
 
       <Switch>
         <Route exact path="/">
@@ -192,7 +196,7 @@ function App(props) {
         </Route>
         <Route exact path="/queue">
           <Queue
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={true}
             address={address}
             readContracts={readContracts}
             writeContracts={writeContracts}

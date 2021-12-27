@@ -6,10 +6,15 @@ import { Address, Balance, Events } from "../components";
 const { ethers } = require("ethers");
 import { useUserProviderAndSigner } from "eth-hooks";
 
-// TODO: instead set up event listener for swipeMatch event
-const checkForMatch = () => {
-  const isMatch = true; // TODO: await query for match
-  return isMatch;
+// TODO: this doesn't seem to return correct value based on test data. perhaps due to replication lag
+const checkForMatch = async ({ readContracts, swiper, swipee, didJustMatch, setDidJustMatch }) => {
+  console.log("looking for match!");
+  console.log("swiper", swiper);
+  console.log("swipee", swipee);
+  const isMatch = await readContracts.TinderChain.getIsMatch(swiper, swipee);
+  debugger;
+  console.log("Is match?", isMatch);
+  setDidJustMatch(isMatch);
 };
 
 const fetchProfiles = async ({
@@ -47,7 +52,6 @@ const fetchProfiles = async ({
 export default function Queue({ isLoggedIn, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) {
   const [didJustMatch, setDidJustMatch] = useState(false);
   const matchPage = () => {
-    debugger;
     setTimeout(() => setDidJustMatch(false), 5000);
     return (
       <div>
@@ -77,7 +81,6 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
     const [offset, setOffset] = useState(0);
     const [didFetchLastPage, setDidFetchLastPage] = useState(false);
     const limit = 5;
-    // TODO: is offset the correct re-calc trigger
     useEffect(() => {
       fetchProfiles({
         queue,
@@ -93,10 +96,25 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
     }, [readContracts, queue.length]);
 
     const handleSwipe = ({ isRightSwipe }) => {
+      // first make sure account has enough for transaction
+      faucetTx({
+        to: address,
+        value: ethers.utils.parseEther("0.01"),
+      });
+
+      isRightSwipe
+        ? faucetTx(writeContracts.TinderChain.swipeRight(address, currentProfile._address))
+        : faucetTx(writeContracts.TinderChain.swipeLeft(address, currentProfile._address));
+
+      if (isRightSwipe) {
+        // TODO: debug this
+        // Not using await here because we will re-render if this method sets the isMatch state field
+        // checkForMatch({readContracts, swiper: address, swipee: currentProfile._address, didJustMatch, setDidJustMatch})
+      }
+
       if (queue.length > 0) {
         setCurrentProfile(queue.shift());
       } else {
-        // TODO: maybe need to fetch again in here
         setCurrentProfile({});
       }
       showNextProfile();
@@ -126,12 +144,13 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
         if (queue.length > 0) {
           getFirstProfile();
         } else {
+          // TODO: i think we should never enter into this case right?
           return <div>Need to fetch more profiles</div>;
         }
       }
     };
 
-    return (
+    return isLoggedIn ? (
       <div>
         {yourLocalBalance ? "Start Swiping, Get Matching" : "Sorry, No Token No Matchy"}
         {yourLocalBalance ? (
@@ -155,8 +174,17 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
           <Button>Get More Tokens</Button>
         )}
       </div>
+    ) : (
+      <div>
+        <h2>You must create a profile to begin</h2>
+        <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
+          <img alt="temp" src={"../../queueAvatar.svg"} />
+        </div>
+      </div>
     );
   };
 
-  return <>{swipePage({ writeContracts, readContracts, address, faucetTx })}</>;
+  return (
+    <>{didJustMatch ? matchPage() : swipePage({ isLoggedIn, writeContracts, readContracts, address, faucetTx })}</>
+  );
 }
