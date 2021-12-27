@@ -42,8 +42,8 @@ const renderMessages = ({ queue }) => {
 };
 
 export default function Messages({ isLoggedIn, sender, readContracts }) {
-  debugger;
   const location = useLocation();
+  debugger;
   const { recipient } = location.state;
   const [queue, setQueue] = useState([]); // TODO: default shape
   const [offset, setOffset] = useState(0);

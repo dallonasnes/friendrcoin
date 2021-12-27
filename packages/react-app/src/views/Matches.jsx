@@ -36,12 +36,12 @@ const fetchMatches = async ({
 const renderMatches = ({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) => {
   return queue.map(profile => {
     return (
-      <div style={{ marginTop: "20px" }}>
-        <Button onClick={() => <Link to="/messages" state={{ recipient: profile._address }}></Link>}>
+      <Link to="/messages" state={{ recipient: profile._address }}>
+        <div style={{ marginTop: "20px" }}>
           <img alt="temp" src={"../../queueAvatar.svg"} />
           <p>{profile.name}</p>
-        </Button>
-      </div>
+        </div>
+      </Link>
     );
   });
 };
