@@ -372,16 +372,23 @@ describe("TinderChain", function () {
       await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
-    it("should emit a swipeMatch event on a right swipe that results in a match", async () => {
+    it("should correctly indicate if a match just happened by getIsMatch endpoint", async () => {
       // create two accounts
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
 
       // acct1 swipes right on acct2
       await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
-      await expect(myContract.connect(addr2).swipeRight(addr2.address, addr1.address))
-        .to.emit(myContract, "swipeMatch")
-        .withArgs(addr2.address, addr1.address);
+
+      // but acct1 has not matched yet
+      expect(await myContract.connect(addr1).getIsMatch(addr1.address, addr2.address)).to.equal(false);
+
+      // now acct2 swipes right on acct1
+      await myContract.connect(addr2).swipeRight(addr2.address, addr1.address);
+
+      // and we see the match is true
+      expect(await myContract.connect(addr1).getIsMatch(addr1.address, addr2.address)).to.equal(true);
+      expect(await myContract.connect(addr2).getIsMatch(addr2.address, addr1.address)).to.equal(true);
     });
   });
 

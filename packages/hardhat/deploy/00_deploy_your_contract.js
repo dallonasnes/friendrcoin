@@ -26,15 +26,22 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
 
   // Getting a previously deployed contract
   const TinderChain = await ethers.getContract("TinderChain", deployer);
-
-  // TODO: create test profiles here
+  let wallets = [];
+  // Create Test Profiles
   for (let i = 0; i < 10; i++){
     const wallet = await ethers.Wallet.createRandom();
     const address = wallet.getAddress();
+    wallets.push(wallet);
     await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "image1", "image2", "image3", "bio");
   }
+
   console.log("FINISHED CREATING PROFILES")
   console.log("ProfileCount:", await TinderChain.profileCount());
+
+  // Have a few swipe right on the web client default wallet
+  await TinderChain.swipeRight(wallets[0].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await TinderChain.swipeRight(wallets[2].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await TinderChain.swipeRight(wallets[6].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
 
   /*  await TinderChain.setPurpose("Hello");
   

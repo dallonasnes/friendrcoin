@@ -11,7 +11,6 @@ contract TinderChain is Ownable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
-    event swipeMatch(address swiper, address swipee);
 
     struct Profile {
         string name;
@@ -148,6 +147,17 @@ contract TinderChain is Ownable {
         }
 
         return (profilesToRtn, offset);
+    }
+
+    function getIsMatch(address swiper, address swipee)
+        public
+        view
+        onlySenderOrOwner(swiper)
+        returns (bool)
+    {
+        return
+            _swipedRightAddresses[swiper][swipee] &&
+            _swipedRightAddresses[swipee][swiper];
     }
 
     // This endpoint serves the messages loading page to see all people with whom there were recent messages
@@ -334,8 +344,6 @@ contract TinderChain is Ownable {
         _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
-    // TODO: this should emit an event on a match instead of returning bools
-    // Because the transaction dominates this method's return value, as far as I can tell
     function swipeRight(address _userProfile, address _swipedProfile)
         public
         onlySenderOrOwner(_userProfile)
@@ -386,8 +394,6 @@ contract TinderChain is Ownable {
             uint256 messages_idx = _messages_count[messageMapKey];
             _messages[messageMapKey][messages_idx] = message;
             _messages_count[messageMapKey]++;
-
-            emit swipeMatch(_userProfile, _swipedProfile);
         } else {
             tinderCoin.transferFrom(_userProfile, address(this), 1);
         }
