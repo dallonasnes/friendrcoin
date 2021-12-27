@@ -4,7 +4,7 @@ import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switc
 import React, { useState, useEffect } from "react";
 import { Address, Balance, Events } from "../components";
 const { ethers } = require("ethers");
-
+import { useUserProviderAndSigner } from "eth-hooks";
 
 // TODO: instead set up event listener for swipeMatch event
 const checkForMatch = () => {
@@ -12,34 +12,29 @@ const checkForMatch = () => {
   return isMatch;
 };
 
-// TODO: should figure out how to gen new address/wallet
-const genMoreAddresses = async ({ count, writeContracts, address, faucetTx }) => {
-  console.log("GEN ADDRESSES CALLED");
-  if (address && writeContracts && writeContracts.TinderChain) {
-    console.log("IN IF CHECK WITH ADDRSS", address);
-    // util for test generating more accounts
-    // address = address.substring(0, address.length - 11) + Math.random().toString(36).slice(2);
-    for (let i = 0; i < count; i++) {
-      try {
-        faucetTx({
-          to: address,
-          value: ethers.utils.parseEther("0.01"),
-        });
-        faucetTx(
-          writeContracts.TinderChain.createUserProfileFlow(
-            address,
-            "This is my test name!",
-            "image1",
-            "image2",
-            "image3",
-            "bio",
-          ),
-        );
-
-        console.log("JUST CREATED CONTRACT WITH ADDRESS:", address);
-      } catch (e) {
-        console.log(e);
+const fetchProfiles = async ({
+  queue,
+  setQueue,
+  didFetchLastPage,
+  setDidFetchLastPage,
+  address,
+  readContracts,
+  limit,
+  offset,
+  setOffset,
+}) => {
+  {
+    if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.TinderChain) {
+      // have at least two before fetching more
+      const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(address, limit, offset);
+      if (nextPage && nextPage.length > 0) {
+        const tmpQueue = queue.concat(nextPage);
+        setQueue(tmpQueue);
       }
+      if (nextOffset === offset || nextPage.length < limit) {
+        setDidFetchLastPage(true);
+      }
+      setOffset(nextOffset);
     }
   }
 };
@@ -52,6 +47,7 @@ const genMoreAddresses = async ({ count, writeContracts, address, faucetTx }) =>
 export default function Queue({ isLoggedIn, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) {
   const [didJustMatch, setDidJustMatch] = useState(false);
   const matchPage = () => {
+    debugger;
     setTimeout(() => setDidJustMatch(false), 5000);
     return (
       <div>
@@ -76,63 +72,70 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
 
   const swipePage = ({ writeContracts, readContracts, address, faucetTx }) => {
     const [queue, setQueue] = useState([]); // TODO: default shape
-    const limit = 10;
-    let offset = 0;
-    let didFetchLastPage = false;
+    const [currentProfile, setCurrentProfile] = useState({});
+    const [isFirstProfile, setIsFirstProfile] = useState(true);
+    const [offset, setOffset] = useState(0);
+    const [didFetchLastPage, setDidFetchLastPage] = useState(false);
+    const limit = 5;
     // TODO: is offset the correct re-calc trigger
     useEffect(() => {
-      async function fetchProfiles() {
-        if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.TinderChain) {
-          // have at least two before fetching more
-          const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(address, limit, offset);
-          debugger;
-          queue.push.apply(nextPage);
-          setQueue(queue);
-          if (nextOffset === offset || nextPage.length < limit) {
-            didFetchLastPage = true;
-          }
-        }
-      }
-      fetchProfiles();
-    }, [queue]);
+      fetchProfiles({
+        queue,
+        setQueue,
+        didFetchLastPage,
+        setDidFetchLastPage,
+        address,
+        readContracts,
+        limit,
+        offset,
+        setOffset,
+      });
+    }, [readContracts, queue.length]);
 
     const handleSwipe = ({ isRightSwipe }) => {
-      queue.pop(0);
-      setQueue(queue);
-      return isRightSwipe ? checkForMatch() : true;
+      if (queue.length > 0) {
+        setCurrentProfile(queue.shift());
+      } else {
+        // TODO: maybe need to fetch again in here
+        setCurrentProfile({});
+      }
+      showNextProfile();
+    };
+
+    const getFirstProfile = () => {
+      if (isFirstProfile) {
+        setCurrentProfile(queue.shift());
+        setIsFirstProfile(false);
+      }
     };
 
     // TODO: @(kk) setup component that builds card from profile + photos
     // needs to allows swiping between the images
-    const showNextProfileInQueue = () => {
-      if (queue.length) {
-        const profileAddress = queue[0]._address;
-        console.log(profileAddress);
+    const showNextProfile = () => {
+      if (currentProfile.name) {
         // TODO: from profile we can get name, photos to fetch from CDN, bio, etc
         return (
           <div style={{ marginTop: "20px" }}>
             <img alt="temp" src={"../../queueAvatar.svg"} />
+            <p>{currentProfile.name}</p>
           </div>
         );
-      } else {
+      } else if (didFetchLastPage) {
         return <div>You've seen all the profiles!</div>;
+      } else {
+        if (queue.length > 0) {
+          getFirstProfile();
+        } else {
+          return <div>Need to fetch more profiles</div>;
+        }
       }
     };
-
-    useEffect(() => {
-      if (writeContracts && writeContracts.TinderChain) {
-        async function genProfiles() {
-          await genMoreAddresses({ count: 10, writeContracts, address, faucetTx });
-        }
-        genProfiles();
-      }
-    }, [writeContracts, writeContracts.TinderChain, address]);
 
     return (
       <div>
         {yourLocalBalance ? "Start Swiping, Get Matching" : "Sorry, No Token No Matchy"}
         {yourLocalBalance ? (
-          showNextProfileInQueue()
+          showNextProfile()
         ) : (
           <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
             <img alt="temp" src={"../../queueAvatar.svg"} />
@@ -141,13 +144,10 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
 
         {yourLocalBalance ? (
           <>
-            <Button style={{ backgroundColor: "red" }} onClick={() => handleClick({ isRightSwipe: false })}>
+            <Button style={{ backgroundColor: "red" }} onClick={() => handleSwipe({ isRightSwipe: false })}>
               <img alt="x" src={"../../x-mark.svg"} />
             </Button>
-            <Button
-              style={{ backgroundColor: "red" }}
-              onClick={() => (handleSwipe({ isRightSwipe: true }) ? setDidJustMatch(true) : setDidJustMatch(false))}
-            >
+            <Button style={{ backgroundColor: "red" }} onClick={() => handleSwipe({ isRightSwipe: true })}>
               <img alt="heart" src={"../../heart.svg"} />
             </Button>
           </>
@@ -158,5 +158,5 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
     );
   };
 
-  return <>{didJustMatch ? matchPage() : swipePage({ writeContracts, readContracts, address, faucetTx })}</>;
+  return <>{swipePage({ writeContracts, readContracts, address, faucetTx })}</>;
 }

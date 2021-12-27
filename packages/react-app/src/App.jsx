@@ -2,6 +2,7 @@ import { Alert, Button, Col, Menu, Row } from "antd";
 import "antd/dist/antd.css";
 import {
   useBalance,
+  useBurnerSigner,
   useContractLoader,
   useContractReader,
   useGasPrice,
@@ -22,14 +23,13 @@ import { Home, Queue, Profile } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 // header and footer
 import Footer from "./components/Footer";
-
 const { ethers } = require("ethers");
 
 /// 📡 What chain are your contracts deployed to?
 const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
-const DEBUG = false;
+const DEBUG = true;
 const NETWORKCHECK = true;
 
 const web3Modal = Web3ModalSetup();
@@ -56,8 +56,9 @@ function App(props) {
 
   // 🔭 block explorer URL
   const blockExplorer = targetNetwork.blockExplorer;
-
   // load all your providers
+  console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
+  console.log("PROVIDER -- targetNetwokr", targetNetwork.rpcUrl);
   const localProvider = useStaticJsonRPC([
     process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : targetNetwork.rpcUrl,
   ]);
@@ -82,7 +83,6 @@ function App(props) {
   const userProviderAndSigner = useUserProviderAndSigner(injectedProvider, localProvider);
   const userSigner = userProviderAndSigner.signer;
 
-  // TODO: how to verify that this is a different address for each session??
   useEffect(() => {
     async function getAddress() {
       if (userSigner) {
@@ -154,6 +154,11 @@ function App(props) {
       loadWeb3Modal();
     }
   }, [loadWeb3Modal]);
+
+  useEffect(() => {
+    async function generateTestAccounts() {}
+    generateTestAccounts();
+  }, [readContracts]);
 
   const isLoggedIn = Boolean(web3Modal && web3Modal.cachedProvider);
 
