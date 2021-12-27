@@ -26,6 +26,16 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
 
   // Getting a previously deployed contract
   const TinderChain = await ethers.getContract("TinderChain", deployer);
+
+  // TODO: create test profiles here
+  for (let i = 0; i < 10; i++){
+    const wallet = await ethers.Wallet.createRandom();
+    const address = wallet.getAddress();
+    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "image1", "image2", "image3", "bio");
+  }
+  console.log("FINISHED CREATING PROFILES")
+  console.log("ProfileCount:", await TinderChain.profileCount());
+
   /*  await TinderChain.setPurpose("Hello");
   
     To take ownership of TinderChain using the ownable library uncomment next line and add the 
