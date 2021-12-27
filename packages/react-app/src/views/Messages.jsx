@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 const { ethers } = require("ethers");
-import { Messages } from ".";
-import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { useLocation } from "react-router-dom";
 
-const fetchMatches = async ({
+const fetchMessages = async ({
   queue,
   setQueue,
   didFetchLastPage,
   setDidFetchLastPage,
-  address,
+  sender,
+  recipient,
   readContracts,
   limit,
   offset,
@@ -31,41 +30,33 @@ const fetchMatches = async ({
   }
 };
 
-// On click I want to move to the message view
-
-const renderMatches = ({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) => {
-  return queue.map(profile => {
+const renderMessages = ({ queue }) => {
+  return queue.map(message => {
     return (
       <div style={{ marginTop: "20px" }}>
-        <Button onClick={() => <Link to="/messages" state={{ recipient: profile._address }}></Link>}>
-          <img alt="temp" src={"../../queueAvatar.svg"} />
-          <p>{profile.name}</p>
-        </Button>
+        <p>{message.text}</p>
+        <p>{message.created_ts}</p>
       </div>
     );
   });
 };
 
-export default function Matches({
-  isLoggedIn,
-  address,
-  readContracts,
-  writeContracts,
-  tx,
-  faucetTx,
-  yourLocalBalance,
-}) {
+export default function Messages({ isLoggedIn, sender, readContracts }) {
+  debugger;
+  const location = useLocation();
+  const { recipient } = location.state;
   const [queue, setQueue] = useState([]); // TODO: default shape
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);
   const limit = 5;
   useEffect(() => {
-    fetchMatches({
+    fetchMessages({
       queue,
       setQueue,
       didFetchLastPage,
       setDidFetchLastPage,
-      address,
+      sender,
+      recipient,
       readContracts,
       limit,
       offset,
@@ -73,13 +64,5 @@ export default function Matches({
     });
   }, [readContracts, offset]);
 
-  return (
-    <>
-      {queue.length > 0 ? (
-        renderMatches({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance })
-      ) : (
-        <div>No matches at the moment</div>
-      )}
-    </>
-  );
+  return <>{queue.length > 0 ? renderMessages({ queue }) : <div>No messages at the moment</div>}</>;
 }
