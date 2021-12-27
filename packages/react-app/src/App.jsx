@@ -19,7 +19,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, Queue, Profile } from "./views";
+import { Home, Queue, Profile, Matches } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 // header and footer
 import Footer from "./components/Footer";
@@ -196,6 +196,17 @@ function App(props) {
         </Route>
         <Route exact path="/queue">
           <Queue
+            isLoggedIn={true}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+            yourLocalBalance={yourLocalBalance}
+          />
+        </Route>
+        <Route exact path="/matches">
+          <Matches
             isLoggedIn={true}
             address={address}
             readContracts={readContracts}
