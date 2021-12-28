@@ -47,7 +47,6 @@ function App(props) {
   const networkOptions = ["localhost", "mainnet", "rinkeby"];
 
   const [injectedProvider, setInjectedProvider] = useState();
-  const [swipeMatch, setSwipeMatch] = useState();
   const [address, setAddress] = useState();
   const [selectedNetwork, setSelectedNetwork] = useState(networkOptions[0]);
   const location = useLocation();
@@ -79,6 +78,7 @@ function App(props) {
   /* 🔥 This hook will get the price of Gas from ⛽️ EtherGasStation */
   const gasPrice = useGasPrice(targetNetwork, "fast");
   // Use your injected provider from 🦊 Metamask or if you don't have it then instantly generate a 🔥 burner wallet.
+  // TODO(@dallon): this needs to be randomized when deployed to prod so that we don't have profile collisions
   const userProviderAndSigner = useUserProviderAndSigner(injectedProvider, localProvider);
   const userSigner = userProviderAndSigner.signer;
 
@@ -154,24 +154,39 @@ function App(props) {
     }
   }, [loadWeb3Modal]);
 
-  useEffect(() => {
-    async function generateTestAccounts() {}
-    generateTestAccounts();
-  }, [readContracts]);
-
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(web3Modal && web3Modal.cachedProvider));
   console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
-  // TODO: highest level needs to know if profile is created in Home.jsx or not
-  // Eg in queue then can only work if profile is created
 
-  return (
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    async function getUserProfile() {
+      if (readContracts && readContracts.TinderChain) {
+        try {
+          const res = await readContracts.TinderChain.getUserProfile(address);
+          // Check for non-nil created TS
+          if (res && res.created_ts._hex !== "0x00") {
+            setUserProfile(res);
+          } else {
+            setUserProfile(null);
+          }
+        } catch (e) {
+          console.log("ERROR IN FETCHING USER PROFILE IN MAIN PAGE LOAD", e);
+          setUserProfile(null);
+        }
+      }
+    }
+    getUserProfile();
+  }, [address, readContracts]);
+
+  return true ? (
     <div className="App">
-      {/* ✏️ Edit the header and change the title to your project name */}
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
       <Switch>
         <Route exact path="/">
           <Home
+            userProfile={userProfile}
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             address={address}
@@ -183,6 +198,7 @@ function App(props) {
         </Route>
         <Route exact path="/queue">
           <Queue
+            userProfile={userProfile}
             isLoggedIn={isLoggedIn}
             address={address}
             readContracts={readContracts}
@@ -194,6 +210,7 @@ function App(props) {
         </Route>
         <Route exact path="/matches">
           <Matches
+            userProfile={userProfile}
             isLoggedIn={isLoggedIn}
             address={address}
             readContracts={readContracts}
@@ -205,7 +222,8 @@ function App(props) {
         </Route>
         <Route exact path="/messages">
           <Messages
-            isLoggedIn={true}
+            userProfile={userProfile}
+            isLoggedIn={isLoggedIn}
             sender={address}
             readContracts={readContracts}
             writeContracts={writeContracts}
@@ -222,6 +240,34 @@ function App(props) {
       <ThemeSwitch />
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
+      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
+        <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
+          {/*TODO(@kk,@dallon): Minimized is set to true, which hides account balance. Can set to false later*/}
+          <Account
+            address={address}
+            localProvider={localProvider}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            price={price}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+            blockExplorer={blockExplorer}
+            minimized={true}
+          />
+        </div>
+      </div>
+      <Footer />
+      <br />
+    </div>
+  ) : (
+    <div className="App-NoProfile">
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <div>Connect your metamask wallet to create an account</div>
+      <div>Or create a temporary profile using a built in burner wallet</div>
+
+      <ThemeSwitch />
+
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
         <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
           {/*TODO(@kk,@dallon): Minimized is set to true, which hides account balance. Can set to false later*/}

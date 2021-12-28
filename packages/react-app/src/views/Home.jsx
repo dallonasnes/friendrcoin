@@ -4,6 +4,46 @@ import { BoxH2 } from "../components/H2";
 import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
 import { FAKE_DASHBOARD_DATA } from "../constants";
 const { ethers } = require("ethers");
+import { Profile } from "./";
+
+/**
+ * if (profile && !didFetch) {
+    if (profile.created_ts._hex === "0x00") {
+      console.log("building profile transaction");
+      if (isLoggedIn) {
+        tx(
+          writeContracts.TinderChain.createUserProfileFlow(
+            address,
+            "This is my test name!",
+            "image1",
+            "image2",
+            "image3",
+            "bio",
+          ),
+        );
+        console.log("real tx done");
+      } else {
+        // load faucet eth and make transaction
+        try {
+          faucetTx({
+            to: address,
+            value: ethers.utils.parseEther("0.01"),
+          });
+          faucetTx(
+            writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"),
+          );
+        } catch (e) {
+          console.log("error:", e);
+        }
+
+        console.log("faucet done");
+      }
+      console.log("finished profile transaction");
+    } else {
+      console.log("need to display profile");
+      // now need to fetch token balance and any other needed data
+    }}
+ */
 
 // TODO(@dallon): use helper fns to reduce code duplication
 const populateDashboard = data => {
@@ -59,80 +99,11 @@ const fakeData = () => {
   );
 };
 
-const loadData = ({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
+const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
-  const [profile, setProfile] = useState(null); // TODO: use default profile here
-  const [didFetch, setDidFetch] = useState(false);
-  useEffect(() => {
-    async function getUserProfile() {
-      if (readContracts && readContracts.TinderChain) {
-        try {
-          const res = await readContracts.TinderChain.getUserProfile(address);
-          setProfile(res);
-          console.log("pfoile is set");
-        } catch (e) {
-          console.log("error here:", e);
-        }
-      }
-    }
-    getUserProfile();
-  }, [address, readContracts]);
-
-  if (profile && !didFetch) {
-    if (profile.created_ts._hex === "0x00") {
-      console.log("building profile transaction");
-      if (isLoggedIn) {
-        tx(
-          writeContracts.TinderChain.createUserProfileFlow(
-            address,
-            "This is my test name!",
-            "image1",
-            "image2",
-            "image3",
-            "bio",
-          ),
-        );
-        console.log("real tx done");
-      } else {
-        // load faucet eth and make transaction
-        try {
-          faucetTx({
-            to: address,
-            value: ethers.utils.parseEther("0.01"),
-          });
-          faucetTx(
-            writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"),
-          );
-        } catch (e) {
-          console.log("error:", e);
-        }
-
-        console.log("faucet done");
-      }
-      setDidFetch(true);
-      console.log("finished profile transaction");
-    } else {
-      console.log("need to display profile");
-      // now need to fetch token balance and any other needed data
-    }
-    setIsLoggedIn(true);
-  } else {
-    return fakeData();
-  }
 
   return (
     <div>
-      <div style={{ display: "inline-block", margin: "5px", marginBottom: "10px" }}>
-        <img alt="Profile avatar" src={"../../profileAvatar.svg"} />
-        <div style={{ display: "inline-block", margin: "5px" }}>
-          <BoxH2 style={{ margin: "5px" }}>Hello: {profile.name}</BoxH2>
-          <div style={{ margin: "5px" }}>Your Balance: 10</div>
-        </div>
-        <div style={{ display: "inline-block", marginLeft: "500px", marginRight: "5px" }}>
-          <Button style={{ display: "vertical-align" }}>Explore messages </Button>
-        </div>
-      </div>
-
       <div style={{ display: "inline-block", margin: "5px" }}>
         <FakeMessageBox>
           <div
@@ -145,7 +116,9 @@ const loadData = ({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx
             <Button onClick={() => setShowGlobalDashboard(!showGlobalDashboard)}>Toggle Personal/Global View</Button>
           </div>
           <Divider />
-          {populateDashboard(showGlobalDashboard ? FAKE_DASHBOARD_DATA : FAKE_DASHBOARD_DATA.filter(elem => elem.adr === address))}
+          {populateDashboard(
+            showGlobalDashboard ? FAKE_DASHBOARD_DATA : FAKE_DASHBOARD_DATA.filter(elem => elem.adr === address),
+          )}
         </FakeMessageBox>
       </div>
       <div style={{ marginBottom: "10px" }}>
@@ -157,6 +130,29 @@ const loadData = ({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx
   );
 };
 
-export default function Home({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) {
-  return loadData({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address });
+export default function Home({
+  isLoggedIn,
+  userProfile,
+  setIsLoggedIn,
+  readContracts,
+  writeContracts,
+  tx,
+  faucetTx,
+  address,
+}) {
+  return (
+    <>
+      <Profile
+        userProfile={userProfile}
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        address={address}
+        readContracts={readContracts}
+        writeContracts={writeContracts}
+        tx={tx}
+        faucetTx={faucetTx}
+      />
+      {loadData({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address })}
+    </>
+  );
 }

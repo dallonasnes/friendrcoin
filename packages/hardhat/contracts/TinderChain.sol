@@ -12,6 +12,7 @@ contract TinderChain is Ownable {
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
 
+    // TODO: distinguish profiles between persistant and with burner account
     struct Profile {
         string name;
         address _address;
