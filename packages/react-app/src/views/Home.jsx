@@ -6,45 +6,6 @@ import { FAKE_DASHBOARD_DATA } from "../constants";
 const { ethers } = require("ethers");
 import { Profile } from "./";
 
-/**
- * if (profile && !didFetch) {
-    if (profile.created_ts._hex === "0x00") {
-      console.log("building profile transaction");
-      if (isLoggedIn) {
-        tx(
-          writeContracts.TinderChain.createUserProfileFlow(
-            address,
-            "This is my test name!",
-            "image1",
-            "image2",
-            "image3",
-            "bio",
-          ),
-        );
-        console.log("real tx done");
-      } else {
-        // load faucet eth and make transaction
-        try {
-          faucetTx({
-            to: address,
-            value: ethers.utils.parseEther("0.01"),
-          });
-          faucetTx(
-            writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"),
-          );
-        } catch (e) {
-          console.log("error:", e);
-        }
-
-        console.log("faucet done");
-      }
-      console.log("finished profile transaction");
-    } else {
-      console.log("need to display profile");
-      // now need to fetch token balance and any other needed data
-    }}
- */
-
 // TODO(@dallon): use helper fns to reduce code duplication
 const populateDashboard = data => {
   return data.map(row => {
@@ -133,6 +94,7 @@ const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, write
 export default function Home({
   isLoggedIn,
   userProfile,
+  setUserProfile,
   setIsLoggedIn,
   readContracts,
   writeContracts,
@@ -144,6 +106,7 @@ export default function Home({
     <>
       <Profile
         userProfile={userProfile}
+        setUserProfile={setUserProfile}
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         address={address}

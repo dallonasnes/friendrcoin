@@ -5,27 +5,6 @@ import React, { useState, useEffect } from "react";
 import { Address, Balance, Events } from "../components";
 const { ethers } = require("ethers");
 
-const setNickname = ({ nickname }) => {
-  // TODO: write this
-  return true;
-};
-
-/**
- * 
- * 
-      
-      <div style={{ display: "inline-block", margin: "5px", marginBottom: "10px" }}>
-        <img alt="Profile avatar" src={"../../profileAvatar.svg"} />
-        <div style={{ display: "inline-block", margin: "5px" }}>
-          <BoxH2 style={{ margin: "5px" }}>Hello: {userProfile ? userProfile.name : "TEMP NAME"}</BoxH2>
-          <div style={{ margin: "5px" }}>Your Balance: 10</div>
-        </div>
-        <div style={{ display: "inline-block", marginLeft: "500px", marginRight: "5px" }}>
-          <Button style={{ display: "vertical-align" }}>Explore messages </Button>
-        </div>
-      </div>
- */
-
 // TODO: debug this
 const isValidHTTPUrl = ({ input }) => {
   return true;
@@ -40,10 +19,6 @@ const isValidHTTPUrl = ({ input }) => {
 
 export default function Profile({ address, userProfile, setUserProfile, faucetTx, tx, writeContracts }) {
   const createProfilePage = () => {
-    const [name, setName] = useState(null);
-    const [image1, setImage1] = useState(null);
-    const [bio, setBio] = useState(null);
-
     const handleCreateClick = () => {
       const _image1 = document.getElementById("image1").value;
       if (!isValidHTTPUrl(_image1)) {
@@ -69,9 +44,8 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
           value: ethers.utils.parseEther("0.01"),
         });
         tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
-        // Refresh page so it loads knowing that client has a profile now
-        setUserProfile({ address, name: _name, image1: _image1, image2: "", image3: "", bio: _bio });
-        setTimeout(() => window.location.reload(), 300)
+        setUserProfile({ address, name: _name, images: [_image1, "", ""], bio: _bio });
+        // setTimeout(() => window.location.reload(), 300)
       } catch (e) {
         console.log(e);
       }
@@ -113,7 +87,7 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
             });
             tx(writeContracts.TinderChain.editProfileImageAtIndex(address, 0, _image1));
             setImage1(_image1);
-            setUserProfile({ ...userProfile, image1: _image1 });
+            setUserProfile({ ...userProfile, images: [_image1, userProfile.images[1], userProfile.images[2]] });
           } catch (e) {
             console.log(e);
           }
@@ -148,16 +122,16 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
           console.log(e);
         }
       }
-      setTimeout(() => window.location.reload(), 300)
+      setTimeout(() => window.location.reload(), 300);
     };
 
     return (
       <>
-      <h2>Here you can edit your profile</h2>
+        <h2>Here you can edit your profile</h2>
         <label>Name</label>
         <input id="name" placeholder={name || userProfile.name}></input>
         <br />
-        <img alt="your image" src={image1 || userProfile.images[0]} />
+        <img alt="your image link doesn't work :(" src={image1 || userProfile.images[0]} />
         <br />
         <label>HTTP URL to profile image</label>
         <input id="image1" placeholder={image1 || userProfile.images[0]}></input>

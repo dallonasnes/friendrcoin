@@ -7,8 +7,10 @@
     a. has wallet to connect
         a. already has profile
         b. needs to create profile
-    b. uses a burner wallet (doesn't save progress) -> needs to create profile
-    TODO: if user does not have a profile, can only visit home page (or copy pages)
+    b. uses a burner wallet (doesn't save progress) -> needs to create a client-only profile
+        a. cannot vote
+        b. cannot match
+        c. cannot send messages
 2. 
 
 #### Launch Token (target Dec 19)

@@ -187,6 +187,7 @@ function App(props) {
         <Route exact path="/">
           <Home
             userProfile={userProfile}
+            setUserProfile={setUserProfile}
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             address={address}
@@ -231,9 +232,6 @@ function App(props) {
             faucetTx={faucetTx}
             yourLocalBalance={yourLocalBalance}
           />
-        </Route>
-        <Route exact path="/profile">
-          <Profile yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
         </Route>
       </Switch>
 
