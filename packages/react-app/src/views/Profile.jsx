@@ -155,15 +155,15 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
       <>
       <h2>Here you can edit your profile</h2>
         <label>Name</label>
-        <input id="name" value={name || userProfile.name}></input>
+        <input id="name" placeholder={name || userProfile.name}></input>
         <br />
         <img alt="your image" src={image1 || userProfile.images[0]} />
         <br />
         <label>HTTP URL to profile image</label>
-        <input id="image1" value={image1 || userProfile.images[0]}></input>
+        <input id="image1" placeholder={image1 || userProfile.images[0]}></input>
         <br />
         <label>Bio</label>
-        <input id="bio" value={bio || userProfile.bio}></input>
+        <input id="bio" placeholder={bio || userProfile.bio}></input>
         <br />
         <button onClick={() => handleEditClick()}>Submit edits</button>
       </>
