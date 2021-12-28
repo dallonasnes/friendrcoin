@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { LoggedInButton } from "./Button";
 import { ButtonLink } from "./Links";
 
-// TODO(@kk) - can use "antd" library for styling
-
 const getNotLoggedInButtons = () => {
   return ["About Us", "How It Works", "Contact"].map(text => (
     <LoggedInButton>
@@ -22,8 +20,8 @@ const getLoggedInButtons = () => {
   ));
 };
 
-// TODO: can change isLoggedIn between true and false for testing views
-export default function Header({ isLoggedIn }) {
+export default function Header({ isLoggedIn, setIsLoggedIn }) {
+  console.log("HEADER LOGGED IN:", isLoggedIn);
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
       <a href="https://github.com/dallonasnes/tinder-chain" target="_blank" rel="noopener noreferrer">

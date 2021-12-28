@@ -1,62 +1,9 @@
-import { SyncOutlined } from "@ant-design/icons";
-import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
 import React, { useState, useEffect } from "react";
-import { Address, Balance, Events } from "../components";
 import { BoxH2 } from "../components/H2";
 import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
-import {
-  useBalance,
-  useContractLoader,
-  useContractReader,
-  useGasPrice,
-  useOnBlock,
-  useUserProviderAndSigner,
-} from "eth-hooks";
+import { FAKE_DASHBOARD_DATA } from "../constants";
 const { ethers } = require("ethers");
-
-const fakeInputData = [
-  {
-    idx: 1,
-    img: "../../avatar1.svg",
-    adr: "0x66bc2...57F",
-    text: "Are you a crypto kitty? Cuz I'm feline a connection between us.",
-    up: 679,
-    down: 115,
-  },
-  {
-    idx: 2,
-    img: "../../avatar2.svg",
-    adr: "0x66bc2...57F",
-    text: "Baby, I ain't going for no pump and dump.",
-    up: 555,
-    down: 56,
-  },
-  {
-    idx: 3,
-    img: "../../avatar3.svg",
-    adr: "0x66bc2...57F",
-    text: "Don't fall for other shitcoins, go for this smart contract.",
-    up: 435,
-    down: 76,
-  },
-  {
-    idx: 4,
-    img: "../../avatar4.svg",
-    adr: "0x66bc2...57F",
-    text: "Coinbase is not good enough, let's go to third base.",
-    up: 235,
-    down: 189,
-  },
-  {
-    idx: 5,
-    img: "../../avatar5.svg",
-    adr: "0x66bc2...57F",
-    text: "I am tether to your USD, because I could peg to you 100%.",
-    up: 128,
-    down: 99,
-  },
-];
 
 // TODO(@dallon): use helper fns to reduce code duplication
 const populateDashboard = data => {
@@ -103,7 +50,7 @@ const fakeData = () => {
       >
         <h2>Top Voted Messages</h2>
         <Divider />
-        {populateDashboard(fakeInputData)}
+        {populateDashboard(FAKE_DASHBOARD_DATA)}
       </div>
       <h2>Tokenized Love</h2>
       <h4>Reap the rewards of matching and</h4>
@@ -112,14 +59,7 @@ const fakeData = () => {
   );
 };
 
-// TODO(@kk) - this should vertically align, i had some trouble with it :/
-const populateRecentMatches = () => {
-  return ["../../avatar1.svg", "../../avatar2.svg", "../../avatar3.svg", "../../avatar4.svg"].map(img => {
-    return <img style={{ display: "vertical-align" }} alt="Match avatar" src={img} />;
-  });
-};
-
-const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
+const loadData = ({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
   const [profile, setProfile] = useState(null); // TODO: use default profile here
   const [didFetch, setDidFetch] = useState(false);
@@ -175,6 +115,7 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
       console.log("need to display profile");
       // now need to fetch token balance and any other needed data
     }
+    setIsLoggedIn(true);
   } else {
     return fakeData();
   }
@@ -193,21 +134,6 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
       </div>
 
       <div style={{ display: "inline-block", margin: "5px" }}>
-        <div
-          style={{
-            display: "inline-block",
-            border: "1px solid #cccccc",
-            padding: 16,
-            width: "20%",
-            height: "75%",
-            margin: "auto",
-            marginTop: 64,
-          }}
-        >
-          Recent Matches
-        </div>
-        <div>{populateRecentMatches()}</div>
-
         <FakeMessageBox>
           <div
             style={{
@@ -219,7 +145,7 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
             <Button onClick={() => setShowGlobalDashboard(!showGlobalDashboard)}>Toggle Personal/Global View</Button>
           </div>
           <Divider />
-          {populateDashboard(showGlobalDashboard ? fakeInputData : fakeInputData.filter(elem => elem.adr === address))}
+          {populateDashboard(showGlobalDashboard ? FAKE_DASHBOARD_DATA : FAKE_DASHBOARD_DATA.filter(elem => elem.adr === address))}
         </FakeMessageBox>
       </div>
       <div style={{ marginBottom: "10px" }}>
@@ -231,6 +157,6 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
   );
 };
 
-export default function Home({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) {
-  return loadData({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address });
+export default function Home({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) {
+  return loadData({ isLoggedIn, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address });
 }

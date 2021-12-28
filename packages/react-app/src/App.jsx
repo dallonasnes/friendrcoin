@@ -58,8 +58,6 @@ function App(props) {
   // 🔭 block explorer URL
   const blockExplorer = targetNetwork.blockExplorer;
   // load all your providers
-  console.log("PROVIDER", process.env.REACT_APP_PROVIDER);
-  console.log("PROVIDER -- targetNetwokr", targetNetwork.rpcUrl);
   const localProvider = useStaticJsonRPC([
     process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : targetNetwork.rpcUrl,
   ]);
@@ -161,20 +159,21 @@ function App(props) {
     generateTestAccounts();
   }, [readContracts]);
 
-  const isLoggedIn = Boolean(web3Modal && web3Modal.cachedProvider);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(web3Modal && web3Modal.cachedProvider));
+  console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
   // TODO: highest level needs to know if profile is created in Home.jsx or not
   // Eg in queue then can only work if profile is created
 
   return (
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
-      <Header isLoggedIn={isLoggedIn} />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
       <Switch>
         <Route exact path="/">
           <Home
             isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
             address={address}
             readContracts={readContracts}
             writeContracts={writeContracts}
@@ -182,21 +181,9 @@ function App(props) {
             faucetTx={faucetTx}
           />
         </Route>
-        <Route exact path="/about-us">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/how-it-works">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/contact">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/dashboard">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
         <Route exact path="/queue">
           <Queue
-            isLoggedIn={true}
+            isLoggedIn={isLoggedIn}
             address={address}
             readContracts={readContracts}
             writeContracts={writeContracts}
@@ -207,7 +194,7 @@ function App(props) {
         </Route>
         <Route exact path="/matches">
           <Matches
-            isLoggedIn={true}
+            isLoggedIn={isLoggedIn}
             address={address}
             readContracts={readContracts}
             writeContracts={writeContracts}

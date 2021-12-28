@@ -55,6 +55,7 @@ export default function Matches({
   faucetTx,
   yourLocalBalance,
 }) {
+  console.log("MATCHES IS-LOGGED-IN", isLoggedIn);
   const [queue, setQueue] = useState([]); // TODO: default shape
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);

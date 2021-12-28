@@ -50,6 +50,7 @@ const fetchProfiles = async ({
 // TODO: can test "match" page by clicking on heart button (user must have at least 1 token in yourLocalBalance variable)
 // ^ it uses a timer so shows for 5 seconds with a button to start message, then goes back to match screen
 export default function Queue({ isLoggedIn, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) {
+  console.log("QUEUE IS-LOGGED-IN", isLoggedIn);
   const [didJustMatch, setDidJustMatch] = useState(false);
   const matchPage = () => {
     setTimeout(() => setDidJustMatch(false), 5000);
