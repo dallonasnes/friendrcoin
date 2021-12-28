@@ -1,3 +1,4 @@
+import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { useState, useEffect } from "react";
 const { ethers } = require("ethers");
 import { useLocation } from "react-router-dom";
@@ -15,10 +16,14 @@ const fetchMessages = async ({
   setOffset,
 }) => {
   {
-    if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.TinderChain) {
+    if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
       // have at least two before fetching more
-      const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMessagesForMatch(sender, recipient, limit, offset);
-      debugger;
+      const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMessagesForMatch(
+        sender,
+        recipient,
+        limit,
+        offset,
+      );
       if (nextPage && nextPage.length > 0) {
         const tmpQueue = queue.concat(nextPage);
         setQueue(tmpQueue);
@@ -31,19 +36,7 @@ const fetchMessages = async ({
   }
 };
 
-const renderMessages = ({ queue }) => {
-    debugger;
-  return queue.map(message => {
-    return (
-      <div style={{ marginTop: "20px" }}>
-        <p>{message.text}</p>
-        <p>{message.created_ts}</p>
-      </div>
-    );
-  });
-};
-
-export default function Messages({ isLoggedIn, sender, readContracts }) {
+export default function Messages({ isLoggedIn, sender, readContracts, writeContracts, tx, faucetTx }) {
   const location = useLocation();
   const recipient = location.search.substring(1);
   const [queue, setQueue] = useState([]); // TODO: default shape
@@ -65,5 +58,37 @@ export default function Messages({ isLoggedIn, sender, readContracts }) {
     });
   }, [readContracts, offset]);
 
-  return <>{queue.length > 0 ? renderMessages({ queue }) : <div>No messages at the moment</div>}</>;
+  const sendMessage = () => {
+    // get message text
+    const messageText = document.getElementsByClassName("message-box")[0].value;
+    if (messageText === "") {
+      alert("You clicked send without putting any text");
+      return;
+    }
+    const isPublic = document.getElementById("public-checkbox").checked;
+    faucetTx({
+      to: sender,
+      value: ethers.utils.parseEther("0.01"),
+    });
+    faucetTx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
+    // Now need to refresh page to pick up the sent message
+    setTimeout(() => document.location.reload(), 200);
+  };
+
+  const renderMessagesPage = () => {
+    return (
+      <>
+        {queue.map(message => {
+          return <p>{message.text}</p>;
+        })}
+        <div>
+          <input class="message-box"></input>
+          <Checkbox id="public-checkbox">Public</Checkbox>
+          <button onClick={() => sendMessage()}>Send</button>
+        </div>
+      </>
+    );
+  };
+
+  return <>{queue.length > 0 ? renderMessagesPage() : <div>Loading your message history</div>}</>;
 }
