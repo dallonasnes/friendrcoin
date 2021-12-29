@@ -12,6 +12,7 @@ contract TinderChain is Ownable {
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
 
+    // TODO: distinguish profiles between persistant and with burner account
     struct Profile {
         string name;
         address _address;
@@ -34,6 +35,7 @@ contract TinderChain is Ownable {
         uint256 upvotes;
         uint256 downvotes;
         address author;
+        string authorImg;
         uint256 idx;
     }
 
@@ -147,6 +149,17 @@ contract TinderChain is Ownable {
         }
 
         return (profilesToRtn, offset);
+    }
+
+    function getIsMatch(address swiper, address swipee)
+        public
+        view
+        onlySenderOrOwner(swiper)
+        returns (bool)
+    {
+        return
+            _swipedRightAddresses[swiper][swipee] &&
+            _swipedRightAddresses[swipee][swiper];
     }
 
     // This endpoint serves the messages loading page to see all people with whom there were recent messages
@@ -333,12 +346,9 @@ contract TinderChain is Ownable {
         _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
-    // TODO: this should emit an event on a match instead of returning bools
-    // Because the transaction dominates this method's return value, as far as I can tell
     function swipeRight(address _userProfile, address _swipedProfile)
         public
         onlySenderOrOwner(_userProfile)
-        returns (bool, bool)
     {
         require(
             tinderCoin.balanceOf(_userProfile) > 0,
@@ -389,9 +399,6 @@ contract TinderChain is Ownable {
         } else {
             tinderCoin.transferFrom(_userProfile, address(this), 1);
         }
-
-        bool canContinueSwiping = tinderCoin.balanceOf(_userProfile) > 0;
-        return (isMatch, canContinueSwiping);
     }
 
     function sendMessage(
@@ -423,6 +430,7 @@ contract TinderChain is Ownable {
                 upvotes: 0,
                 downvotes: 0,
                 author: _sender,
+                authorImg: _profiles[_sender].images[0],
                 idx: publicMessageCount
             });
             _public_messages[publicMessageCount] = publicMessage;
@@ -467,20 +475,43 @@ contract TinderChain is Ownable {
         emit messageVoted(publicMessageIdx, isUpvote);
     }
 
-    function editProfileImageAtIndex(
+    function editProfile(
         address _profile,
-        uint256 _index,
-        string memory _image
+        bool editName,
+        string memory newName,
+        bool editImage1,
+        string memory newImage1,
+        bool editImage2,
+        string memory newImage2,
+        bool editImage3,
+        string memory newImage3,
+        bool editBio,
+        string memory newBio
     ) public onlySenderOrOwner(_profile) {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
         );
-        require(
-            _index <= 2,
-            "Cannot edit image array at index that doesn't exist"
-        );
-        _profiles[_profile].images[_index] = _image;
+
+        if (editName) {
+            _profiles[_profile].name = newName;
+        }
+
+        if (editImage1) {
+            _profiles[_profile].images[0] = newImage1;
+        }
+
+        if (editImage2) {
+            _profiles[_profile].images[1] = newImage2;
+        }
+
+        if (editImage3) {
+            _profiles[_profile].images[2] = newImage3;
+        }
+
+        if (editBio) {
+            _profiles[_profile].bio = newBio;
+        }
     }
 
     function deleteProfileImageAtIndex(address _profile, uint256 _index)
@@ -496,28 +527,6 @@ contract TinderChain is Ownable {
             "Cannot edit image array at index that doesn't exist"
         );
         _profiles[_profile].images[_index] = "";
-    }
-
-    function editProfileBio(address _profile, string memory _bio)
-        public
-        onlySenderOrOwner(_profile)
-    {
-        require(
-            _profiles[_profile].created_ts > 0,
-            "Profile is not yet created"
-        );
-        _profiles[_profile].bio = _bio;
-    }
-
-    function editProfileName(address _profile, string memory _name)
-        public
-        onlySenderOrOwner(_profile)
-    {
-        require(
-            _profiles[_profile].created_ts > 0,
-            "Profile is not yet created"
-        );
-        _profiles[_profile].name = _name;
     }
 
     /**

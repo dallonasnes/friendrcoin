@@ -26,6 +26,37 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
 
   // Getting a previously deployed contract
   const TinderChain = await ethers.getContract("TinderChain", deployer);
+  let wallets = [];
+  // Create Test Profiles
+  for (let i = 0; i < 10; i++){
+    const wallet = await ethers.Wallet.createRandom();
+    const address = wallet.getAddress();
+    wallets.push(wallet);
+    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "image1", "image2", "image3", "bio");
+  }
+
+  console.log("FINISHED CREATING PROFILES")
+  console.log("ProfileCount:", await TinderChain.profileCount());
+
+  // Have a few swipe right on the web client default wallet
+  await TinderChain.swipeRight(wallets[0].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await TinderChain.swipeRight(wallets[2].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await TinderChain.swipeRight(wallets[6].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+
+  // Have some accounts match with each other and send public messages
+  await TinderChain.swipeRight(wallets[0].getAddress(), wallets[2].getAddress())
+  await TinderChain.swipeRight(wallets[2].getAddress(), wallets[0].getAddress())
+  await TinderChain.swipeRight(wallets[2].getAddress(), wallets[6].getAddress())
+  await TinderChain.swipeRight(wallets[6].getAddress(), wallets[2].getAddress())
+
+  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "hello world", true);
+  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "another public message", true);
+
+
+  await TinderChain.voteOnPublicMessage(0, true);
+
+
+
   /*  await TinderChain.setPurpose("Hello");
   
     To take ownership of TinderChain using the ownable library uncomment next line and add the 

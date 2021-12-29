@@ -2,6 +2,7 @@ import { Alert, Button, Col, Menu, Row } from "antd";
 import "antd/dist/antd.css";
 import {
   useBalance,
+  useBurnerSigner,
   useContractLoader,
   useContractReader,
   useGasPrice,
@@ -18,18 +19,17 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, Queue, Profile } from "./views";
+import { Home, Queue, Profile, Matches, Messages } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 // header and footer
 import Footer from "./components/Footer";
-
 const { ethers } = require("ethers");
 
 /// 📡 What chain are your contracts deployed to?
 const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
-const DEBUG = false;
+const DEBUG = true;
 const NETWORKCHECK = true;
 
 const web3Modal = Web3ModalSetup();
@@ -56,7 +56,6 @@ function App(props) {
 
   // 🔭 block explorer URL
   const blockExplorer = targetNetwork.blockExplorer;
-
   // load all your providers
   const localProvider = useStaticJsonRPC([
     process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : targetNetwork.rpcUrl,
@@ -79,10 +78,10 @@ function App(props) {
   /* 🔥 This hook will get the price of Gas from ⛽️ EtherGasStation */
   const gasPrice = useGasPrice(targetNetwork, "fast");
   // Use your injected provider from 🦊 Metamask or if you don't have it then instantly generate a 🔥 burner wallet.
+  // TODO(@dallon): this needs to be randomized when deployed to prod so that we don't have profile collisions
   const userProviderAndSigner = useUserProviderAndSigner(injectedProvider, localProvider);
   const userSigner = userProviderAndSigner.signer;
 
-  // TODO: how to verify that this is a different address for each session??
   useEffect(() => {
     async function getAddress() {
       if (userSigner) {
@@ -155,17 +154,43 @@ function App(props) {
     }
   }, [loadWeb3Modal]);
 
-  const isLoggedIn = Boolean(web3Modal && web3Modal.cachedProvider);
+  // TODO: remove hardcode after testing
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // useState(Boolean(web3Modal && web3Modal.cachedProvider));
+  console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
 
-  return (
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    async function getUserProfile() {
+      if (readContracts && readContracts.TinderChain) {
+        try {
+          const res = await readContracts.TinderChain.getUserProfile(address);
+          // Check for non-nil created TS
+          if (res && res.created_ts._hex !== "0x00") {
+            setUserProfile(res);
+          } else {
+            setUserProfile(null);
+          }
+        } catch (e) {
+          console.log("ERROR IN FETCHING USER PROFILE IN MAIN PAGE LOAD", e);
+          setUserProfile(null);
+        }
+      }
+    }
+    getUserProfile();
+  }, [address, readContracts]);
+
+  return isLoggedIn ? (
     <div className="App">
-      {/* ✏️ Edit the header and change the title to your project name */}
-      <Header isLoggedIn={web3Modal?.cachedProvider} />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
 
       <Switch>
         <Route exact path="/">
           <Home
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
             isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
             address={address}
             readContracts={readContracts}
             writeContracts={writeContracts}
@@ -173,32 +198,101 @@ function App(props) {
             faucetTx={faucetTx}
           />
         </Route>
-        <Route exact path="/about-us">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/how-it-works">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/contact">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
         <Route exact path="/dashboard">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/queue">
-          <Queue yourLocalBalance={yourLocalBalance} />
+          <Home
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+          />
         </Route>
         <Route exact path="/profile">
-          <Profile yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
+          <Home
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+          />
+        </Route>
+        <Route exact path="/queue">
+          <Queue
+            userProfile={userProfile}
+            isLoggedIn={isLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+            yourLocalBalance={yourLocalBalance}
+          />
+        </Route>
+        <Route exact path="/matches">
+          <Matches
+            userProfile={userProfile}
+            isLoggedIn={isLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+            yourLocalBalance={yourLocalBalance}
+          />
         </Route>
         <Route exact path="/messages">
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
+          <Messages
+            userProfile={userProfile}
+            isLoggedIn={isLoggedIn}
+            sender={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+            yourLocalBalance={yourLocalBalance}
+          />
         </Route>
       </Switch>
 
       <ThemeSwitch />
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
+      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
+        <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
+          {/*TODO(@kk,@dallon): Minimized is set to true, which hides account balance. Can set to false later*/}
+          <Account
+            address={address}
+            localProvider={localProvider}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            price={price}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+            blockExplorer={blockExplorer}
+            minimized={true}
+          />
+        </div>
+      </div>
+      <Footer />
+      <br />
+    </div>
+  ) : (
+    <div className="App-NoProfile">
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
+      <div>Connect your metamask wallet to create an account</div>
+      <div>Or create a temporary profile using a built in burner wallet</div>
+
+      <ThemeSwitch />
+
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
         <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
           {/*TODO(@kk,@dallon): Minimized is set to true, which hides account balance. Can set to false later*/}

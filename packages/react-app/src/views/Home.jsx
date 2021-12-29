@@ -1,93 +1,146 @@
-import { SyncOutlined } from "@ant-design/icons";
-import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
 import React, { useState, useEffect } from "react";
-import { Address, Balance, Events } from "../components";
 import { BoxH2 } from "../components/H2";
 import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
-import {
-  useBalance,
-  useContractLoader,
-  useContractReader,
-  useGasPrice,
-  useOnBlock,
-  useUserProviderAndSigner,
-} from "eth-hooks";
+import { FAKE_DASHBOARD_DATA } from "../constants";
 const { ethers } = require("ethers");
+import { Profile } from "./";
 
-const fakeInputData = [
-  {
-    idx: 1,
-    img: "../../avatar1.svg",
-    adr: "0x66bc2...57F",
-    text: "Are you a crypto kitty? Cuz I'm feline a connection between us.",
-    up: 679,
-    down: 115,
-  },
-  {
-    idx: 2,
-    img: "../../avatar2.svg",
-    adr: "0x66bc2...57F",
-    text: "Baby, I ain't going for no pump and dump.",
-    up: 555,
-    down: 56,
-  },
-  {
-    idx: 3,
-    img: "../../avatar3.svg",
-    adr: "0x66bc2...57F",
-    text: "Don't fall for other shitcoins, go for this smart contract.",
-    up: 435,
-    down: 76,
-  },
-  {
-    idx: 4,
-    img: "../../avatar4.svg",
-    adr: "0x66bc2...57F",
-    text: "Coinbase is not good enough, let's go to third base.",
-    up: 235,
-    down: 189,
-  },
-  {
-    idx: 5,
-    img: "../../avatar5.svg",
-    adr: "0x66bc2...57F",
-    text: "I am tether to your USD, because I could peg to you 100%.",
-    up: 128,
-    down: 99,
-  },
-];
+const _handleVote = ({ address, isUpvote, faucetTx, writeContracts, isLoggedIn, publicMessages, messageIdx }) => {
+  try {
+    faucetTx({
+      to: address,
+      value: ethers.utils.parseEther("0.01"),
+    });
+    faucetTx(writeContracts.TinderChain.voteOnPublicMessage(parseInt(messageIdx), isUpvote));
+    setTimeout(() => window.location.reload(), 500);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const handleVote = ({
+  address,
+  isUpvote,
+  faucetTx,
+  writeContracts,
+  isLoggedIn,
+  publicMessages,
+  messageIdx,
+  userProfile,
+}) => {
+  if (isLoggedIn && userProfile !== null) {
+    setTimeout(
+      () => _handleVote({ address, isUpvote, faucetTx, writeContracts, isLoggedIn, publicMessages, messageIdx }),
+      500,
+    );
+  } else if (!isLoggedIn) {
+    alert("Hook up your crypto wallet to make your vote count!");
+  } else {
+    // userProfile !== null
+    alert("Create your profile before you can vote");
+  }
+};
 
 // TODO(@dallon): use helper fns to reduce code duplication
-const populateDashboard = data => {
+const populateDashboard = ({ address, data, faucetTx, writeContracts, isLoggedIn, publicMessages, userProfile }) => {
+  if (!data || data.length === 0) return <div>No messages to show</div>;
   return data.map(row => {
     return row.idx % 2 === 0 ? (
       // TODO(@kk) -- for even set text pink, for odd then red
       // TODO: also this may work better for alignment as a grid or with strict margins per column
       <>
         <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
-          <img alt="avatar" src={row.img} />
-          <div style={{ display: "inline-block" }}>{row.adr}</div>
-          <ChatLog backgroundColor="#E2A8A8">{row.text}</ChatLog>
-          <img alt="thumbUp" src={"../../thumbUp.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up}</div>
-          <img alt="thumbDown" src={"../../thumbDown.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.down}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>
+            {row.idx._hex ? parseInt(row.idx._hex) : row.idx}
+          </div>
+          <img alt="author image" src={row.img ? row.img : row.authorImg} />
+          <div style={{ display: "inline-block" }}>{row.author}</div>
+          <ChatLog backgroundColor="#E2A8A8">{row.text ? row.text : row.message.text}</ChatLog>
+          <button
+            onClick={() =>
+              handleVote({
+                userProfile,
+                isUpvote: true,
+                faucetTx,
+                writeContracts,
+                isLoggedIn,
+                address,
+                publicMessages: data,
+                messageIdx: row.idx._hex,
+              })
+            }
+          >
+            <img alt="thumbUp" src={"../../thumbUp.svg"} />
+          </button>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.up ? row.up : parseInt(row.upvotes._hex)}</div>
+          <button
+            onClick={() =>
+              handleVote({
+                userProfile,
+                isUpvote: false,
+                faucetTx,
+                address,
+                writeContracts,
+                isLoggedIn,
+                publicMessages: data,
+                messageIdx: row.idx._hex,
+              })
+            }
+          >
+            <img alt="thumbDown" src={"../../thumbDown.svg"} />
+          </button>
+          <div style={{ display: "inline-block", margin: "5px" }}>
+            {row.down ? row.down : parseInt(row.downvotes._hex)}
+          </div>
         </MessageRow>
         <br />
       </>
     ) : (
       <>
         <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
-          <img alt="avatar" src={row.img} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.adr}</div>
-          <ChatLog backgroundColor="#E47B7B">{row.text}</ChatLog>
-          <img alt="thumbUp" src={"../../thumbUp.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up}</div>
-          <img alt="thumbDown" src={"../../thumbDown.svg"} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.down}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>
+            {row.idx._hex ? parseInt(row.idx._hex) : row.idx}
+          </div>
+          <img alt="author image" src={row.img ? row.img : row.authorImg} />
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.author}</div>
+          <ChatLog backgroundColor="#E47B7B">{row.text ? row.text : row.message.text}</ChatLog>
+          <button
+            onClick={() =>
+              handleVote({
+                userProfile,
+                address,
+                isUpvote: true,
+                faucetTx,
+                writeContracts,
+                isLoggedIn,
+                publicMessages: data,
+                messageIdx: row.idx._hex,
+              })
+            }
+          >
+            <img alt="thumbUp" src={"../../thumbUp.svg"} />
+          </button>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.up ? row.up : parseInt(row.upvotes._hex)}</div>
+          <button
+            onClick={() =>
+              handleVote({
+                userProfile,
+                address,
+                isUpvote: false,
+                faucetTx,
+                writeContracts,
+                isLoggedIn,
+                publicMessages: data,
+                messageIdx: row.idx._hex,
+              })
+            }
+          >
+            <img alt="thumbDown" src={"../../thumbDown.svg"} />
+          </button>
+          <div style={{ display: "inline-block", margin: "5px" }}>
+            {row.down ? row.down : parseInt(row.downvotes._hex)}
+          </div>
         </MessageRow>
         <br />
       </>
@@ -95,119 +148,66 @@ const populateDashboard = data => {
   });
 };
 
-const fakeData = () => {
-  return (
-    <div>
-      <div
-        style={{ border: "1px solid #cccccc", padding: 16, width: "75%", height: "75%", margin: "auto", marginTop: 64 }}
-      >
-        <h2>Top Voted Messages</h2>
-        <Divider />
-        {populateDashboard(fakeInputData)}
-      </div>
-      <h2>Tokenized Love</h2>
-      <h4>Reap the rewards of matching and</h4>
-      <h4>'Playing the game'</h4>
-    </div>
-  );
-};
-
-// TODO(@kk) - this should vertically align, i had some trouble with it :/
-const populateRecentMatches = () => {
-  return ["../../avatar1.svg", "../../avatar2.svg", "../../avatar3.svg", "../../avatar4.svg"].map(img => {
-    return <img style={{ display: "vertical-align" }} alt="Match avatar" src={img} />;
-  });
-};
-
-const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
-  const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
-  const [profile, setProfile] = useState(null); // TODO: use default profile here
-  const [didFetch, setDidFetch] = useState(false);
-  useEffect(() => {
-    async function getUserProfile() {
-      if (readContracts && readContracts.TinderChain) {
-        try {
-          const res = await readContracts.TinderChain.getUserProfile(address);
-          setProfile(res);
-          console.log("pfoile is set");
-        } catch (e) {
-          console.log("error here:", e);
-        }
+const getPublicMessages = async ({
+  publicMessages,
+  setPublicMessages,
+  offset,
+  setOffset,
+  didFetchLastPage,
+  setDidFetchLastPage,
+  address,
+  readContracts,
+  limit,
+}) => {
+  if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
+    try {
+      const [nextPage, nextOffset] = await readContracts.TinderChain.getPublicMessages(limit, offset);
+      if (nextPage && nextPage.length > 0) {
+        // HACK: this page loads again after userProfile loads, then fetches the first page twice
+        // need to make sure the we don't duplicate messages on screen
+        const unseenMessages = nextPage.filter(newMessage => {
+          for (let i = 0; i < publicMessages.length; i++) {
+            if (parseInt(newMessage.idx._hex) === parseInt(publicMessages[i].idx._hex)) return false;
+          }
+          return true;
+        });
+        const _publicMessages = publicMessages.concat(unseenMessages);
+        setPublicMessages(_publicMessages);
       }
-    }
-    getUserProfile();
-  }, [address, readContracts]);
-
-  if (profile && !didFetch) {
-    if (profile.created_ts._hex === "0x00") {
-      console.log("building profile transaction");
-      if (isLoggedIn) {
-        tx(
-          writeContracts.TinderChain.createUserProfileFlow(
-            address,
-            "This is my test name!",
-            "image1",
-            "image2",
-            "image3",
-            "bio",
-          ),
-        );
-        console.log("real tx done");
-      } else {
-        // load faucet eth and make transaction
-        try {
-          faucetTx({
-            to: address,
-            value: ethers.utils.parseEther("0.01"),
-          });
-          faucetTx(
-            writeContracts.TinderChain.createUserProfileFlow(address, "name", "image1", "image2", "image3", "bio"),
-          );
-        } catch (e) {
-          console.log("error:", e);
-        }
-
-        console.log("faucet done");
+      if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
+        setDidFetchLastPage(true);
       }
-      setDidFetch(true);
-      console.log("finished profile transaction");
-    } else {
-      console.log("need to display profile");
-      // now need to fetch token balance and any other needed data
+      setOffset(parseInt(nextOffset._hex));
+    } catch (e) {
+      console.log(e);
     }
-  } else {
-    return fakeData();
   }
+};
+
+const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
+  const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
+  const [publicMessages, setPublicMessages] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [didFetchLastPage, setDidFetchLastPage] = useState(false);
+  const limit = 5;
+
+  useEffect(() => {
+    getPublicMessages({
+      publicMessages,
+      setPublicMessages,
+      offset,
+      setOffset,
+      didFetchLastPage,
+      setDidFetchLastPage,
+      address,
+      readContracts,
+      limit,
+    });
+  }, [readContracts, publicMessages.length]);
 
   return (
     <div>
-      <div style={{ display: "inline-block", margin: "5px", marginBottom: "10px" }}>
-        <img alt="Profile avatar" src={"../../profileAvatar.svg"} />
-        <div style={{ display: "inline-block", margin: "5px" }}>
-          <BoxH2 style={{ margin: "5px" }}>Hello: {profile.name}</BoxH2>
-          <div style={{ margin: "5px" }}>Your Balance: 10</div>
-        </div>
-        <div style={{ display: "inline-block", marginLeft: "500px", marginRight: "5px" }}>
-          <Button style={{ display: "vertical-align" }}>Explore messages </Button>
-        </div>
-      </div>
-
       <div style={{ display: "inline-block", margin: "5px" }}>
-        <div
-          style={{
-            display: "inline-block",
-            border: "1px solid #cccccc",
-            padding: 16,
-            width: "20%",
-            height: "75%",
-            margin: "auto",
-            marginTop: 64,
-          }}
-        >
-          Recent Matches
-        </div>
-        <div>{populateRecentMatches()}</div>
-
         <FakeMessageBox>
           <div
             style={{
@@ -219,7 +219,29 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
             <Button onClick={() => setShowGlobalDashboard(!showGlobalDashboard)}>Toggle Personal/Global View</Button>
           </div>
           <Divider />
-          {populateDashboard(showGlobalDashboard ? fakeInputData : fakeInputData.filter(elem => elem.adr === address))}
+          {populateDashboard(
+            isLoggedIn
+              ? showGlobalDashboard
+                ? { data: publicMessages, faucetTx, writeContracts, isLoggedIn, address, userProfile }
+                : {
+                    data: publicMessages.filter(elem => elem.author === address),
+                    faucetTx,
+                    writeContracts,
+                    isLoggedIn,
+                    address,
+                    userProfile,
+                  }
+              : showGlobalDashboard
+              ? { data: FAKE_DASHBOARD_DATA, faucetTx, writeContracts, isLoggedIn, address, userProfile }
+              : {
+                  data: FAKE_DASHBOARD_DATA.filter(elem => elem.author === address),
+                  faucetTx,
+                  writeContracts,
+                  isLoggedIn,
+                  address,
+                  userProfile,
+                },
+          )}
         </FakeMessageBox>
       </div>
       <div style={{ marginBottom: "10px" }}>
@@ -231,6 +253,31 @@ const loadData = ({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, add
   );
 };
 
-export default function Home({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) {
-  return loadData({ isLoggedIn, readContracts, writeContracts, tx, faucetTx, address });
+export default function Home({
+  isLoggedIn,
+  userProfile,
+  setUserProfile,
+  setIsLoggedIn,
+  readContracts,
+  writeContracts,
+  tx,
+  faucetTx,
+  address,
+}) {
+  return (
+    <>
+      <Profile
+        userProfile={userProfile}
+        setUserProfile={setUserProfile}
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        address={address}
+        readContracts={readContracts}
+        writeContracts={writeContracts}
+        tx={tx}
+        faucetTx={faucetTx}
+      />
+      {loadData({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address })}
+    </>
+  );
 }
