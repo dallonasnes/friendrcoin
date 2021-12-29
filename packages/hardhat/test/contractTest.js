@@ -139,7 +139,7 @@ describe("TinderChain", function () {
 
     it("should allow an existing user to edit any of their own images", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).editProfileImageAtIndex(addr1.address, 0, "fake image");
+      await myContract.connect(addr1).editProfile(addr1.address, false, "", true, "fake image", false, "", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.images).to.eql(["fake image", img2, img3]);
     });
@@ -147,11 +147,11 @@ describe("TinderChain", function () {
     it("should allow only the contract owner to edit someone else's images", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       // works for owner
-      await myContract.editProfileImageAtIndex(addr1.address, 0, "fake image");
+      await myContract.editProfile(addr1.address, false, "", true, "fake image", false, "", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(await profile.images).to.eql(["fake image", img2, img3]);
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfileImageAtIndex(addr1.address, 0, "fake image")).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
     it("should allow an existing user to delete any of their images", async () => {
@@ -173,36 +173,36 @@ describe("TinderChain", function () {
 
     it("should allow an existing user to edit their profile bio", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).editProfileBio(addr1.address, "hello world");
+      await myContract.connect(addr1).editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(profile.bio).to.equal("hello world");
+      expect(profile.bio).to.equal("new bio");
     });
 
     it("should allow only the contract owner to edit someone else's profile bio", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       // works for owner
-      await myContract.editProfileBio(addr1.address, "hello world");
+      await myContract.editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(profile.bio).to.equal("hello world");
+      expect(profile.bio).to.equal("new bio");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfileBio(addr1.address, "hello world")).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio")).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
     it("should allow an existing user to edit their profile name", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).editProfileName(addr1.address, "hello world");
+      await myContract.connect(addr1).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(profile.name).to.equal("hello world");
+      expect(profile.name).to.equal("new name");
     });
 
-    it("should allow only the contract owner to edit someone else's profile bio", async () => {
+    it("should allow only the contract owner to edit someone else's profile name", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       // works for owner
-      await myContract.editProfileName(addr1.address, "hello world");
+      await myContract.editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(profile.name).to.equal("hello world");
+      expect(profile.name).to.equal("new name");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfileName(addr1.address, "hello world")).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address or owner.");
     });
   });
 

@@ -473,20 +473,43 @@ contract TinderChain is Ownable {
         emit messageVoted(publicMessageIdx, isUpvote);
     }
 
-    function editProfileImageAtIndex(
+    function editProfile(
         address _profile,
-        uint256 _index,
-        string memory _image
+        bool editName,
+        string memory newName,
+        bool editImage1,
+        string memory newImage1,
+        bool editImage2,
+        string memory newImage2,
+        bool editImage3,
+        string memory newImage3,
+        bool editBio,
+        string memory newBio
     ) public onlySenderOrOwner(_profile) {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
         );
-        require(
-            _index <= 2,
-            "Cannot edit image array at index that doesn't exist"
-        );
-        _profiles[_profile].images[_index] = _image;
+
+        if (editName) {
+            _profiles[_profile].name = newName;
+        }
+
+        if (editImage1) {
+            _profiles[_profile].images[0] = newImage1;
+        }
+
+        if (editImage2) {
+            _profiles[_profile].images[1] = newImage2;
+        }
+
+        if (editImage3) {
+            _profiles[_profile].images[2] = newImage3;
+        }
+
+        if (editBio) {
+            _profiles[_profile].bio = newBio;
+        }
     }
 
     function deleteProfileImageAtIndex(address _profile, uint256 _index)
@@ -502,28 +525,6 @@ contract TinderChain is Ownable {
             "Cannot edit image array at index that doesn't exist"
         );
         _profiles[_profile].images[_index] = "";
-    }
-
-    function editProfileBio(address _profile, string memory _bio)
-        public
-        onlySenderOrOwner(_profile)
-    {
-        require(
-            _profiles[_profile].created_ts > 0,
-            "Profile is not yet created"
-        );
-        _profiles[_profile].bio = _bio;
-    }
-
-    function editProfileName(address _profile, string memory _name)
-        public
-        onlySenderOrOwner(_profile)
-    {
-        require(
-            _profiles[_profile].created_ts > 0,
-            "Profile is not yet created"
-        );
-        _profiles[_profile].name = _name;
     }
 
     /**

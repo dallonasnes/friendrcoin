@@ -43,6 +43,13 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await TinderChain.swipeRight(wallets[2].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
   await TinderChain.swipeRight(wallets[6].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
 
+  // Have some accounts match with each other and send public messages
+  await TinderChain.swipeRight(wallets[0].getAddress(), wallets[2].getAddress())
+  await TinderChain.swipeRight(wallets[2].getAddress(), wallets[0].getAddress())
+  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "hello world", true);
+
+
+
   /*  await TinderChain.setPurpose("Hello");
   
     To take ownership of TinderChain using the ownable library uncomment next line and add the 
