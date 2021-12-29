@@ -28,10 +28,10 @@ const fetchMessages = async ({
         const tmpQueue = queue.concat(nextPage);
         setQueue(tmpQueue);
       }
-      if (nextOffset === offset || nextPage.length < limit) {
+      if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
         setDidFetchLastPage(true);
       }
-      setOffset(nextOffset);
+      setOffset(parseInt(nextOffset._hex));
     }
   }
 };
@@ -58,6 +58,17 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
     });
   }, [readContracts, offset]);
 
+  const _sendMessage = ({ messageText, isPublic }) => {
+    faucetTx({
+      to: sender,
+      value: ethers.utils.parseEther("0.01"),
+    });
+    faucetTx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
+    // Now need to refresh page to pick up the sent message
+    setTimeout(() => document.location.reload(), 200);
+  };
+
+  // add timeout on calls to prevent nonce issue with transactions
   const sendMessage = () => {
     // get message text
     const messageText = document.getElementsByClassName("message-box")[0].value;
@@ -66,13 +77,7 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
       return;
     }
     const isPublic = document.getElementById("public-checkbox").checked;
-    faucetTx({
-      to: sender,
-      value: ethers.utils.parseEther("0.01"),
-    });
-    faucetTx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
-    // Now need to refresh page to pick up the sent message
-    setTimeout(() => document.location.reload(), 200);
+    setTimeout(() => _sendMessage({ messageText, isPublic }), 500);
   };
 
   const renderMessagesPage = () => {

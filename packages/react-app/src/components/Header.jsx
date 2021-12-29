@@ -13,14 +13,14 @@ const getNotLoggedInButtons = () => {
 };
 
 const getLoggedInButtons = () => {
-  return ["Dashboard", "Queue", "Profile", "Messages"].map(text => (
+  return ["Dashboard", "Queue", "Profile", "Matches"].map(text => (
     <LoggedInButton>
       <Link to={`/${text.toLowerCase().replace(" ", "-")}`}>{text}</Link>
     </LoggedInButton>
   ));
 };
 
-export default function Header({ isLoggedIn, setIsLoggedIn }) {
+export default function Header({ isLoggedIn, setIsLoggedIn, userProfile }) {
   console.log("HEADER LOGGED IN:", isLoggedIn);
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
@@ -28,7 +28,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
         Matchcoin
         <img alt="Matchcoin Logo" src={"../../logo-matchcoin.svg"} />
       </a>
-      <div>{isLoggedIn ? getLoggedInButtons() : getNotLoggedInButtons()}</div>
+      <div>{userProfile !== null ? getLoggedInButtons() : getNotLoggedInButtons()}</div>
       <div></div>
     </div>
   );

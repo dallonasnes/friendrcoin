@@ -36,10 +36,10 @@ const fetchProfiles = async ({
         const tmpQueue = queue.concat(nextPage);
         setQueue(tmpQueue);
       }
-      if (nextOffset === offset || nextPage.length < limit) {
+      if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
         setDidFetchLastPage(true);
       }
-      setOffset(nextOffset);
+      setOffset(parseInt(nextOffset._hex));
     }
   }
 };
@@ -49,7 +49,16 @@ const fetchProfiles = async ({
 // TODO: can change yourLocalBalance between 0 and 1 to test different views
 // TODO: can test "match" page by clicking on heart button (user must have at least 1 token in yourLocalBalance variable)
 // ^ it uses a timer so shows for 5 seconds with a button to start message, then goes back to match screen
-export default function Queue({ isLoggedIn, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) {
+export default function Queue({
+  isLoggedIn,
+  userProfile,
+  address,
+  readContracts,
+  writeContracts,
+  tx,
+  faucetTx,
+  yourLocalBalance,
+}) {
   console.log("QUEUE IS-LOGGED-IN", isLoggedIn);
   const [didJustMatch, setDidJustMatch] = useState(false);
   const matchPage = () => {
@@ -75,6 +84,88 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
     );
   };
 
+  const loggedInView = ({ yourLocalBalance, userProfile, handleSwipe, showNextProfile }) => {
+    return userProfile === null ? (
+      <div>
+        <h2>You must create a profile to begin</h2>
+        <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
+          <img alt="temp" src={"../../queueAvatar.svg"} />
+        </div>
+      </div>
+    ) : (
+      <div>
+        {yourLocalBalance ? "Start Swiping, Get Matching" : "Sorry, No Token No Matchy"}
+        {yourLocalBalance ? (
+          showNextProfile()
+        ) : (
+          <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
+            <img alt="temp" src={"../../queueAvatar.svg"} />
+          </div>
+        )}
+
+        {yourLocalBalance ? (
+          <>
+            <Button
+              style={{ backgroundColor: "red" }}
+              onClick={() => handleSwipe({ isRightSwipe: false, isLoggedIn: true })}
+            >
+              <img alt="x" src={"../../x-mark.svg"} />
+            </Button>
+            <Button
+              style={{ backgroundColor: "red" }}
+              onClick={() => handleSwipe({ isRightSwipe: true, isLoggedIn: true })}
+            >
+              <img alt="heart" src={"../../heart.svg"} />
+            </Button>
+          </>
+        ) : (
+          <Button>Get More Tokens</Button>
+        )}
+      </div>
+    );
+  };
+
+  const burnerWalletView = ({ yourLocalBalance, userProfile, handleSwipe, showNextProfile }) => {
+    return userProfile === null ? (
+      <div>
+        <h2>You must create a profile to begin</h2>
+        <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
+          <img alt="temp" src={"../../queueAvatar.svg"} />
+        </div>
+      </div>
+    ) : (
+      <div>
+        {yourLocalBalance ? "Start Swiping, Get Matching" : "Sorry, No Token No Matchy"}
+        {yourLocalBalance ? (
+          showNextProfile()
+        ) : (
+          <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
+            <img alt="temp" src={"../../queueAvatar.svg"} />
+          </div>
+        )}
+
+        {yourLocalBalance ? (
+          <>
+            <Button
+              style={{ backgroundColor: "red" }}
+              onClick={() => handleSwipe({ isRightSwipe: false, isLoggedIn: false })}
+            >
+              <img alt="x" src={"../../x-mark.svg"} />
+            </Button>
+            <Button
+              style={{ backgroundColor: "red" }}
+              onClick={() => handleSwipe({ isRightSwipe: true, isLoggedIn: false })}
+            >
+              <img alt="heart" src={"../../heart.svg"} />
+            </Button>
+          </>
+        ) : (
+          <Button>Get More Tokens</Button>
+        )}
+      </div>
+    );
+  };
+
   const swipePage = ({ writeContracts, readContracts, address, faucetTx }) => {
     const [queue, setQueue] = useState([]); // TODO: default shape
     const [currentProfile, setCurrentProfile] = useState({});
@@ -96,29 +187,37 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
       });
     }, [readContracts, queue.length]);
 
-    const handleSwipe = ({ isRightSwipe }) => {
-      // first make sure account has enough for transaction
-      faucetTx({
-        to: address,
-        value: ethers.utils.parseEther("0.01"),
-      });
+    const _handleSwipe = ({ isRightSwipe, isLoggedIn, swipedProfile }) => {
+      if (isLoggedIn) {
+        // TODO: remove faucet TX if real account
+        // first make sure account has enough for transaction
+        faucetTx({
+          to: address,
+          value: ethers.utils.parseEther("0.01"),
+        });
 
-      isRightSwipe
-        ? faucetTx(writeContracts.TinderChain.swipeRight(address, currentProfile._address))
-        : faucetTx(writeContracts.TinderChain.swipeLeft(address, currentProfile._address));
+        isRightSwipe
+          ? faucetTx(writeContracts.TinderChain.swipeRight(address, swipedProfile._address))
+          : faucetTx(writeContracts.TinderChain.swipeLeft(address, swipedProfile._address));
 
-      if (isRightSwipe) {
-        // TODO: debug this
-        // Not using await here because we will re-render if this method sets the isMatch state field
-        // checkForMatch({readContracts, swiper: address, swipee: currentProfile._address, didJustMatch, setDidJustMatch})
+        if (isRightSwipe) {
+          // TODO: debug this
+          // Not using await here because we will re-render if this method sets the isMatch state field
+          // checkForMatch({readContracts, swiper: address, swipee: currentProfile._address, didJustMatch, setDidJustMatch})
+        }
       }
+    };
 
+    // use timeout to avoid nonce transaction error when fast subsequent swipes
+    const handleSwipe = ({ isRightSwipe, isLoggedIn }) => {
+      let swipedProfile = { ...currentProfile };
       if (queue.length > 0) {
         setCurrentProfile(queue.shift());
       } else {
         setCurrentProfile({});
       }
       showNextProfile();
+      setTimeout(() => _handleSwipe({ isRightSwipe, isLoggedIn, swipedProfile }), 1000);
     };
 
     const getFirstProfile = () => {
@@ -135,8 +234,9 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
         // TODO: from profile we can get name, photos to fetch from CDN, bio, etc
         return (
           <div style={{ marginTop: "20px" }}>
-            <img alt="temp" src={"../../queueAvatar.svg"} />
+            <img alt="temp" src={currentProfile.images[0] || "../../queueAvatar.svg"} />
             <p>{currentProfile.name}</p>
+            <p>{currentProfile.bio}</p>
           </div>
         );
       } else if (didFetchLastPage) {
@@ -151,38 +251,10 @@ export default function Queue({ isLoggedIn, address, readContracts, writeContrac
       }
     };
 
-    return isLoggedIn ? (
-      <div>
-        {yourLocalBalance ? "Start Swiping, Get Matching" : "Sorry, No Token No Matchy"}
-        {yourLocalBalance ? (
-          showNextProfile()
-        ) : (
-          <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
-            <img alt="temp" src={"../../queueAvatar.svg"} />
-          </div>
-        )}
-
-        {yourLocalBalance ? (
-          <>
-            <Button style={{ backgroundColor: "red" }} onClick={() => handleSwipe({ isRightSwipe: false })}>
-              <img alt="x" src={"../../x-mark.svg"} />
-            </Button>
-            <Button style={{ backgroundColor: "red" }} onClick={() => handleSwipe({ isRightSwipe: true })}>
-              <img alt="heart" src={"../../heart.svg"} />
-            </Button>
-          </>
-        ) : (
-          <Button>Get More Tokens</Button>
-        )}
-      </div>
-    ) : (
-      <div>
-        <h2>You must create a profile to begin</h2>
-        <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
-          <img alt="temp" src={"../../queueAvatar.svg"} />
-        </div>
-      </div>
-    );
+    // TODO: if logged in, can meaningfully swipe. if not logged in && has profile, can swipe but no network calls
+    return isLoggedIn
+      ? loggedInView({ yourLocalBalance, userProfile, handleSwipe, showNextProfile })
+      : burnerWalletView({ yourLocalBalance, userProfile, handleSwipe, showNextProfile });
   };
 
   return (

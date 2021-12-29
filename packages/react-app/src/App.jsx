@@ -154,7 +154,8 @@ function App(props) {
     }
   }, [loadWeb3Modal]);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(web3Modal && web3Modal.cachedProvider));
+  // TODO: remove hardcode after testing
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // useState(Boolean(web3Modal && web3Modal.cachedProvider));
   console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
 
   const [userProfile, setUserProfile] = useState(null);
@@ -179,12 +180,38 @@ function App(props) {
     getUserProfile();
   }, [address, readContracts]);
 
-  return true ? (
+  return isLoggedIn ? (
     <div className="App">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
 
       <Switch>
         <Route exact path="/">
+          <Home
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+          />
+        </Route>
+        <Route exact path="/dashboard">
+          <Home
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            address={address}
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            faucetTx={faucetTx}
+          />
+        </Route>
+        <Route exact path="/profile">
           <Home
             userProfile={userProfile}
             setUserProfile={setUserProfile}
@@ -260,7 +287,7 @@ function App(props) {
     </div>
   ) : (
     <div className="App-NoProfile">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
       <div>Connect your metamask wallet to create an account</div>
       <div>Or create a temporary profile using a built in burner wallet</div>
 

@@ -17,20 +17,22 @@ const fetchMatches = async ({
 }) => {
   {
     if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
-      const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMatches(address, limit, offset);
-      if (nextPage && nextPage.length > 0) {
-        const tmpQueue = queue.concat(nextPage);
-        setQueue(tmpQueue);
+      try {
+        const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMatches(address, limit, offset);
+        if (nextPage && nextPage.length > 0) {
+          const tmpQueue = queue.concat(nextPage);
+          setQueue(tmpQueue);
+        }
+        if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
+          setDidFetchLastPage(true);
+        }
+        setOffset(parseInt(nextOffset._hex));
+      } catch (e) {
+        console.log(e);
       }
-      if (nextOffset === offset || nextPage.length < limit) {
-        setDidFetchLastPage(true);
-      }
-      setOffset(nextOffset);
     }
   }
 };
-
-// On click I want to move to the message view
 
 const renderMatches = ({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) => {
   return queue.map(profile => {

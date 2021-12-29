@@ -46,7 +46,14 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   // Have some accounts match with each other and send public messages
   await TinderChain.swipeRight(wallets[0].getAddress(), wallets[2].getAddress())
   await TinderChain.swipeRight(wallets[2].getAddress(), wallets[0].getAddress())
+  await TinderChain.swipeRight(wallets[2].getAddress(), wallets[6].getAddress())
+  await TinderChain.swipeRight(wallets[6].getAddress(), wallets[2].getAddress())
+
   await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "hello world", true);
+  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "another public message", true);
+
+
+  await TinderChain.voteOnPublicMessage(0, true);
 
 
 
