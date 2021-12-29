@@ -35,6 +35,7 @@ contract TinderChain is Ownable {
         uint256 upvotes;
         uint256 downvotes;
         address author;
+        string authorImg;
         uint256 idx;
     }
 
@@ -429,6 +430,7 @@ contract TinderChain is Ownable {
                 upvotes: 0,
                 downvotes: 0,
                 author: _sender,
+                authorImg: _profiles[_sender].images[0],
                 idx: publicMessageCount
             });
             _public_messages[publicMessageCount] = publicMessage;

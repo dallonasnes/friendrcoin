@@ -12,43 +12,46 @@ const handleVote = ({ isUpvote, faucetTx, writeContracts }) => {
 };
 
 // TODO(@dallon): use helper fns to reduce code duplication
+// TODO: fetch image for each author
 const populateDashboard = ({ data, faucetTx, writeContracts }) => {
+  if (!data || data.length === 0) return <div>No messages to show</div>
+  debugger;
   return data.map(row => {
     return row.idx % 2 === 0 ? (
       // TODO(@kk) -- for even set text pink, for odd then red
       // TODO: also this may work better for alignment as a grid or with strict margins per column
       <>
         <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
-          <img alt="avatar" src={row.img} />
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx._hex ? row.idx._hex : row.idx}</div>
+          <img alt="avatar" src={row.img ? row.img : row.authorImg} />
           <div style={{ display: "inline-block" }}>{row.author}</div>
-          <ChatLog backgroundColor="#E2A8A8">{row.text}</ChatLog>
+          <ChatLog backgroundColor="#E2A8A8">{row.text ? row.text : row.message.text}</ChatLog>
           <button onClick={() => handleVote({ isUpvote: true, faucetTx, writeContracts })}>
             <img alt="thumbUp" src={"../../thumbUp.svg"} />
           </button>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.up ? row.up : row.upvotes._hex}</div>
           <button onClick={() => handleVote({ isUpvote: false, faucetTx, writeContracts })}>
             <img alt="thumbDown" src={"../../thumbDown.svg"} />
           </button>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.down}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.down ? row.down : row.downvotes._hex}</div>
         </MessageRow>
         <br />
       </>
     ) : (
       <>
         <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
-          <img alt="avatar" src={row.img} />
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.idx._hex ? row.idx._hex : row.idx}</div>
+          <img alt="avatar" src={row.img ? row.img : row.authorImg} />
           <div style={{ display: "inline-block", margin: "5px" }}>{row.author}</div>
-          <ChatLog backgroundColor="#E47B7B">{row.text}</ChatLog>
+          <ChatLog backgroundColor="#E47B7B">{row.text ? row.text : row.message.text}</ChatLog>
           <button onClick={() => handleVote({ isUpvote: true, faucetTx, writeContracts })}>
             <img alt="thumbUp" src={"../../thumbUp.svg"} />
           </button>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.up ? row.up : row.upvotes._hex}</div>
           <button onClick={() => handleVote({ isUpvote: false, faucetTx, writeContracts })}>
             <img alt="thumbDown" src={"../../thumbDown.svg"} />
           </button>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.down}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.down ? row.down : row.downvotes._hex}</div>
         </MessageRow>
         <br />
       </>
@@ -85,7 +88,6 @@ const getPublicMessages = async ({
   setOffset,
 }) => {
   if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
-    // have at least two before fetching more
     const [nextPage, nextOffset] = await readContracts.TinderChain.getPublicMessages(limit, offset);
     if (nextPage && nextPage.length > 0) {
       const _publicMessages = publicMessages.concat(nextPage);
@@ -133,7 +135,7 @@ const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, write
           </div>
           <Divider />
           {populateDashboard(
-            isLoggedIn
+            true // isLoggedIn
               ? showGlobalDashboard
                 ? { data: publicMessages, faucetTx, writeContracts }
                 : { data: publicMessages.filter(elem => elem.author === address), faucetTx, writeContracts }

@@ -513,6 +513,12 @@ describe("TinderChain", function () {
       await myContract.connect(addr3).voteOnPublicMessage(0, true);
     });
 
+    it("should display the correct author image on a public message", async () => {
+      await setupPublicMessages(1);
+      const [publicMessages, offset] = await myContract.getPublicMessages(10, 0);
+      expect(publicMessages[0].authorImg).to.equal(img1)
+    });
+
     it("should correctly reflect a message's vote count following a vote", async () => {
       await setupPublicMessages(2);
       await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
