@@ -25,13 +25,11 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
         alert("Image input is not a valid url. Please try again");
         return;
       }
-      setImage1(_image1);
       const _name = document.getElementById("name").value;
       if (!_name || _name === "") {
         alert("Empty name input");
         return;
       }
-      setName(_name);
       const _bio = document.getElementById("bio").value;
       if (!_bio || _bio === "") {
         alert("Empty bio input");
@@ -43,7 +41,7 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
           to: address,
           value: ethers.utils.parseEther("0.01"),
         });
-        tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
+        faucetTx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
         setUserProfile({ address, name: _name, images: [_image1, "", ""], bio: _bio });
         // setTimeout(() => window.location.reload(), 300)
       } catch (e) {
@@ -69,10 +67,6 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
   };
 
   const editProfilePage = () => {
-    const [name, setName] = useState(userProfile.name);
-    const [image1, setImage1] = useState(userProfile.images[0]);
-    const [bio, setBio] = useState(userProfile.bio);
-
     const handleEditClick = () => {
       const _image1 = document.getElementById("image1").value;
       if (_image1 !== "" && _image1 != image1) {
@@ -85,8 +79,7 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
               to: address,
               value: ethers.utils.parseEther("0.01"),
             });
-            tx(writeContracts.TinderChain.editProfileImageAtIndex(address, 0, _image1));
-            setImage1(_image1);
+            faucetTx(writeContracts.TinderChain.editProfileImageAtIndex(address, 0, _image1));
             setUserProfile({ ...userProfile, images: [_image1, userProfile.images[1], userProfile.images[2]] });
           } catch (e) {
             console.log(e);
@@ -101,8 +94,7 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
             to: address,
             value: ethers.utils.parseEther("0.01"),
           });
-          tx(writeContracts.TinderChain.editProfileName(address, _name));
-          setName(_name);
+          faucetTx(writeContracts.TinderChain.editProfileName(address, _name));
           setUserProfile({ ...userProfile, name: _name });
         } catch (e) {
           console.log(e);
@@ -115,14 +107,12 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
             to: address,
             value: ethers.utils.parseEther("0.01"),
           });
-          tx(writeContracts.TinderChain.editProfileName(address, _bio));
-          setBio(_bio);
+          faucetTx(writeContracts.TinderChain.editProfileName(address, _bio));
           setUserProfile({ ...userProfile, bio: _bio });
         } catch (e) {
           console.log(e);
         }
       }
-      setTimeout(() => window.location.reload(), 300);
     };
 
     return (
