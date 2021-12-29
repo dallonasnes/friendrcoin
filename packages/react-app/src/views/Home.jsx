@@ -21,7 +21,7 @@ const populateDashboard = ({ data, faucetTx, writeContracts }) => {
         <MessageRow>
           <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
           <img alt="avatar" src={row.img} />
-          <div style={{ display: "inline-block" }}>{row.adr}</div>
+          <div style={{ display: "inline-block" }}>{row.author}</div>
           <ChatLog backgroundColor="#E2A8A8">{row.text}</ChatLog>
           <button onClick={() => handleVote({ isUpvote: true, faucetTx, writeContracts })}>
             <img alt="thumbUp" src={"../../thumbUp.svg"} />
@@ -39,7 +39,7 @@ const populateDashboard = ({ data, faucetTx, writeContracts }) => {
         <MessageRow>
           <div style={{ display: "inline-block", margin: "5px" }}>{row.idx}</div>
           <img alt="avatar" src={row.img} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.adr}</div>
+          <div style={{ display: "inline-block", margin: "5px" }}>{row.author}</div>
           <ChatLog backgroundColor="#E47B7B">{row.text}</ChatLog>
           <button onClick={() => handleVote({ isUpvote: true, faucetTx, writeContracts })}>
             <img alt="thumbUp" src={"../../thumbUp.svg"} />
@@ -73,7 +73,7 @@ const fakeData = ({ writeContracts, faucetTx }) => {
   );
 };
 
-const getPublicMessages = ({
+const getPublicMessages = async ({
   publicMessages,
   setPublicMessages,
   didFetchLastPage,
@@ -86,10 +86,7 @@ const getPublicMessages = ({
 }) => {
   if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
     // have at least two before fetching more
-    const [nextPage, nextOffset] = await readContracts.TinderChain.getPublicMessages(
-      limit,
-      offset,
-    );
+    const [nextPage, nextOffset] = await readContracts.TinderChain.getPublicMessages(limit, offset);
     if (nextPage && nextPage.length > 0) {
       const _publicMessages = publicMessages.concat(nextPage);
       setPublicMessages(_publicMessages);
@@ -138,11 +135,11 @@ const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, write
           {populateDashboard(
             isLoggedIn
               ? showGlobalDashboard
-                ? publicMessages
-                : publicMessages.filter(elem => elem.sender === address)
+                ? { data: publicMessages, faucetTx, writeContracts }
+                : { data: publicMessages.filter(elem => elem.author === address), faucetTx, writeContracts }
               : showGlobalDashboard
-              ? FAKE_DASHBOARD_DATA
-              : FAKE_DASHBOARD_DATA.filter(elem => elem.adr === address),
+              ? { data: FAKE_DASHBOARD_DATA, faucetTx, writeContracts }
+              : { data: FAKE_DASHBOARD_DATA.filter(elem => elem.author === address), faucetTx, writeContracts },
           )}
         </FakeMessageBox>
       </div>

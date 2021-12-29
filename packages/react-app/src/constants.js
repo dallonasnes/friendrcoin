@@ -199,7 +199,7 @@ export const FAKE_DASHBOARD_DATA = [
   {
     idx: 1,
     img: "../../avatar1.svg",
-    adr: "0x66bc2...57F",
+    author: "0x66bc2...57F",
     text: "Are you a crypto kitty? Cuz I'm feline a connection between us.",
     up: 679,
     down: 115,
@@ -207,7 +207,7 @@ export const FAKE_DASHBOARD_DATA = [
   {
     idx: 2,
     img: "../../avatar2.svg",
-    adr: "0x66bc2...57F",
+    author: "0x66bc2...57F",
     text: "Baby, I ain't going for no pump and dump.",
     up: 555,
     down: 56,
@@ -215,7 +215,7 @@ export const FAKE_DASHBOARD_DATA = [
   {
     idx: 3,
     img: "../../avatar3.svg",
-    adr: "0x66bc2...57F",
+    author: "0x66bc2...57F",
     text: "Don't fall for other shitcoins, go for this smart contract.",
     up: 435,
     down: 76,
@@ -223,7 +223,7 @@ export const FAKE_DASHBOARD_DATA = [
   {
     idx: 4,
     img: "../../avatar4.svg",
-    adr: "0x66bc2...57F",
+    author: "0x66bc2...57F",
     text: "Coinbase is not good enough, let's go to third base.",
     up: 235,
     down: 189,
@@ -231,7 +231,7 @@ export const FAKE_DASHBOARD_DATA = [
   {
     idx: 5,
     img: "../../avatar5.svg",
-    adr: "0x66bc2...57F",
+    author: "0x66bc2...57F",
     text: "I am tether to your USD, because I could peg to you 100%.",
     up: 128,
     down: 99,

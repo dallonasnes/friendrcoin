@@ -35,7 +35,6 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
         alert("Empty bio input");
         return;
       }
-      setBio(_bio);
       try {
         faucetTx({
           to: address,
@@ -43,7 +42,6 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
         });
         faucetTx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
         setUserProfile({ address, name: _name, images: [_image1, "", ""], bio: _bio });
-        // setTimeout(() => window.location.reload(), 300)
       } catch (e) {
         console.log(e);
       }
@@ -68,47 +66,59 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
 
   const editProfilePage = () => {
     const handleEditClick = () => {
+      let didNameChange = false;
+      let didBioChange = false;
+      let didImage1Change = false;
       const _image1 = document.getElementById("image1").value;
       if (_image1 !== "" && _image1 != image1) {
         if (!isValidHTTPUrl(_image1)) {
           alert("Image input is not a valid url. Please try again");
           return;
         } else {
-          try {
-            faucetTx({
-              to: address,
-              value: ethers.utils.parseEther("0.01"),
-            });
-            faucetTx(writeContracts.TinderChain.editProfileImageAtIndex(address, 0, _image1));
-            setUserProfile({ ...userProfile, images: [_image1, userProfile.images[1], userProfile.images[2]] });
-          } catch (e) {
-            console.log(e);
-          }
+          didImage1Change = true;
         }
       }
 
       const _name = document.getElementById("name").value;
-      if (_name && _name !== name && _name === "") {
-        try {
-          faucetTx({
-            to: address,
-            value: ethers.utils.parseEther("0.01"),
-          });
-          faucetTx(writeContracts.TinderChain.editProfileName(address, _name));
-          setUserProfile({ ...userProfile, name: _name });
-        } catch (e) {
-          console.log(e);
-        }
+      if (_name && _name !== name && _name !== "") {
+        didNameChange = true;
       }
       const _bio = document.getElementById("bio").value;
-      if (_bio && _bio !== bio && _bio === "") {
+      if (_bio && _bio !== bio && _bio !== "") {
+        didBioChange = true;
+      }
+
+      if (didNameChange || didBioChange || didImage1Change) {
         try {
           faucetTx({
             to: address,
             value: ethers.utils.parseEther("0.01"),
           });
-          faucetTx(writeContracts.TinderChain.editProfileName(address, _bio));
-          setUserProfile({ ...userProfile, bio: _bio });
+          faucetTx(
+            writeContracts.TinderChain.editProfile(
+              address,
+              didNameChange,
+              _name,
+              didImage1Change,
+              _image1,
+              false,
+              "",
+              false,
+              "",
+              didBioChange,
+              _bio,
+            ),
+          );
+          const updatedName = didNameChange ? _name : userProfile.name;
+          const updatedImage = didImage1Change ? _image1 : userProfile.images[0];
+          const updatedBio = didBioChange ? _bio : userProfile.bio;
+
+          setUserProfile({
+            ...userProfile,
+            name: updatedName,
+            bio: updatedBio,
+            images: [updatedImage, userProfile.images[1], userProfile.images[2]],
+          });
         } catch (e) {
           console.log(e);
         }
@@ -119,15 +129,15 @@ export default function Profile({ address, userProfile, setUserProfile, faucetTx
       <>
         <h2>Here you can edit your profile</h2>
         <label>Name</label>
-        <input id="name" placeholder={name || userProfile.name}></input>
+        <input id="name" placeholder={userProfile.name}></input>
         <br />
-        <img alt="your image link doesn't work :(" src={image1 || userProfile.images[0]} />
+        <img alt="your image link doesn't work :(" src={userProfile.images[0]} />
         <br />
         <label>HTTP URL to profile image</label>
-        <input id="image1" placeholder={image1 || userProfile.images[0]}></input>
+        <input id="image1" placeholder={userProfile.images[0]}></input>
         <br />
         <label>Bio</label>
-        <input id="bio" placeholder={bio || userProfile.bio}></input>
+        <input id="bio" placeholder={userProfile.bio}></input>
         <br />
         <button onClick={() => handleEditClick()}>Submit edits</button>
       </>
