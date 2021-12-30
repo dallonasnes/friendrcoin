@@ -155,7 +155,7 @@ function App(props) {
   }, [loadWeb3Modal]);
 
   // TODO: remove hardcode after testing
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // useState(Boolean(web3Modal && web3Modal.cachedProvider));
+  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(web3Modal && web3Modal.cachedProvider));
   console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
 
   const [userProfile, setUserProfile] = useState(null);
@@ -180,7 +180,7 @@ function App(props) {
     getUserProfile();
   }, [address, readContracts]);
 
-  return isLoggedIn ? (
+  return (
     <div className="App">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
 
@@ -198,7 +198,7 @@ function App(props) {
             faucetTx={faucetTx}
           />
         </Route>
-        <Route exact path="/dashboard">
+        <Route exact path="/home">
           <Home
             userProfile={userProfile}
             setUserProfile={setUserProfile}
@@ -265,34 +265,6 @@ function App(props) {
       <ThemeSwitch />
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-      <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
-        <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
-          {/*TODO(@kk,@dallon): Minimized is set to true, which hides account balance. Can set to false later*/}
-          <Account
-            address={address}
-            localProvider={localProvider}
-            userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            price={price}
-            web3Modal={web3Modal}
-            loadWeb3Modal={loadWeb3Modal}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-            blockExplorer={blockExplorer}
-            minimized={true}
-          />
-        </div>
-      </div>
-      <Footer />
-      <br />
-    </div>
-  ) : (
-    <div className="App-NoProfile">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
-      <div>Connect your metamask wallet to create an account</div>
-      <div>Or create a temporary profile using a built in burner wallet</div>
-
-      <ThemeSwitch />
-
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
         <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
           {/*TODO(@kk,@dallon): Minimized is set to true, which hides account balance. Can set to false later*/}

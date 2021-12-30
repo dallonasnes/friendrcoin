@@ -108,7 +108,8 @@ contract TinderChain is Ownable {
     function getUnseenProfiles(
         address _profile,
         uint256 limit,
-        uint256 offset
+        uint256 offset,
+        bool isBurner
     )
         public
         view
@@ -127,7 +128,10 @@ contract TinderChain is Ownable {
             // skip if _profile is the same as currAct
             if (_profile != currAcct) {
                 // see if currAcct was already swiped by _profile
-                bool alreadySwiped = _swipedAddresses[_profile][currAcct];
+                // but if caller is burner wallet then we don't need to do profile lookup
+                bool alreadySwiped = isBurner
+                    ? false
+                    : _swipedAddresses[_profile][currAcct];
                 if (!alreadySwiped) {
                     // get profile for currAcct
                     Profile memory profToShowInQueue = _profiles[currAcct];

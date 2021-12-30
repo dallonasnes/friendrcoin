@@ -5,18 +5,22 @@ import { LoggedInButton } from "./Button";
 import { ButtonLink } from "./Links";
 
 const getNotLoggedInButtons = () => {
-  return ["About Us", "How It Works", "Contact"].map(text => (
-    <LoggedInButton>
-      <ButtonLink to={`/${text.toLowerCase().replace(" ", "-")}`}>{text}</ButtonLink>
-    </LoggedInButton>
+  return ["Home", "About Us", "How It Works", "Contact"].map(text => (
+    <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
+      <LoggedInButton>
+        <ButtonLink to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</ButtonLink>
+      </LoggedInButton>
+    </a>
   ));
 };
 
 const getLoggedInButtons = () => {
-  return ["Dashboard", "Queue", "Profile", "Matches"].map(text => (
-    <LoggedInButton>
-      <Link to={`/${text.toLowerCase().replace(" ", "-")}`}>{text}</Link>
-    </LoggedInButton>
+  return ["Home", "Queue", "Matches"].map(text => (
+    <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
+      <LoggedInButton>
+        <Link to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</Link>
+      </LoggedInButton>
+    </a>
   ));
 };
 
@@ -24,7 +28,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn, userProfile }) {
   console.log("HEADER LOGGED IN:", isLoggedIn);
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
-      <a href="https://github.com/dallonasnes/tinder-chain" target="_blank" rel="noopener noreferrer">
+      <a href="/">
         Matchcoin
         <img alt="Matchcoin Logo" src={"../../logo-matchcoin.svg"} />
       </a>
