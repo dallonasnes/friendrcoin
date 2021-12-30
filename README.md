@@ -2,17 +2,6 @@
 
 ## Remaining Todos
 
-#### Web Flow Planning
-1. User goes to home page
-    a. has wallet to connect
-        a. already has profile
-        b. needs to create profile
-    b. uses a burner wallet (doesn't save progress) -> needs to create a client-only profile
-        a. cannot vote
-        b. cannot match
-        c. cannot send messages
-2. 
-
 #### Launch Token (target Dec 19)
 -- Owned by Dallon
 1. Setup proxy pattern for tinderCoin
@@ -41,20 +30,6 @@
 
 -- Owned by Kelly
 1. Shill coin in DAOs
-
-
-#### Web App middleware P0 for launch (target Dec 22)
--- Owned by Dallon
-1. Hook up calls to all BE APIs
-
-
-#### Web App Core flow (target Dec 23)
--- Owned by Dallon/Sushant :)
-1. Basic functionality for connecting wallet or using burner wallet
-2. Creating / editing profile
-3. Viewing queue + swiping
-4. Messaging
-5. Voting on public messages
 
 #### Web App UI (target Dec 23)
 -- Owned by Kelly
