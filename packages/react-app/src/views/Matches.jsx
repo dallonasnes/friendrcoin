@@ -79,8 +79,10 @@ export default function Matches({
     <>
       {queue.length > 0 ? (
         renderMatches({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance })
-      ) : (
+      ) : isLoggedIn ? (
         <div>No matches at the moment</div>
+      ) : (
+        <div>No matches at the moment. Connect your wallet for better luck</div>
       )}
     </>
   );

@@ -214,9 +214,9 @@ describe("TinderChain", function () {
       await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
 
       // each account should see only other 2 accounts in the queue
-      let [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0);
-      let [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0);
-      let [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0);
+      let [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0, false);
+      let [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0, false);
+      let [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0, false);
 
       expect(acct1UnseenProfiles.map((profile) => profile._address)).to.eql([addr2.address, addr3.address]);
       expect(acct1Offset).to.equal(3);
@@ -231,20 +231,20 @@ describe("TinderChain", function () {
       await myContract.connect(addr1).swipeLeft(addr1.address, addr2.address);
       await myContract.connect(addr1).swipeLeft(addr1.address, addr3.address);
       // there should be no unseen profiles left
-      [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0);
+      [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0, false);
       expect(acct1UnseenProfiles.length).to.equal(0);
       expect(acct1Offset).to.equal(3);
 
       // acct2 swipes on acct1
       await myContract.connect(addr2).swipeLeft(addr2.address, addr1.address);
       // there should be only one unseen profile left (addr3)
-      [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0);
+      [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0, false);
       expect(acct2UnseenProfiles.length).to.equal(1);
       expect(acct2UnseenProfiles[0]._address).to.equal(addr3.address);
       expect(acct2Offset).to.equal(3);
 
       // acct3 doesn't swipe
-      [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0);
+      [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0, false);
       expect(acct3UnseenProfiles.length).to.equal(2);
       expect(acct3UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address, addr2.address]);
       expect(acct3Offset).to.equal(3);
@@ -262,9 +262,9 @@ describe("TinderChain", function () {
       await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
 
       // get page 1 of unseen profiles
-      const [firstPageUnseenProfiles, firstPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, 0);
+      const [firstPageUnseenProfiles, firstPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, 0, false);
       // get page 2 of unseen profiles
-      const [secondPageUnseenProfiles, secondPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, firstPageOffset);
+      const [secondPageUnseenProfiles, secondPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, firstPageOffset, false);
 
       // each page should have exactly one profile
       expect(firstPageUnseenProfiles.length).to.equal(1);
@@ -364,12 +364,12 @@ describe("TinderChain", function () {
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
 
       // owner can fetch for addr1
-      const [unseenProfiles, firstPageOffset] = await myContract.getUnseenProfiles(addr1.address, 10, 0);
+      const [unseenProfiles, firstPageOffset] = await myContract.getUnseenProfiles(addr1.address, 10, 0, false);
       expect(unseenProfiles.length).to.equal(1);
       expect(firstPageOffset).to.equal(2);
 
       // addr2 cannot fetch for addr1
-      await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0, false)).to.be.revertedWith("Caller is neither the target address or owner.");
     });
 
     it("should correctly indicate if a match just happened by getIsMatch endpoint", async () => {

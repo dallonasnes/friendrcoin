@@ -27,19 +27,33 @@ const fetchProfiles = async ({
   limit,
   offset,
   setOffset,
+  isLoggedIn,
 }) => {
   {
     if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.TinderChain) {
       // have at least two before fetching more
-      const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(address, limit, offset);
-      if (nextPage && nextPage.length > 0) {
-        const tmpQueue = queue.concat(nextPage);
-        setQueue(tmpQueue);
+      // and if user is not logged in, then isBurner wallet is true
+      try {
+        const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(
+          address,
+          limit,
+          offset,
+          !isLoggedIn,
+        );
+        if (nextPage && nextPage.length > 0) {
+          const tmpQueue = queue.concat(nextPage);
+          setQueue(tmpQueue);
+        }
+        if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
+          setDidFetchLastPage(true);
+        }
+        setOffset(parseInt(nextOffset._hex));
+      } catch (e) {
+        console.log(e);
+        if (e.toString().toLowerCase().includes("indexed beyond those that exist")) {
+          setDidFetchLastPage(true);
+        }
       }
-      if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
-        setDidFetchLastPage(true);
-      }
-      setOffset(parseInt(nextOffset._hex));
     }
   }
 };
@@ -60,34 +74,12 @@ export default function Queue({
   yourLocalBalance,
 }) {
   console.log("QUEUE IS-LOGGED-IN", isLoggedIn);
-  const [didJustMatch, setDidJustMatch] = useState(false);
-  const matchPage = () => {
-    setTimeout(() => setDidJustMatch(false), 5000);
-    return (
-      <div>
-        <div>
-          <h2>Congrats! Issa match</h2>
-          <div style={{ display: "inline-block" }}>
-            <div style={{ display: "inline-block" }}>
-              <img style={{ margin: "10px" }} alt="match1" src={"../../profileAvatar.svg"} />
-              <p>+1 $MATCH</p>
-            </div>
-            <img style={{ margin: "10px", backgroundColor: "red" }} alt="heart" src={"../../heart.svg"} />
-            <div style={{ display: "inline-block" }}>
-              <img style={{ margin: "10px" }} alt="match1" src={"../../profileAvatar.svg"} />
-              <p>+1 $MATCH</p>
-            </div>
-          </div>
-        </div>
-        <Button>Say hi! Don't be shy!</Button>
-      </div>
-    );
-  };
 
   const loggedInView = ({ yourLocalBalance, userProfile, handleSwipe, showNextProfile }) => {
     return userProfile === null ? (
       <div>
         <h2>You must create a profile to begin</h2>
+        <h2>You can do that on the home page</h2>
         <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
           <img alt="temp" src={"../../queueAvatar.svg"} />
         </div>
@@ -128,7 +120,8 @@ export default function Queue({
   const burnerWalletView = ({ yourLocalBalance, userProfile, handleSwipe, showNextProfile }) => {
     return userProfile === null ? (
       <div>
-        <h2>You must create a profile to begin</h2>
+        <h2>You must create a temporary profile to begin</h2>
+        <h2>You can do that on the home page</h2>
         <div style={{ marginTop: "20px", filter: "blur(8px)" }}>
           <img alt="temp" src={"../../queueAvatar.svg"} />
         </div>
@@ -166,7 +159,7 @@ export default function Queue({
     );
   };
 
-  const swipePage = ({ writeContracts, readContracts, address, faucetTx }) => {
+  const swipePage = ({ isLoggedIn, writeContracts, readContracts, address, faucetTx }) => {
     const [queue, setQueue] = useState([]); // TODO: default shape
     const [currentProfile, setCurrentProfile] = useState({});
     const [isFirstProfile, setIsFirstProfile] = useState(true);
@@ -184,6 +177,7 @@ export default function Queue({
         limit,
         offset,
         setOffset,
+        isLoggedIn,
       });
     }, [readContracts, queue.length]);
 
@@ -231,10 +225,14 @@ export default function Queue({
     // needs to allows swiping between the images
     const showNextProfile = () => {
       if (currentProfile.name) {
+        console.log("FIRST IMAGE: ", currentProfile.images[0]);
         // TODO: from profile we can get name, photos to fetch from CDN, bio, etc
         return (
           <div style={{ marginTop: "20px" }}>
-            <img alt="temp" src={currentProfile.images[0] || "../../queueAvatar.svg"} />
+            <img
+              alt="Default avatar"
+              src={currentProfile.images[0] !== "" ? currentProfile.images[0] : "../../queueAvatar.svg"}
+            />
             <p>{currentProfile.name}</p>
             <p>{currentProfile.bio}</p>
           </div>
@@ -245,6 +243,7 @@ export default function Queue({
         if (queue.length > 0) {
           getFirstProfile();
         } else {
+          debugger;
           // TODO: i think we should never enter into this case right?
           return <div>Need to fetch more profiles</div>;
         }
@@ -257,7 +256,5 @@ export default function Queue({
       : burnerWalletView({ yourLocalBalance, userProfile, handleSwipe, showNextProfile });
   };
 
-  return (
-    <>{didJustMatch ? matchPage() : swipePage({ isLoggedIn, writeContracts, readContracts, address, faucetTx })}</>
-  );
+  return <>{swipePage({ isLoggedIn, writeContracts, readContracts, address, faucetTx })}</>;
 }
