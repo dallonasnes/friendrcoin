@@ -1,10 +1,7 @@
-import { SyncOutlined } from "@ant-design/icons";
-import { utils } from "ethers";
-import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
+import { Button } from "antd";
 import React, { useState, useEffect } from "react";
-import { Address, Balance, Events } from "../components";
 const { ethers } = require("ethers");
-import { useUserProviderAndSigner } from "eth-hooks";
+import { DEBUG_TRANSACTIONS } from "../constants";
 
 // TODO: this doesn't seem to return correct value based on test data. perhaps due to replication lag
 const checkForMatch = async ({ readContracts, swiper, swipee, didJustMatch, setDidJustMatch }) => {
@@ -70,7 +67,6 @@ export default function Queue({
   readContracts,
   writeContracts,
   tx,
-  faucetTx,
   yourLocalBalance,
 }) {
   console.log("QUEUE IS-LOGGED-IN", isLoggedIn);
@@ -159,13 +155,13 @@ export default function Queue({
     );
   };
 
-  const swipePage = ({ isLoggedIn, writeContracts, readContracts, address, faucetTx }) => {
+  const swipePage = ({ isLoggedIn, writeContracts, readContracts, address, tx }) => {
     const [queue, setQueue] = useState([]); // TODO: default shape
     const [currentProfile, setCurrentProfile] = useState({});
     const [isFirstProfile, setIsFirstProfile] = useState(true);
     const [offset, setOffset] = useState(0);
     const [didFetchLastPage, setDidFetchLastPage] = useState(false);
-    const limit = 5;
+    const limit = 100;
     useEffect(() => {
       fetchProfiles({
         queue,
@@ -183,16 +179,16 @@ export default function Queue({
 
     const _handleSwipe = ({ isRightSwipe, isLoggedIn, swipedProfile }) => {
       if (isLoggedIn) {
-        // TODO: remove faucet TX if real account
-        // first make sure account has enough for transaction
-        faucetTx({
-          to: address,
-          value: ethers.utils.parseEther("0.01"),
-        });
+        if (DEBUG_TRANSACTIONS) {
+          tx({
+            to: address,
+            value: ethers.utils.parseEther("0.1"),
+          });
+        }
 
         isRightSwipe
-          ? faucetTx(writeContracts.TinderChain.swipeRight(address, swipedProfile._address))
-          : faucetTx(writeContracts.TinderChain.swipeLeft(address, swipedProfile._address));
+          ? tx(writeContracts.TinderChain.swipeRight(address, swipedProfile._address))
+          : tx(writeContracts.TinderChain.swipeLeft(address, swipedProfile._address));
 
         if (isRightSwipe) {
           // TODO: debug this
@@ -226,7 +222,6 @@ export default function Queue({
     const showNextProfile = () => {
       if (currentProfile.name) {
         console.log("FIRST IMAGE: ", currentProfile.images[0]);
-        // TODO: from profile we can get name, photos to fetch from CDN, bio, etc
         return (
           <div style={{ marginTop: "20px" }}>
             <img
@@ -250,11 +245,11 @@ export default function Queue({
       }
     };
 
-    // TODO: if logged in, can meaningfully swipe. if not logged in && has profile, can swipe but no network calls
+    // if logged in, can meaningfully swipe. if not logged in && has profile, can swipe but no network calls
     return isLoggedIn
       ? loggedInView({ yourLocalBalance, userProfile, handleSwipe, showNextProfile })
       : burnerWalletView({ yourLocalBalance, userProfile, handleSwipe, showNextProfile });
   };
 
-  return <>{swipePage({ isLoggedIn, writeContracts, readContracts, address, faucetTx })}</>;
+  return <>{swipePage({ isLoggedIn, writeContracts, readContracts, address, tx })}</>;
 }

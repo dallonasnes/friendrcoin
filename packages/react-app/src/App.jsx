@@ -28,8 +28,8 @@ const { ethers } = require("ethers");
 /// 📡 What chain are your contracts deployed to?
 const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
-// 😬 Sorry for all the console logging
-const DEBUG = true;
+// TODO: this should come from an env var
+const DEBUG_TRANSACTIONS = true;
 const NETWORKCHECK = true;
 
 const web3Modal = Web3ModalSetup();
@@ -78,7 +78,6 @@ function App(props) {
   /* 🔥 This hook will get the price of Gas from ⛽️ EtherGasStation */
   const gasPrice = useGasPrice(targetNetwork, "fast");
   // Use your injected provider from 🦊 Metamask or if you don't have it then instantly generate a 🔥 burner wallet.
-  // TODO(@dallon): this needs to be randomized when deployed to prod so that we don't have profile collisions
   const userProviderAndSigner = useUserProviderAndSigner(injectedProvider, localProvider);
   const userSigner = userProviderAndSigner.signer;
 
@@ -97,9 +96,8 @@ function App(props) {
 
   // For more hooks, check out 🔗eth-hooks at: https://www.npmjs.com/package/eth-hooks
 
-  // The transactor wraps transactions and provides notificiations
-  const tx = Transactor(userSigner, gasPrice);
-  const faucetTx = Transactor(localProvider, gasPrice);
+  // Use a local faucet for debug mode instead of a network transaction
+  const tx = DEBUG_TRANSACTIONS ? Transactor(localProvider, gasPrice) : Transactor(userSigner, gasPrice);
 
   // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
   const yourLocalBalance = useBalance(localProvider, address);
@@ -154,8 +152,9 @@ function App(props) {
     }
   }, [loadWeb3Modal]);
 
-  // TODO: remove hardcode after testing
-  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(web3Modal && web3Modal.cachedProvider));
+  const [isLoggedIn, setIsLoggedIn] = DEBUG_TRANSACTIONS
+    ? useState(true)
+    : useState(Boolean(web3Modal && web3Modal.cachedProvider));
   console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
 
   const [userProfile, setUserProfile] = useState(null);
@@ -195,7 +194,6 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
-            faucetTx={faucetTx}
           />
         </Route>
         <Route exact path="/home">
@@ -208,7 +206,6 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
-            faucetTx={faucetTx}
           />
         </Route>
         <Route exact path="/profile">
@@ -221,7 +218,6 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
-            faucetTx={faucetTx}
           />
         </Route>
         <Route exact path="/queue">
@@ -232,7 +228,6 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
-            faucetTx={faucetTx}
             yourLocalBalance={yourLocalBalance}
           />
         </Route>
@@ -244,7 +239,6 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
-            faucetTx={faucetTx}
             yourLocalBalance={yourLocalBalance}
           />
         </Route>
@@ -256,7 +250,6 @@ function App(props) {
             readContracts={readContracts}
             writeContracts={writeContracts}
             tx={tx}
-            faucetTx={faucetTx}
             yourLocalBalance={yourLocalBalance}
           />
         </Route>

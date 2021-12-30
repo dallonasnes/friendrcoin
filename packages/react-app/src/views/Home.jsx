@@ -2,36 +2,30 @@ import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switc
 import React, { useState, useEffect } from "react";
 import { BoxH2 } from "../components/H2";
 import { FakeMessageBox, ChatLog, MessageRow } from "../components/Box";
-import { FAKE_DASHBOARD_DATA } from "../constants";
+import { FAKE_DASHBOARD_DATA, DEBUG_TRANSACTIONS } from "../constants";
 const { ethers } = require("ethers");
 import { Profile } from "./";
 
-const _handleVote = ({ address, isUpvote, faucetTx, writeContracts, isLoggedIn, publicMessages, messageIdx }) => {
+const _handleVote = ({ address, isUpvote, tx, writeContracts, messageIdx }) => {
   try {
-    faucetTx({
-      to: address,
-      value: ethers.utils.parseEther("0.01"),
-    });
-    faucetTx(writeContracts.TinderChain.voteOnPublicMessage(parseInt(messageIdx), isUpvote));
+    // fill wallet for transactions if in debug mode
+    if (DEBUG_TRANSACTIONS) {
+      tx({
+        to: address,
+        value: ethers.utils.parseEther("0.1"),
+      });
+    }
+    tx(writeContracts.TinderChain.voteOnPublicMessage(parseInt(messageIdx), isUpvote));
     setTimeout(() => window.location.reload(), 500);
   } catch (e) {
     console.log(e);
   }
 };
 
-const handleVote = ({
-  address,
-  isUpvote,
-  faucetTx,
-  writeContracts,
-  isLoggedIn,
-  publicMessages,
-  messageIdx,
-  userProfile,
-}) => {
+const handleVote = ({ address, isUpvote, tx, writeContracts, isLoggedIn, publicMessages, messageIdx, userProfile }) => {
   if (isLoggedIn && userProfile !== null) {
     setTimeout(
-      () => _handleVote({ address, isUpvote, faucetTx, writeContracts, isLoggedIn, publicMessages, messageIdx }),
+      () => _handleVote({ address, isUpvote, tx, writeContracts, isLoggedIn, publicMessages, messageIdx }),
       500,
     );
   } else if (!isLoggedIn) {
@@ -42,13 +36,10 @@ const handleVote = ({
   }
 };
 
-// TODO(@dallon): use helper fns to reduce code duplication
-const populateDashboard = ({ address, data, faucetTx, writeContracts, isLoggedIn, publicMessages, userProfile }) => {
+const populateDashboard = ({ address, data, tx, writeContracts, isLoggedIn, userProfile }) => {
   if (!data || data.length === 0) return <div>No messages to show</div>;
   return data.map(row => {
-    return row.idx % 2 === 0 ? (
-      // TODO(@kk) -- for even set text pink, for odd then red
-      // TODO: also this may work better for alignment as a grid or with strict margins per column
+    return (
       <>
         <MessageRow>
           <div style={{ display: "inline-block", margin: "5px" }}>
@@ -56,13 +47,16 @@ const populateDashboard = ({ address, data, faucetTx, writeContracts, isLoggedIn
           </div>
           <img alt="author image" src={row.img ? row.img : row.authorImg} />
           <div style={{ display: "inline-block" }}>{row.author}</div>
-          <ChatLog backgroundColor="#E2A8A8">{row.text ? row.text : row.message.text}</ChatLog>
+          <ChatLog backgroundColor={row.idx % 2 === 0 ? "#E2A8A8" : "#E47B7B"}>
+            {row.text ? row.text : row.message.text}
+          </ChatLog>
           <button
             onClick={() =>
               handleVote({
                 userProfile,
                 isUpvote: true,
-                faucetTx,
+
+                tx,
                 writeContracts,
                 isLoggedIn,
                 address,
@@ -79,56 +73,9 @@ const populateDashboard = ({ address, data, faucetTx, writeContracts, isLoggedIn
               handleVote({
                 userProfile,
                 isUpvote: false,
-                faucetTx,
+
                 address,
-                writeContracts,
-                isLoggedIn,
-                publicMessages: data,
-                messageIdx: row.idx._hex,
-              })
-            }
-          >
-            <img alt="thumbDown" src={"../../thumbDown.svg"} />
-          </button>
-          <div style={{ display: "inline-block", margin: "5px" }}>
-            {row.down ? row.down : parseInt(row.downvotes._hex)}
-          </div>
-        </MessageRow>
-        <br />
-      </>
-    ) : (
-      <>
-        <MessageRow>
-          <div style={{ display: "inline-block", margin: "5px" }}>
-            {row.idx._hex ? parseInt(row.idx._hex) : row.idx}
-          </div>
-          <img alt="author image" src={row.img ? row.img : row.authorImg} />
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.author}</div>
-          <ChatLog backgroundColor="#E47B7B">{row.text ? row.text : row.message.text}</ChatLog>
-          <button
-            onClick={() =>
-              handleVote({
-                userProfile,
-                address,
-                isUpvote: true,
-                faucetTx,
-                writeContracts,
-                isLoggedIn,
-                publicMessages: data,
-                messageIdx: row.idx._hex,
-              })
-            }
-          >
-            <img alt="thumbUp" src={"../../thumbUp.svg"} />
-          </button>
-          <div style={{ display: "inline-block", margin: "5px" }}>{row.up ? row.up : parseInt(row.upvotes._hex)}</div>
-          <button
-            onClick={() =>
-              handleVote({
-                userProfile,
-                address,
-                isUpvote: false,
-                faucetTx,
+                tx,
                 writeContracts,
                 isLoggedIn,
                 publicMessages: data,
@@ -155,7 +102,6 @@ const getPublicMessages = async ({
   setOffset,
   didFetchLastPage,
   setDidFetchLastPage,
-  address,
   readContracts,
   limit,
 }) => {
@@ -184,12 +130,12 @@ const getPublicMessages = async ({
   }
 };
 
-const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address }) => {
+const loadData = ({ isLoggedIn, userProfile, readContracts, writeContracts, tx, address }) => {
   const [showGlobalDashboard, setShowGlobalDashboard] = useState(true);
   const [publicMessages, setPublicMessages] = useState([]);
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);
-  const limit = 5;
+  const limit = 100;
 
   useEffect(() => {
     getPublicMessages({
@@ -222,20 +168,21 @@ const loadData = ({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, write
           {populateDashboard(
             isLoggedIn
               ? showGlobalDashboard
-                ? { data: publicMessages, faucetTx, writeContracts, isLoggedIn, address, userProfile }
+                ? { data: publicMessages, writeContracts, isLoggedIn, address, userProfile, tx }
                 : {
                     data: publicMessages.filter(elem => elem.author === address),
-                    faucetTx,
+
                     writeContracts,
                     isLoggedIn,
                     address,
                     userProfile,
+                    tx,
                   }
               : showGlobalDashboard
-              ? { data: FAKE_DASHBOARD_DATA, faucetTx, writeContracts, isLoggedIn, address, userProfile }
+              ? { data: FAKE_DASHBOARD_DATA, writeContracts, isLoggedIn, address, userProfile, tx }
               : {
                   data: FAKE_DASHBOARD_DATA.filter(elem => elem.author === address),
-                  faucetTx,
+
                   writeContracts,
                   isLoggedIn,
                   address,
@@ -261,7 +208,6 @@ export default function Home({
   readContracts,
   writeContracts,
   tx,
-  faucetTx,
   address,
 }) {
   return (
@@ -275,9 +221,8 @@ export default function Home({
         readContracts={readContracts}
         writeContracts={writeContracts}
         tx={tx}
-        faucetTx={faucetTx}
       />
-      {loadData({ isLoggedIn, userProfile, setIsLoggedIn, readContracts, writeContracts, tx, faucetTx, address })}
+      {loadData({ isLoggedIn, userProfile, readContracts, writeContracts, tx, address })}
     </>
   );
 }

@@ -1,8 +1,5 @@
-import { SyncOutlined } from "@ant-design/icons";
-import { utils } from "ethers";
-import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switch } from "antd";
-import React, { useState, useEffect } from "react";
-import { Address, Balance, Events } from "../components";
+import React from "react";
+import { DEBUG_TRANSACTIONS } from "../constants";
 const { ethers } = require("ethers");
 
 const imageTypes = ["jpg", "jpeg", "png", "gif"];
@@ -16,7 +13,7 @@ const isValidHTTPUrl = input => {
   }
 };
 
-export default function Profile({ isLoggedIn, address, userProfile, setUserProfile, faucetTx, tx, writeContracts }) {
+export default function Profile({ isLoggedIn, address, userProfile, setUserProfile, tx, writeContracts }) {
   const createProfilePage = () => {
     const handleCreateClick = () => {
       const _image1 = document.getElementById("image1").value;
@@ -36,11 +33,14 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
       }
       if (isLoggedIn) {
         try {
-          faucetTx({
-            to: address,
-            value: ethers.utils.parseEther("0.01"),
-          });
-          faucetTx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
+          // send local eth if in debug mode
+          if (DEBUG_TRANSACTIONS) {
+            tx({
+              to: address,
+              value: ethers.utils.parseEther("0.1"),
+            });
+          }
+          tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
         } catch (e) {
           console.log(e);
         }
@@ -105,11 +105,14 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         // only make transactions if there is a wallet connected
         if (isLoggedIn) {
           try {
-            faucetTx({
-              to: address,
-              value: ethers.utils.parseEther("0.01"),
-            });
-            faucetTx(
+            // send local eth if in debug mode before transaction
+            if (DEBUG_TRANSACTIONS) {
+              tx({
+                to: address,
+                value: ethers.utils.parseEther("0.1"),
+              });
+            }
+            tx(
               writeContracts.TinderChain.editProfile(
                 address,
                 didNameChange,

@@ -2,6 +2,7 @@ import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { useState, useEffect } from "react";
 const { ethers } = require("ethers");
 import { useLocation } from "react-router-dom";
+import { DEBUG_TRANSACTIONS } from "../constants";
 
 const fetchMessages = async ({
   queue,
@@ -36,13 +37,13 @@ const fetchMessages = async ({
   }
 };
 
-export default function Messages({ isLoggedIn, sender, readContracts, writeContracts, tx, faucetTx }) {
+export default function Messages({ isLoggedIn, sender, readContracts, writeContracts, tx }) {
   const location = useLocation();
   const recipient = location.search.substring(1);
-  const [queue, setQueue] = useState([]); // TODO: default shape
+  const [queue, setQueue] = useState([]);
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);
-  const limit = 5;
+  const limit = 100;
   useEffect(() => {
     fetchMessages({
       queue,
@@ -59,11 +60,14 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
   }, [readContracts, offset]);
 
   const _sendMessage = ({ messageText, isPublic }) => {
-    faucetTx({
-      to: sender,
-      value: ethers.utils.parseEther("0.01"),
-    });
-    faucetTx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
+    // send local tx from faucet in debug mode
+    if (DEBUG_TRANSACTIONS) {
+      tx({
+        to: sender,
+        value: ethers.utils.parseEther("0.1"),
+      });
+    }
+    tx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
     // Now need to refresh page to pick up the sent message
     setTimeout(() => document.location.reload(), 200);
   };
@@ -81,7 +85,7 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
   };
 
   const renderMessagesPage = () => {
-    return (
+    return isLoggedIn ? (
       <>
         {queue.map(message => {
           return <p>{message.text}</p>;
@@ -92,6 +96,8 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
           <button onClick={() => sendMessage()}>Send</button>
         </div>
       </>
+    ) : (
+      <div>You must connect your wallet to send messages</div>
     );
   };
 
