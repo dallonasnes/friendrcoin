@@ -24,12 +24,11 @@ import { useStaticJsonRPC } from "./hooks";
 // header and footer
 import Footer from "./components/Footer";
 const { ethers } = require("ethers");
+import { DEBUG_TRANSACTIONS } from "../constants";
 
 /// 📡 What chain are your contracts deployed to?
 const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
-// TODO: this should come from an env var
-const DEBUG_TRANSACTIONS = true;
 const NETWORKCHECK = true;
 
 const web3Modal = Web3ModalSetup();
