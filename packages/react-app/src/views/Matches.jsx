@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-const { ethers } = require("ethers");
-import { Messages } from ".";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
 
 const fetchMatches = async ({
   queue,
@@ -34,7 +31,7 @@ const fetchMatches = async ({
   }
 };
 
-const renderMatches = ({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance }) => {
+const renderMatches = ({ queue }) => {
   return queue.map(profile => {
     return (
       <Link to={"/messages?" + profile._address}>
@@ -47,20 +44,12 @@ const renderMatches = ({ queue, address, readContracts, writeContracts, tx, fauc
   });
 };
 
-export default function Matches({
-  isLoggedIn,
-  address,
-  readContracts,
-  writeContracts,
-  tx,
-  faucetTx,
-  yourLocalBalance,
-}) {
+export default function Matches({ isLoggedIn, address, readContracts }) {
   console.log("MATCHES IS-LOGGED-IN", isLoggedIn);
-  const [queue, setQueue] = useState([]); // TODO: default shape
+  const [queue, setQueue] = useState([]);
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);
-  const limit = 5;
+  const limit = 100;
   useEffect(() => {
     fetchMatches({
       queue,
@@ -78,7 +67,7 @@ export default function Matches({
   return (
     <>
       {queue.length > 0 ? (
-        renderMatches({ queue, address, readContracts, writeContracts, tx, faucetTx, yourLocalBalance })
+        renderMatches({ queue })
       ) : isLoggedIn ? (
         <div>No matches at the moment</div>
       ) : (
