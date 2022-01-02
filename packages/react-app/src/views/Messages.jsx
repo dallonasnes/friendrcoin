@@ -18,21 +18,27 @@ const fetchMessages = async ({
 }) => {
   {
     if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
-      // have at least two before fetching more
-      const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMessagesForMatch(
-        sender,
-        recipient,
-        limit,
-        offset,
-      );
-      if (nextPage && nextPage.length > 0) {
-        const tmpQueue = queue.concat(nextPage);
-        setQueue(tmpQueue);
+      try {
+        // have at least two before fetching more
+        const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMessagesForMatch(
+          sender,
+          recipient,
+          limit,
+          offset,
+        );
+        if (nextPage && nextPage.length > 0) {
+          const tmpQueue = queue.concat(nextPage);
+          setQueue(tmpQueue);
+        }
+        if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
+          setDidFetchLastPage(true);
+        }
+        setOffset(parseInt(nextOffset._hex));
+      } catch (e) {
+        if (e.toString().toLowerCase().includes("indexed beyond those that exist")) {
+          setDidFetchLastPage(true);
+        }
       }
-      if (parseInt(nextOffset._hex) === offset || nextPage.length < limit) {
-        setDidFetchLastPage(true);
-      }
-      setOffset(parseInt(nextOffset._hex));
     }
   }
 };

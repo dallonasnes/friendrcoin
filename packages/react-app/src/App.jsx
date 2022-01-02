@@ -14,7 +14,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import { Account, Header, ThemeSwitch, Faucet, FaucetHint } from "./components";
-import { NETWORKS, ALCHEMY_KEY } from "./constants";
+import { NETWORKS, ALCHEMY_KEY, DEBUG_TRANSACTIONS } from "./constants";
 import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
@@ -24,7 +24,6 @@ import { useStaticJsonRPC } from "./hooks";
 // header and footer
 import Footer from "./components/Footer";
 const { ethers } = require("ethers");
-import { DEBUG_TRANSACTIONS } from "../constants";
 
 /// 📡 What chain are your contracts deployed to?
 const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
@@ -184,30 +183,6 @@ function App(props) {
 
       <Switch>
         <Route exact path="/">
-          <Home
-            userProfile={userProfile}
-            setUserProfile={setUserProfile}
-            isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-            address={address}
-            readContracts={readContracts}
-            writeContracts={writeContracts}
-            tx={tx}
-          />
-        </Route>
-        <Route exact path="/home">
-          <Home
-            userProfile={userProfile}
-            setUserProfile={setUserProfile}
-            isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-            address={address}
-            readContracts={readContracts}
-            writeContracts={writeContracts}
-            tx={tx}
-          />
-        </Route>
-        <Route exact path="/profile">
           <Home
             userProfile={userProfile}
             setUserProfile={setUserProfile}

@@ -238,9 +238,7 @@ export default function Queue({
         if (queue.length > 0) {
           getFirstProfile();
         } else {
-          debugger;
-          // TODO: i think we should never enter into this case right?
-          return <div>Need to fetch more profiles</div>;
+          return <div>Loading</div>;
         }
       }
     };

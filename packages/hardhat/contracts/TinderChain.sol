@@ -83,8 +83,8 @@ contract TinderChain is Ownable {
         tinderCoin.transferFrom(address(this), owner(), twoHundredMillion);
         profileCount = 0; // Init to 0
         publicMessageCount = 0; // Init to 0
-        initTokenReward = 10;
-        defaultApprovalAmt = 1000;
+        initTokenReward = 100;
+        defaultApprovalAmt = 10000000;
         defaultMessageText = "This is the beginning of your message history.";
     }
 
@@ -95,7 +95,6 @@ contract TinderChain is Ownable {
     // Used by FE login flow to determine if wallet user has already created a profile
     // If Profile object created_ts == 0, then it is a default profile (not yet created)
     // FE needs to decode image
-    // TODO: perhaps store images in CDN and return their URL for performance/gas efficiency
     function getUserProfile(address _profile)
         public
         view

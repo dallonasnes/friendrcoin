@@ -5,23 +5,39 @@ import { LoggedInButton } from "./Button";
 import { ButtonLink } from "./Links";
 
 const getNotLoggedInButtons = () => {
-  return ["Home", "About Us", "How It Works", "Contact"].map(text => (
-    <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
-      <LoggedInButton>
-        <ButtonLink to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</ButtonLink>
-      </LoggedInButton>
-    </a>
-  ));
+  return ["Home", "About Us", "How It Works", "Contact"].map(text =>
+    text === "Home" ? (
+      <a href={"/"}>
+        <LoggedInButton>
+          <ButtonLink to={"/"}>{text}</ButtonLink>
+        </LoggedInButton>
+      </a>
+    ) : (
+      <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
+        <LoggedInButton>
+          <ButtonLink to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</ButtonLink>
+        </LoggedInButton>
+      </a>
+    ),
+  );
 };
 
 const getLoggedInButtons = () => {
-  return ["Home", "Queue", "Matches"].map(text => (
-    <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
-      <LoggedInButton>
-        <Link to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</Link>
-      </LoggedInButton>
-    </a>
-  ));
+  return ["Home", "Queue", "Matches"].map(text =>
+    text === "Home" ? (
+      <a href={"/"}>
+        <LoggedInButton>
+          <ButtonLink to={"/"}>{text}</ButtonLink>
+        </LoggedInButton>
+      </a>
+    ) : (
+      <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
+        <LoggedInButton>
+          <Link to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</Link>
+        </LoggedInButton>
+      </a>
+    ),
+  );
 };
 
 export default function Header({ isLoggedIn, setIsLoggedIn, userProfile }) {

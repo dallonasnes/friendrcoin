@@ -17,7 +17,11 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
   const createProfilePage = () => {
     const handleCreateClick = () => {
       const _image1 = document.getElementById("image1").value;
-      if (!isValidHTTPUrl(_image1)) {
+      if (!_image1) {
+        // for now no requirement to upload an image
+        // alert("plz upload an image");
+        // return;
+      } else if (!isValidHTTPUrl(_image1)) {
         alert("Image input is not a valid url. Please try again");
         return;
       }
@@ -54,13 +58,13 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         {isLoggedIn ? (
           <>
             <h2>You must create a profile to swipe</h2>
-            <h2>Get 10 matchcoins free when you create a profile attached to your wallet</h2>
+            <h2>Get 100 matchcoins free when you create a profile attached to your wallet</h2>
           </>
         ) : (
           <>
             <h2>You must create a burner profile to swipe</h2>
             <h2>Or connect your crypto wallet for your account to be saved on the ETH blockchain</h2>
-            <h2>Get 10 matchcoins free when you create a profile attached to your wallet</h2>
+            <h2>Get 100 matchcoins free when you create a profile attached to your wallet</h2>
           </>
         )}
         <label>Name</label>
