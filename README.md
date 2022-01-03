@@ -1,5 +1,14 @@
 # TinderChain
 
+## How to run
+1. Run `yarn install` in the root dir
+2. Run `yarn chain` in one terminal
+3. Once the first terminal is dumping ETH network logs, run `yarn deploy` in the second terminal
+4. When the second terminal finishes, run `yarn start` in that terminal to start the web app
+
+## File structure
+Solidity code lives in `packages/hardhat/contracts` and `packages/react-app` houses the FE code
+
 ## Remaining Todos
 
 #### Launch Token (target Dec 19)
@@ -8,7 +17,6 @@
 2. Launch tinderCoin on an exchange
 3. Setup liquidity pool for tinderCoin (and find liquidity providers)
 
--- Owned by Sushant
 1. Buy matchcoin.io domain
 2. Setup single page HTML + timer + logging user info (matchcoin.io)
 3. Figure out how to log traffic to IG/social media accounts using bit.ly redirects
