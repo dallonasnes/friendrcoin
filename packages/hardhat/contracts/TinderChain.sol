@@ -4,10 +4,10 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./TinderCoin.sol";
 
-contract TinderChain is Ownable {
+contract TinderChain is OwnableUpgradeable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
@@ -70,7 +70,9 @@ contract TinderChain is Ownable {
     uint256 private constant oneBillion = 1000 * 1000 * 1000;
     uint256 private constant twoHundredMillion = oneBillion / 5;
 
-    constructor() {
+    function initialize() external initializer {
+        __Ownable_init();
+        _transferOwnership(address(this));
         tinderCoin = new TinderCoin(
             "TINDERCOIN",
             "TC",

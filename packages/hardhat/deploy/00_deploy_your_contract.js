@@ -1,6 +1,6 @@
 // deploy/00_deploy_your_contract.js
 
-const { ethers } = require("hardhat");
+const { ethers, upgrades } = require("hardhat");
 
 const localChainId = "31337";
 
@@ -15,17 +15,16 @@ const sleep = (ms) =>
 module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
+  const [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
   const chainId = await getChainId();
 
-  await deploy("TinderChain", {
-    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-    from: deployer,
-    // args: [ "Hello", ethers.utils.parseEther("1.5") ],
-    log: true,
-  });
-
   // Getting a previously deployed contract
-  const TinderChain = await ethers.getContract("TinderChain", deployer);
+  const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
+  const TinderChain = await upgrades.deployProxy(TinderChainFactory, [], {
+    initializer: "initialize",
+  });
+  await TinderChain.deployed();
+
   let wallets = [];
   // Create Test Profiles
   for (let i = 0; i < 10; i++){
