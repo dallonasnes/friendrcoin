@@ -18,7 +18,6 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
   const chainId = await getChainId();
 
-  // Getting a previously deployed contract
   const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
   const TinderChain = await upgrades.deployProxy(TinderChainFactory, [], {
     initializer: "initialize",
@@ -51,10 +50,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "hello world", true);
   await TinderChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "another public message", true);
 
-
   await TinderChain.voteOnPublicMessage(0, true);
-
-
 
   /*  await TinderChain.setPurpose("Hello");
   

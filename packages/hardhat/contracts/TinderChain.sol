@@ -69,20 +69,22 @@ contract TinderChain is OwnableUpgradeable {
 
     uint256 private constant oneBillion = 1000 * 1000 * 1000;
     uint256 private constant twoHundredMillion = oneBillion / 5;
+    uint256 private constant eightHundredMillion = twoHundredMillion * 4;
+
 
     function initialize() external initializer {
         __Ownable_init();
-        _transferOwnership(address(this));
+        // deployer has entire supply of tokens
         tinderCoin = new TinderCoin(
             "TINDERCOIN",
             "TC",
             oneBillion,
-            address(this)
+            owner()
         );
         // Need to approve this contract's address to transact
         tinderCoin.approve(address(this), oneBillion);
-        // Transfer 20% of tokens to dev team
-        tinderCoin.transferFrom(address(this), owner(), twoHundredMillion);
+        // transfer 80% of the tokens to this contract for users
+        tinderCoin.transferFrom(owner(), address(this), eightHundredMillion);
         profileCount = 0; // Init to 0
         publicMessageCount = 0; // Init to 0
         initTokenReward = 100;

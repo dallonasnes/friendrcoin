@@ -36,6 +36,11 @@ describe("TinderChain", function () {
   });
 
   beforeEach(async () => {
+  //   const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
+  // const TinderChain = await upgrades.deployProxy(TinderChainFactory, [], {
+  //   initializer: "initialize",
+  // });
+  // await TinderChain.deployed();
     const TinderChain = await ethers.getContractFactory("TinderChain");
     myContract = await TinderChain.deploy();
     [owner, addr1, addr2, addr3] = await ethers.getSigners();
