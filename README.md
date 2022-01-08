@@ -43,7 +43,7 @@ Solidity code lives in `packages/hardhat/contracts` and `packages/react-app` hou
 1. Shill coin in DAOs
 
 #### Web App UI (target Dec 23)
--- Owned by Kelly
+-- Owned by Kelly and Colton
 1. Make styling/css match Figma
 2. Write copy for about us, how it works, contact pages
 3. Setup Figma + implement css for about us, how it works, contact pages

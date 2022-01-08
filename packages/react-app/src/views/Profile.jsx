@@ -162,9 +162,9 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         <label>Name</label>
         <input type="text" id="name" placeholder={userProfile.name}></input>
         <br />
-        <img alt="your image link doesn't work :(" src={userProfile.images[0]} />
         <br />
         <label>HTTP URL to profile image</label>
+        <img src={userProfile.images[0]} style={{ "border-radius": "50%" }}></img>
         <input type="text" id="image1" placeholder={userProfile.images[0]}></input>
         <br />
         <label>Bio</label>
