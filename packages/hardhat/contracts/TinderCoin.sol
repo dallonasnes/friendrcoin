@@ -19,6 +19,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
  */
 contract TinderCoin is ERC20Burnable {
     address private tokenOwner;
+    address private proxyAdmin;
 
     /**
      * @dev Mints `initialSupply` amount of token and transfers them to `owner`.
@@ -28,18 +29,23 @@ contract TinderCoin is ERC20Burnable {
     constructor(
         string memory name,
         string memory symbol,
-        uint256 initialSupply,
-        address owner
+        uint256 teamSupply,
+        uint256 contractSupply,
+        address owner,
+        address _proxyAdmin
     ) ERC20(name, symbol) {
         tokenOwner = owner;
-        _mint(owner, initialSupply);
+        proxyAdmin = _proxyAdmin;
+        _mint(owner, teamSupply);
+        _mint(_proxyAdmin, contractSupply);
+        approve(proxyAdmin, contractSupply);
     }
 
     // Approve contract to make + and - transactions on a token holder's wallet
     function approveFor(address spender, uint256 amount) public returns (bool) {
         require(
-            _msgSender() == tokenOwner,
-            "Only token owner is authorized to call this method"
+            _msgSender() == tokenOwner || _msgSender() == proxyAdmin,
+            "Only token owner or proxy admin is authorized to call this method"
         );
         _approve(spender, _msgSender(), amount);
         return true;
