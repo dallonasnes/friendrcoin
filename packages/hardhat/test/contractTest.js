@@ -1,4 +1,4 @@
-const { ethers } = require("hardhat");
+const { ethers, upgrades } = require("hardhat");
 const { use, expect } = require("chai");
 const { solidity } = require("ethereum-waffle");
 
@@ -36,22 +36,20 @@ describe("TinderChain", function () {
   });
 
   beforeEach(async () => {
-  //   const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
-  // const TinderChain = await upgrades.deployProxy(TinderChainFactory, [], {
-  //   initializer: "initialize",
-  // });
-  // await TinderChain.deployed();
-    const TinderChain = await ethers.getContractFactory("TinderChain");
-    myContract = await TinderChain.deploy();
     [owner, addr1, addr2, addr3] = await ethers.getSigners();
+    const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
+    myContract = await upgrades.deployProxy(TinderChainFactory, [], {
+      initializer: "initialize",
+    });
+    await myContract.deployed();
   });
 
   describe("Deployment", () => {
     it("should deploy with correct values", async () => {
       expect(await myContract.profileCount()).to.equal(0);
       expect(await myContract.publicMessageCount()).to.equal(0);
-      expect(await myContract.getInitTokenReward()).to.equal(10);
-      expect(await myContract.getDefaultApprovalAmt()).to.equal(1000);
+      expect(await myContract.getInitTokenReward()).to.equal(100);
+      expect(await myContract.getDefaultApprovalAmt()).to.equal(10000000);
       expect(await myContract.defaultMessageText()).to.equal("This is the beginning of your message history.");
     });
 
@@ -88,13 +86,13 @@ describe("TinderChain", function () {
       expect(Number(profile.deleted_ts)).to.equal(0);
 
       // doesn't work for non-contract owner
-      await expect(myContract.connect(addr1).createUserProfileFlow(addr2.address, name1, img1, img2, img3, bio1)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr1).createUserProfileFlow(addr2.address, name1, img1, img2, img3, bio1)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow contract to transact on behalf of new user", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      expect(await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(10);
-      expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800 - 10);
+      expect(await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(100);
+      expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800 - 100);
 
     });
 
@@ -126,20 +124,20 @@ describe("TinderChain", function () {
       const profile = await myContract.getUserProfile(addr1.address);
       expect(Number(profile.created_ts)).to.be.greaterThan(0);
       // fails for someone else
-      await expect(myContract.connect(addr2).getUserProfile(addr1.address)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).getUserProfile(addr1.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to see how many swipe tokens they have", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      expect (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(10);
+      expect (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(100);
     });
 
     it("should allow only the contract owner to see how many swipe tokens someone else has", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
       // works for owner
-      expect (await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(10);
+      expect (await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(100);
       // doesn't work for a different address
-      await (expect(myContract.connect(addr2).getTokenBalanceOfUser(addr1.address))).to.be.revertedWith("Caller is neither the target address or owner.");
+      await (expect(myContract.connect(addr2).getTokenBalanceOfUser(addr1.address))).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to edit any of their own images", async () => {
@@ -156,7 +154,7 @@ describe("TinderChain", function () {
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(await profile.images).to.eql(["fake image", img2, img3]);
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to delete any of their images", async () => {
@@ -173,7 +171,7 @@ describe("TinderChain", function () {
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(await profile.images).to.eql(["", img2, img3]);
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).deleteProfileImageAtIndex(addr1.address, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).deleteProfileImageAtIndex(addr1.address, 0)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to edit their profile bio", async () => {
@@ -190,7 +188,7 @@ describe("TinderChain", function () {
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.bio).to.equal("new bio");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio")).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to edit their profile name", async () => {
@@ -207,7 +205,7 @@ describe("TinderChain", function () {
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.name).to.equal("new name");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
   });
 
@@ -360,7 +358,7 @@ describe("TinderChain", function () {
       expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance - 1);
       
       // fails if addr1 tries to swipe for addr2
-      await expect(myContract.connect(addr2).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow only the contract owner to view the unseen profile queue different account", async () => {
@@ -374,7 +372,7 @@ describe("TinderChain", function () {
       expect(firstPageOffset).to.equal(2);
 
       // addr2 cannot fetch for addr1
-      await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0, false)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).getUnseenProfiles(addr1.address, 10, 0, false)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should correctly indicate if a match just happened by getIsMatch endpoint", async () => {
@@ -411,7 +409,7 @@ describe("TinderChain", function () {
       // works for owner
       await myContract.getRecentMatches(addr1.address, 10, 0);
       // not for someone else
-      await expect(myContract.connect(addr2).getRecentMatches(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr2).getRecentMatches(addr1.address, 10, 0)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow user to message and receive message a match", async () => {
@@ -469,7 +467,7 @@ describe("TinderChain", function () {
       await myContract.sendMessage(addr2.address, addr1.address, "hello world", false);
 
       // doesn't work for non owner
-      await expect(myContract.connect(addr1).sendMessage(addr2.address, addr1.address, "hello world", false)).to.be.revertedWith("Caller is neither the target address or owner.");
+      await expect(myContract.connect(addr1).sendMessage(addr2.address, addr1.address, "hello world", false)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should not increase publicMessageCount if a private message is sent", async () => {

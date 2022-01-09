@@ -41,8 +41,8 @@ contract TinderChain is OwnableUpgradeable {
 
     modifier onlySenderOrOwner(address _profile) {
         require(
-            _profile == _msgSender() || owner() == _msgSender(),
-            "Caller is neither the target address or owner."
+            _profile == _msgSender() || owner() == _msgSender() || address(this) == _msgSender(),
+            "Caller is neither the target address nor owner nor proxy admin."
         );
         _;
     }
@@ -73,7 +73,7 @@ contract TinderChain is OwnableUpgradeable {
 
     function initialize() external initializer {
         __Ownable_init();
-        // deployer has entire supply of tokens
+        // mint 20% to deployer and the rest to the contract
         tinderCoin = new TinderCoin(
             "TINDERCOIN",
             "TC",
