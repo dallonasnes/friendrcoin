@@ -12,9 +12,7 @@ const sleep = (ms) =>
     }, ms)
   );
 
-module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
-  const { deploy } = deployments;
-  const { deployer } = await getNamedAccounts();
+module.exports = async ({ getChainId }) => {
   const [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
   const chainId = await getChainId();
 
