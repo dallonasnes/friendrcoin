@@ -32,7 +32,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     const wallet = await ethers.Wallet.createRandom();
     const address = wallet.getAddress();
     wallets.push(wallet);
-    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "image1", "image2", "image3", "bio");
+    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "", "image2", "image3", "bio");
   }
 
   console.log("FINISHED CREATING PROFILES")
