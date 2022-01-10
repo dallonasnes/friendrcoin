@@ -41,6 +41,8 @@ build
 .yarn/install-state.gz
 .yarn/build-state.yml
 .eslintcache
+yarn.lock
+
 # testing
 coverage
 
@@ -50,6 +52,9 @@ build
 # Hardhat files
 cache
 artifacts
+
+# Openzeppelin files
+packages/hardhat/.openzeppelin/unknown-31337.json
 
 # misc
 .DS_Store

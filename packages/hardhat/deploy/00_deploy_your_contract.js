@@ -12,15 +12,25 @@ const sleep = (ms) =>
     }, ms)
   );
 
-module.exports = async ({ getChainId }) => {
+module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
   const chainId = await getChainId();
-
-  const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
-  const TinderChain = await upgrades.deployProxy(TinderChainFactory, [], {
-    initializer: "initialize",
+  const {deploy} = deployments;
+  const {deployer} = await getNamedAccounts();
+  const deployResult = await deploy('TinderChain', {
+    from: deployer,
+    proxy: {
+        owner: deployer,
+        proxyContract: "OpenZeppelinTransparentProxy",
+        viaAdminContract: "DefaultProxyAdmin",
+        execute: {
+            init: {methodName: "initialize", args: []},
+            onUpgrade: {methodName: "", args: []}
+        }
+    }
   });
-  await TinderChain.deployed();
+
+  var TinderChain = await ethers.getContractAt("TinderChain", deployResult.address, owner);
 
   let wallets = [];
   // Create Test Profiles
