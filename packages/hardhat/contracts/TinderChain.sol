@@ -3,11 +3,10 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./TinderCoin.sol";
 
-contract TinderChain is Ownable {
+contract TinderChain is OwnableUpgradeable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
@@ -41,8 +40,10 @@ contract TinderChain is Ownable {
 
     modifier onlySenderOrOwner(address _profile) {
         require(
-            _profile == _msgSender() || owner() == _msgSender(),
-            "Caller is neither the target address or owner."
+            _profile == _msgSender() ||
+                owner() == _msgSender() ||
+                address(this) == _msgSender(),
+            "Caller is neither the target address nor owner nor proxy admin."
         );
         _;
     }
@@ -69,18 +70,19 @@ contract TinderChain is Ownable {
 
     uint256 private constant oneBillion = 1000 * 1000 * 1000;
     uint256 private constant twoHundredMillion = oneBillion / 5;
+    uint256 private constant eightHundredMillion = twoHundredMillion * 4;
 
-    constructor() {
+    function initialize() external initializer {
+        __Ownable_init();
+        // mint 20% to deployer and the rest to the contract
         tinderCoin = new TinderCoin(
             "TINDERCOIN",
             "TC",
-            oneBillion,
+            twoHundredMillion,
+            eightHundredMillion,
+            owner(),
             address(this)
         );
-        // Need to approve this contract's address to transact
-        tinderCoin.approve(address(this), oneBillion);
-        // Transfer 20% of tokens to dev team
-        tinderCoin.transferFrom(address(this), owner(), twoHundredMillion);
         profileCount = 0; // Init to 0
         publicMessageCount = 0; // Init to 0
         initTokenReward = 100;

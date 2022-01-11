@@ -4,6 +4,8 @@ const { ethers } = require("ethers");
 
 const imageTypes = ["jpg", "jpeg", "png", "gif"];
 const isValidHTTPUrl = input => {
+  // TODO do i want to require this?
+  return true;
   try {
     const url = new URL(input);
     // check if the input includes a image file type
@@ -44,6 +46,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
               value: ethers.utils.parseEther("0.1"),
             });
           }
+          debugger;
           tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
         } catch (e) {
           console.log(e);
