@@ -40,7 +40,9 @@ contract TinderChain is OwnableUpgradeable {
 
     modifier onlySenderOrOwner(address _profile) {
         require(
-            _profile == _msgSender() || owner() == _msgSender() || address(this) == _msgSender(),
+            _profile == _msgSender() ||
+                owner() == _msgSender() ||
+                address(this) == _msgSender(),
             "Caller is neither the target address nor owner nor proxy admin."
         );
         _;
