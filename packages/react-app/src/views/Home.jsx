@@ -191,10 +191,12 @@ const loadData = ({ isLoggedIn, userProfile, readContracts, writeContracts, tx, 
           )}
         </FakeMessageBox>
       </div>
-      <div style={{ marginBottom: "10px" }}>
-        <h2>Tokenized Love</h2>
+      <div style={{ marginBottom: "10px", "margin-inline": "auto", "width": "max(500px, 70%)"}}>
+        <h2 style={{"font-size": "3.5rem", "margin-bottom": ".07rem"}}>Tokenized Love</h2>
+        <div style={{"font-size": "clamp(1.5rem, 1.5vw, 4rem)", "line-height": ".9rem", "padding": "max(3vh, 1rem) .5rem"}}>
         <h4>Reap the rewards of matching and</h4>
         <h4>'Playing the game'</h4>
+        </div>
       </div>
     </div>
   );
