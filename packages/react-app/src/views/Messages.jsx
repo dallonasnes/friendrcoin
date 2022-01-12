@@ -75,7 +75,7 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
     }
     tx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
     // Now need to refresh page to pick up the sent message
-    setTimeout(() => document.location.reload(), 200);
+    setTimeout(() => document.location.reload(), 800);
   };
 
   // add timeout on calls to prevent nonce issue with transactions

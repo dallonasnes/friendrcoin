@@ -15,8 +15,9 @@ contract TinderChain is OwnableUpgradeable {
     struct Profile {
         string name;
         address _address;
-        string[3] images;
+        string image;
         string bio;
+        string socialMediaProfile;
         uint256 created_ts;
         uint256 deleted_ts; // TODO: create delete profile endpoint
     }
@@ -310,10 +311,9 @@ contract TinderChain is OwnableUpgradeable {
     function createUserProfileFlow(
         address _profile,
         string memory name,
-        string memory _image0,
-        string memory _image1,
-        string memory _image2,
-        string memory bio
+        string memory _image,
+        string memory bio,
+        string memory _socialMediaProfile
     ) public onlySenderOrOwner(_profile) {
         // This function adds tokens to the profile upon creation
         // So require that a profile cannot already exist for the given address
@@ -326,10 +326,9 @@ contract TinderChain is OwnableUpgradeable {
 
         profile.name = name;
         profile._address = _profile;
-        profile.images[0] = _image0;
-        profile.images[1] = _image1;
-        profile.images[2] = _image2;
+        profile.image = _image;
         profile.bio = bio;
+        profile.socialMediaProfile = _socialMediaProfile;
         profile.created_ts = block.timestamp;
 
         // Add profile to indexed list of accounts and increment counter
@@ -435,7 +434,7 @@ contract TinderChain is OwnableUpgradeable {
                 upvotes: 0,
                 downvotes: 0,
                 author: _sender,
-                authorImg: _profiles[_sender].images[0],
+                authorImg: _profiles[_sender].image,
                 idx: publicMessageCount
             });
             _public_messages[publicMessageCount] = publicMessage;
@@ -484,34 +483,28 @@ contract TinderChain is OwnableUpgradeable {
         address _profile,
         bool editName,
         string memory newName,
-        bool editImage1,
-        string memory newImage1,
-        bool editImage2,
-        string memory newImage2,
-        bool editImage3,
-        string memory newImage3,
+        bool editImage,
+        string memory newImage,
         bool editBio,
-        string memory newBio
+        string memory newBio,
+        bool editSocialMediaProfileLink,
+        string memory newSocialMediaProfileLink
     ) public onlySenderOrOwner(_profile) {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
         );
 
+        if (editSocialMediaProfileLink) {
+            _profiles[_profile].socialMediaProfile = newSocialMediaProfileLink;
+        }
+
         if (editName) {
             _profiles[_profile].name = newName;
         }
 
-        if (editImage1) {
-            _profiles[_profile].images[0] = newImage1;
-        }
-
-        if (editImage2) {
-            _profiles[_profile].images[1] = newImage2;
-        }
-
-        if (editImage3) {
-            _profiles[_profile].images[2] = newImage3;
+        if (editImage) {
+            _profiles[_profile].image = newImage;
         }
 
         if (editBio) {
@@ -519,7 +512,7 @@ contract TinderChain is OwnableUpgradeable {
         }
     }
 
-    function deleteProfileImageAtIndex(address _profile, uint256 _index)
+    function deleteProfileImage(address _profile)
         public
         onlySenderOrOwner(_profile)
     {
@@ -527,11 +520,7 @@ contract TinderChain is OwnableUpgradeable {
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
         );
-        require(
-            _index <= 2,
-            "Cannot edit image array at index that doesn't exist"
-        );
-        _profiles[_profile].images[_index] = "";
+        _profiles[_profile].image = "";
     }
 
     /**

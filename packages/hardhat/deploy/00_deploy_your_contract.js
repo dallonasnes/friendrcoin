@@ -38,7 +38,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     const wallet = await ethers.Wallet.createRandom();
     const address = wallet.getAddress();
     wallets.push(wallet);
-    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "", "image2", "image3", "bio");
+    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "", "bio", "https://www.youtube.com/c/sinqueso/videos");
   }
 
   console.log("FINISHED CREATING PROFILES")
@@ -55,10 +55,20 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await TinderChain.swipeRight(wallets[2].getAddress(), wallets[6].getAddress())
   await TinderChain.swipeRight(wallets[6].getAddress(), wallets[2].getAddress())
 
-  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "hello world", true);
-  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "another public message", true);
+  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "Are you a crypto kitty? Cuz I'm feline a connection between us.", true);
+  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "Baby, I ain't going for no pump and dump.", true);
 
-  await TinderChain.voteOnPublicMessage(0, true);
+  for (let i = 0; i < 489; i++){
+    await TinderChain.voteOnPublicMessage(0, true);
+    if (i < 328) await TinderChain.voteOnPublicMessage(0, false);
+  }
+
+  for (let i = 0; i < 39; i++){
+    await TinderChain.voteOnPublicMessage(1, true);
+    if (i < 8) await TinderChain.voteOnPublicMessage(1, false);
+  }
+
+  
 
   // Verify your contracts with Etherscan
   // You don't want to verify on localhost
