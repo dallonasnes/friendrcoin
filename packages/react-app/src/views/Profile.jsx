@@ -4,12 +4,10 @@ const { ethers } = require("ethers");
 
 const imageTypes = ["jpg", "jpeg", "png", "gif"];
 const isValidHTTPUrl = input => {
-  // TODO do i want to require this?
-  return true;
   try {
     const url = new URL(input);
     // TODO: now that this is being reused, do we still want to check if the input includes a image file type
-    return url && imageTypes.some(el => input.toLowerCase().includes(el));
+    return url // && imageTypes.some(el => input.toLowerCase().includes(el));
   } catch (e) {
     return false;
   }
@@ -203,7 +201,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         <label>URL to a social media profile</label>
         <input type="text" id="socialProfile" placeholder={userProfile.socialMediaProfile}></input>
         <br />
-        <button onClick={() => setTimeout(window.open(userProfile.socialMediaProfile, "_blank"), 1000)}>
+        <button onClick={() => setTimeout(window.open("//" + userProfile.socialMediaProfile, "_blank"), 1000)}>
           Social Media Profile
         </button>
         <br />
