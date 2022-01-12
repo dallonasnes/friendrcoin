@@ -8,7 +8,7 @@ const isValidHTTPUrl = input => {
   return true;
   try {
     const url = new URL(input);
-    // check if the input includes a image file type
+    // TODO: now that this is being reused, do we still want to check if the input includes a image file type
     return url && imageTypes.some(el => input.toLowerCase().includes(el));
   } catch (e) {
     return false;
@@ -18,21 +18,30 @@ const isValidHTTPUrl = input => {
 export default function Profile({ isLoggedIn, address, userProfile, setUserProfile, tx, writeContracts }) {
   const createProfilePage = () => {
     const handleCreateClick = () => {
-      const _image1 = document.getElementById("image1").value;
-      if (!_image1) {
+      const _image = document.getElementById("image").value.trim();
+      if (!_image) {
         // for now no requirement to upload an image
         // alert("plz upload an image");
         // return;
-      } else if (!isValidHTTPUrl(_image1)) {
+      } else if (!isValidHTTPUrl(_image)) {
         alert("Image input is not a valid url. Please try again");
         return;
       }
-      const _name = document.getElementById("name").value;
+      const _socialProfile = document.getElementById("socialProfile").value.trim();
+      if (!_socialProfile) {
+        alert("plz link to your social media profile");
+        return;
+      } else if (!isValidHTTPUrl(_socialProfile)) {
+        alert("Social media link is not a valid url. Please try again");
+        return;
+      }
+
+      const _name = document.getElementById("name").value.trim();
       if (!_name || _name === "") {
         alert("Empty name input");
         return;
       }
-      const _bio = document.getElementById("bio").value;
+      const _bio = document.getElementById("bio").value.trim();
       if (!_bio || _bio === "") {
         alert("Empty bio input");
         return;
@@ -47,13 +56,19 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
             });
           }
           debugger;
-          tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image1, "", "", _bio));
+          tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image, _bio, _socialProfile));
         } catch (e) {
           console.log(e);
         }
       }
       // always set the profile, so it's just in state for burner mode
-      setUserProfile({ address, name: _name, images: [_image1, "", ""], bio: _bio });
+      setUserProfile({
+        address,
+        name: _name,
+        image: image,
+        bio: _bio,
+        socialMediaProfile: _socialProfile,
+      });
     };
 
     return (
@@ -73,8 +88,11 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         <label>Name</label>
         <input type="text" id="name"></input>
         <br />
-        <label>HTTP URL to profile image</label>
-        <input type="text" id="image1"></input>
+        <label>URL to an avatar image</label>
+        <input type="text" id="image"></input>
+        <br />
+        <label>URL to a social media profile</label>
+        <input type="text" id="socialProfile"></input>
         <br />
         <label>Bio</label>
         <input type="text" id="bio"></input>
@@ -88,27 +106,38 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
     const handleEditClick = () => {
       let didNameChange = false;
       let didBioChange = false;
-      let didImage1Change = false;
-      const _image1 = document.getElementById("image1").value;
-      if (_image1 !== "" && _image1 != image1) {
-        if (!isValidHTTPUrl(_image1)) {
+      let didimageChange = false;
+      let didSocialProfileChange = false;
+      const _image = document.getElementById("image").value.trim();
+      if (_image !== "" && _image != image) {
+        if (!isValidHTTPUrl(_image)) {
           alert("Image input is not a valid url. Please try again");
           return;
         } else {
-          didImage1Change = true;
+          didimageChange = true;
         }
       }
+      const _socialProfile = document.getElementById("socialProfile").value.trim();
+      if (!_socialProfile) {
+        alert("plz link to your social media profile");
+        return;
+      } else if (!isValidHTTPUrl(_socialProfile)) {
+        alert("Social media link is not a valid url. Please try again");
+        return;
+      } else {
+        didSocialProfileChange = true;
+      }
 
-      const _name = document.getElementById("name").value;
+      const _name = document.getElementById("name").value.trim();
       if (_name && _name !== name && _name !== "") {
         didNameChange = true;
       }
-      const _bio = document.getElementById("bio").value;
+      const _bio = document.getElementById("bio").value.trim();
       if (_bio && _bio !== bio && _bio !== "") {
         didBioChange = true;
       }
 
-      if (didNameChange || didBioChange || didImage1Change) {
+      if (didNameChange || didBioChange || didimageChange || didSocialProfileChange) {
         // only make transactions if there is a wallet connected
         if (isLoggedIn) {
           try {
@@ -119,19 +148,18 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
                 value: ethers.utils.parseEther("0.1"),
               });
             }
+            debugger;
             tx(
               writeContracts.TinderChain.editProfile(
                 address,
                 didNameChange,
                 _name,
-                didImage1Change,
-                _image1,
-                false,
-                "",
-                false,
-                "",
+                didimageChange,
+                _image,
                 didBioChange,
                 _bio,
+                didSocialProfileChange,
+                _socialProfile,
               ),
             );
           } catch (e) {
@@ -140,14 +168,16 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         }
 
         const updatedName = didNameChange ? _name : userProfile.name;
-        const updatedImage = didImage1Change ? _image1 : userProfile.images[0];
+        const updatedImage = didimageChange ? _image : userProfile.image;
         const updatedBio = didBioChange ? _bio : userProfile.bio;
-
+        const updatedSocialMediaLink = didSocialProfileChange ? _socialProfile : userProfile.socialMediaProfile;
+        debugger;
         setUserProfile({
           ...userProfile,
           name: updatedName,
           bio: updatedBio,
-          images: [updatedImage, userProfile.images[1], userProfile.images[2]],
+          image: updatedImage,
+          socialMediaProfile: updatedSocialMediaLink,
         });
       }
     };
@@ -166,9 +196,16 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         <input type="text" id="name" placeholder={userProfile.name}></input>
         <br />
         <br />
-        <label>HTTP URL to profile image</label>
-        <img src={userProfile.images[0]} style={{ "border-radius": "50%" }}></img>
-        <input type="text" id="image1" placeholder={userProfile.images[0]}></input>
+        <label>URL to an avatar image</label>
+        <input type="text" id="image" placeholder={userProfile.image}></input>
+        <img src={userProfile.image} style={{ "border-radius": "50%" }}></img>
+        <br />
+        <label>URL to a social media profile</label>
+        <input type="text" id="socialProfile" placeholder={userProfile.socialMediaProfile}></input>
+        <br />
+        <button onClick={() => setTimeout(window.open(userProfile.socialMediaProfile, "_blank"), 1000)}>
+          Social Media Profile
+        </button>
         <br />
         <label>Bio</label>
         <input type="text" id="bio" placeholder={userProfile.bio}></input>

@@ -9,13 +9,14 @@ describe("TinderChain", function () {
   let owner, addr1, addr2, addr3;
 
   const [name1, name2, name3] = ["addr1", "addr2", "addr3"];
-  const [img1, img2, img3] = ["img1", "img2", "img3"];
+  const img = "";
+  const socialMediaProf = "https://www.youtube.com/c/sinqueso/videos";
   const [bio1, bio2, bio3] = ["bio1", "bio2", "bio3"];
 
   // helper methods in scope
   const setupMatch = async () => {
-    await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-    await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+    await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+    await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
     // acct1 swipes right on acct2 and acct1 is charged one token
     await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
   
@@ -64,62 +65,62 @@ describe("TinderChain", function () {
 
   describe("Onboarding Flow", () => {
     it("should allow a new user to sign up", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       const profile = await myContract.getUserProfile(addr1.address);
       expect(profile.name).to.equal(name1);
       expect(profile.bio).to.equal(bio1);
       expect(profile._address).to.equal(addr1.address);
-      expect(profile.images).to.eql([img1, img2, img3]);
+      expect(profile.image).to.eql(img);
       expect(Number(profile.created_ts)).to.be.greaterThan(0);
       expect(Number(profile.deleted_ts)).to.equal(0);
     });
 
     it("should allow only owner to create a profile for another wallet", async () => {
       // works for contract owner
-      await myContract.createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       const profile = await myContract.getUserProfile(addr1.address);
       expect(profile.name).to.equal(name1);
       expect(profile.bio).to.equal(bio1);
       expect(profile._address).to.equal(addr1.address);
-      expect(profile.images).to.eql([img1, img2, img3]);
+      expect(profile.image).to.eql(img);
       expect(Number(profile.created_ts)).to.be.greaterThan(0);
       expect(Number(profile.deleted_ts)).to.equal(0);
 
       // doesn't work for non-contract owner
-      await expect(myContract.connect(addr1).createUserProfileFlow(addr2.address, name1, img1, img2, img3, bio1)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+      await expect(myContract.connect(addr1).createUserProfileFlow(addr2.address, name1, img, bio1, socialMediaProf)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow contract to transact on behalf of new user", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       expect(await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(100);
       expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800 - 100);
 
     });
 
     it("should prevent an existing user from signing up again", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img1, img2, img3, bio1);
-      await expect(myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1)).to.be.revertedWith("Cannot create a profile that already exists.");
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img, bio1, socialMediaProf);
+      await expect(myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf)).to.be.revertedWith("Cannot create a profile that already exists.");
     });
 
     it("should increase the total number of profiles on each new user signup", async () => {
       expect(await myContract.connect(addr1).profileCount()).to.equal(0);
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       expect(await myContract.profileCount()).to.equal(1);
-      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img, bio1, socialMediaProf);
       expect(await myContract.profileCount()).to.equal(2);
     });
   });
 
   describe("Login Flow", () => {
     it("should allow an existing user to fetch their own profile", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(Number(profile.created_ts)).to.be.greaterThan(0);
     });
 
     it("should allow only the contract owner to fetch someone else's profile", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
       const profile = await myContract.getUserProfile(addr1.address);
       expect(Number(profile.created_ts)).to.be.greaterThan(0);
@@ -128,12 +129,12 @@ describe("TinderChain", function () {
     });
 
     it("should allow an existing user to see how many swipe tokens they have", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       expect (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(100);
     });
 
     it("should allow only the contract owner to see how many swipe tokens someone else has", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
       expect (await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(100);
       // doesn't work for a different address
@@ -141,80 +142,80 @@ describe("TinderChain", function () {
     });
 
     it("should allow an existing user to edit any of their own images", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).editProfile(addr1.address, false, "", true, "fake image", false, "", false, "", false, "");
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).editProfile(addr1.address, false, "", true, "fake image", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(profile.images).to.eql(["fake image", img2, img3]);
+      expect(profile.image).to.eql("fake image")
     });
 
     it("should allow only the contract owner to edit someone else's images", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
-      await myContract.editProfile(addr1.address, false, "", true, "fake image", false, "", false, "", false, "");
+      await myContract.editProfile(addr1.address, false, "", true, "fake image", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(await profile.images).to.eql(["fake image", img2, img3]);
+      expect(await profile.image).to.eql("fake image");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to delete any of their images", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).deleteProfileImageAtIndex(addr1.address, 0);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).deleteProfileImage(addr1.address);
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(profile.images).to.eql(["", img2, img3]);
+      expect(profile.image).to.eql("");
     });
 
     it("should allow only the contract owner to delete someone else's images", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
-      await myContract.deleteProfileImageAtIndex(addr1.address, 0);
+      await myContract.deleteProfileImage(addr1.address);
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
-      expect(await profile.images).to.eql(["", img2, img3]);
+      expect(await profile.image).to.eql("");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).deleteProfileImageAtIndex(addr1.address, 0)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+      await expect(myContract.connect(addr2).deleteProfileImage(addr1.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to edit their profile bio", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio");
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).editProfile(addr1.address, false, "", false, "", true, "new bio", false, "",);
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.bio).to.equal("new bio");
     });
 
     it("should allow only the contract owner to edit someone else's profile bio", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
-      await myContract.editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio");
+      await myContract.editProfile(addr1.address, false, "", false, "", true, "new bio", false, "",);
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.bio).to.equal("new bio");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfile(addr1.address, false, "", false, "", false, "", false, "", true, "new bio")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, false, "", false, "", true, "new bio", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
     it("should allow an existing user to edit their profile name", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "");
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).editProfile(addr1.address, true, "new name", false, "", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.name).to.equal("new name");
     });
 
     it("should allow only the contract owner to edit someone else's profile name", async () => {
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
-      await myContract.editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "");
+      await myContract.editProfile(addr1.address, true, "new name", false, "", false, "", false, "");
       const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
       expect(profile.name).to.equal("new name");
       // doesn't work for another acct
-      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+      await expect(myContract.connect(addr2).editProfile(addr1.address, true, "new name", false, "", false, "", false, "")).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
   });
 
   describe("Queue and Swipe Flow", () => {
     it("should fetch only not-yet-swiped profiles for logged in user", async () => {
       // create 3 accounts
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
-      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img, bio3, socialMediaProf);
 
       // each account should see only other 2 accounts in the queue
       let [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0, false);
@@ -260,9 +261,9 @@ describe("TinderChain", function () {
 
     it("should fetch distinct pages of unseen profiles", async () => {
       // create 3 accounts
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
-      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img, bio3, socialMediaProf);
 
       // get page 1 of unseen profiles
       const [firstPageUnseenProfiles, firstPageOffset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 1, 0, false);
@@ -281,8 +282,8 @@ describe("TinderChain", function () {
 
     it("should charge a token for a right swipe that does not immediately result in a match", async () => {
       // create 2 accounts
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
       const startTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
@@ -299,8 +300,8 @@ describe("TinderChain", function () {
 
     it("should not charge a token for a left swipe", async () => {
       // create two profiles
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       // get start token count for first two profiles
       const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
@@ -319,8 +320,8 @@ describe("TinderChain", function () {
 
     it("should not charge a token for a right swipe that immediately results in a match and returns token to original swiper in match", async () => {
       // create two profiles
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       const startTokenBalance = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
 
@@ -340,8 +341,8 @@ describe("TinderChain", function () {
       await myContract.setInitTokenReward(0);
 
       // create two profiles
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       // try to swipe right on one, expect out of tokens failure
       await expect(myContract.connect(addr1).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("User doesn't have enough tokens to swipe right");
@@ -349,8 +350,8 @@ describe("TinderChain", function () {
 
     it("should allow only the contract owner to swipe for a different account", async () => {
       // create two profiles
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       const startTokenBalance = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
       // owner can swipe and cause charge to swiper
@@ -363,8 +364,8 @@ describe("TinderChain", function () {
 
     it("should allow only the contract owner to view the unseen profile queue different account", async () => {
       // create two accounts
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       // owner can fetch for addr1
       const [unseenProfiles, firstPageOffset] = await myContract.getUnseenProfiles(addr1.address, 10, 0, false);
@@ -377,8 +378,8 @@ describe("TinderChain", function () {
 
     it("should correctly indicate if a match just happened by getIsMatch endpoint", async () => {
       // create two accounts
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       // acct1 swipes right on acct2
       await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
@@ -450,7 +451,7 @@ describe("TinderChain", function () {
 
     it("should not allow anyone to message someone they haven't matched with", async () => {
       await setupMatch();
-      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name1, img1, img2, img3, bio1);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name1, img, bio1, socialMediaProf);
 
       // owner fails to message between addr3 and addr2
       await expect(myContract.sendMessage(addr3.address, addr2.address, "hello world", false)).to.be.revertedWith("Profile pair doesn't have any messages, perhaps match was never initialized");
@@ -510,7 +511,7 @@ describe("TinderChain", function () {
   describe("Message Voting Flow", () => {
     it("should allow a user to vote on a public message", async () => {
       await setupPublicMessages(1);
-      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img, bio3, socialMediaProf);
 
       // upvote the first public message
       await myContract.connect(addr3).voteOnPublicMessage(0, true);
@@ -519,12 +520,12 @@ describe("TinderChain", function () {
     it("should display the correct author image on a public message", async () => {
       await setupPublicMessages(1);
       const [publicMessages, offset] = await myContract.getPublicMessages(10, 0);
-      expect(publicMessages[0].authorImg).to.equal(img1)
+      expect(publicMessages[0].authorImg).to.equal(img)
     });
 
     it("should correctly reflect a message's vote count following a vote", async () => {
       await setupPublicMessages(2);
-      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img1, img2, img3, bio3);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img, bio3, socialMediaProf);
 
       // upvote the first public message twice
       await myContract.connect(addr3).voteOnPublicMessage(0, true);
@@ -551,8 +552,8 @@ describe("TinderChain", function () {
 
     it("should only allow owner to vote on their own public message", async () => {
       // works for owner
-      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img1, img2, img3, bio1);
-      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name2, img1, img2, img3, bio2);
+      await myContract.connect(owner).createUserProfileFlow(owner.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name2, img, bio2, socialMediaProf);
       await myContract.connect(owner).swipeRight(owner.address, addr1.address);
       await myContract.connect(addr1).swipeRight(addr1.address, owner.address);
 
