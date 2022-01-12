@@ -5,9 +5,12 @@ const { ethers } = require("ethers");
 const imageTypes = ["jpg", "jpeg", "png", "gif"];
 const isValidHTTPUrl = input => {
   try {
+    if (!/^https?:\/\//i.test(input)) {
+      input = "https://" + input;
+    }
     const url = new URL(input);
     // TODO: now that this is being reused, do we still want to check if the input includes a image file type
-    return url // && imageTypes.some(el => input.toLowerCase().includes(el));
+    return url; // && imageTypes.some(el => input.toLowerCase().includes(el));
   } catch (e) {
     return false;
   }
@@ -53,7 +56,6 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
               value: ethers.utils.parseEther("0.1"),
             });
           }
-          debugger;
           tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image, _bio, _socialProfile));
         } catch (e) {
           console.log(e);
@@ -63,7 +65,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
       setUserProfile({
         address,
         name: _name,
-        image: image,
+        image: _image,
         bio: _bio,
         socialMediaProfile: _socialProfile,
       });
@@ -117,8 +119,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
       }
       const _socialProfile = document.getElementById("socialProfile").value.trim();
       if (!_socialProfile) {
-        alert("plz link to your social media profile");
-        return;
+        // do nothing if they don't update social profile
       } else if (!isValidHTTPUrl(_socialProfile)) {
         alert("Social media link is not a valid url. Please try again");
         return;
@@ -146,7 +147,6 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
                 value: ethers.utils.parseEther("0.1"),
               });
             }
-            debugger;
             tx(
               writeContracts.TinderChain.editProfile(
                 address,
@@ -169,7 +169,6 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         const updatedImage = didimageChange ? _image : userProfile.image;
         const updatedBio = didBioChange ? _bio : userProfile.bio;
         const updatedSocialMediaLink = didSocialProfileChange ? _socialProfile : userProfile.socialMediaProfile;
-        debugger;
         setUserProfile({
           ...userProfile,
           name: updatedName,
