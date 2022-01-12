@@ -4,13 +4,12 @@ const { ethers } = require("ethers");
 
 const imageTypes = ["jpg", "jpeg", "png", "gif"];
 const isValidHTTPUrl = input => {
+  return true;
   try {
-    if (!/^https?:\/\//i.test(input)) {
-      input = "https://" + input;
-    }
+    debugger;
     const url = new URL(input);
     // TODO: now that this is being reused, do we still want to check if the input includes a image file type
-    return url; // && imageTypes.some(el => input.toLowerCase().includes(el));
+    return true; // && imageTypes.some(el => input.toLowerCase().includes(el));
   } catch (e) {
     return false;
   }
@@ -28,13 +27,15 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         alert("Image input is not a valid url. Please try again");
         return;
       }
-      const _socialProfile = document.getElementById("socialProfile").value.trim();
+      let _socialProfile = document.getElementById("socialProfile").value.trim();
       if (!_socialProfile) {
         alert("plz link to your social media profile");
         return;
       } else if (!isValidHTTPUrl(_socialProfile)) {
         alert("Social media link is not a valid url. Please try again");
         return;
+      } else {
+        // _socialProfile = new URL(_socialProfile);
       }
 
       const _name = document.getElementById("name").value.trim();
@@ -109,7 +110,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
       let didimageChange = false;
       let didSocialProfileChange = false;
       const _image = document.getElementById("image").value.trim();
-      if (_image !== "" && _image != image) {
+      if (_image !== "" && _image != userProfile.image) {
         if (!isValidHTTPUrl(_image)) {
           alert("Image input is not a valid url. Please try again");
           return;
@@ -117,22 +118,23 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
           didimageChange = true;
         }
       }
-      const _socialProfile = document.getElementById("socialProfile").value.trim();
-      if (!_socialProfile) {
+      let _socialProfile = document.getElementById("socialProfile").value.trim();
+      if (!_socialProfile || _socialProfile === userProfile.socialProfile) {
         // do nothing if they don't update social profile
       } else if (!isValidHTTPUrl(_socialProfile)) {
         alert("Social media link is not a valid url. Please try again");
         return;
       } else {
+        // _socialProfile = new URL(_socialProfile);
         didSocialProfileChange = true;
       }
 
       const _name = document.getElementById("name").value.trim();
-      if (_name && _name !== name && _name !== "") {
+      if (_name && _name !== userProfile.name && _name !== "") {
         didNameChange = true;
       }
       const _bio = document.getElementById("bio").value.trim();
-      if (_bio && _bio !== bio && _bio !== "") {
+      if (_bio && _bio !== userProfile.bio && _bio !== "") {
         didBioChange = true;
       }
 
