@@ -32,7 +32,24 @@
     lodash "^4.17.21"
     resize-observer-polyfill "^1.5.0"
 
-"@apollo/client@^3.3.21", "@apollo/client@latest":
+"@apollo/client@^3.5.7":
+  version "3.5.7"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.5.7.tgz#38051c0a414ebf784319fa5131faa19df24fa9ec"
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.0.0"
+    "@wry/context" "^0.6.0"
+    "@wry/equality" "^0.5.0"
+    "@wry/trie" "^0.3.0"
+    graphql-tag "^2.12.3"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.16.1"
+    prop-types "^15.7.2"
+    symbol-observable "^4.0.0"
+    ts-invariant "^0.9.4"
+    tslib "^2.3.0"
+    zen-observable-ts "^1.2.0"
+
+"@apollo/client@latest":
   version "3.3.21"
   resolved "https://registry.npmjs.org/@apollo/client/-/client-3.3.21.tgz"
   dependencies:
@@ -9302,9 +9319,9 @@ graphql-language-service@^3.1.6:
     graphql-language-service-types "^1.8.3"
     graphql-language-service-utils "^2.6.0"
 
-graphql-tag@^2.12.0, graphql-tag@^2.4.2:
-  version "2.12.5"
-  resolved "https://registry.npmjs.org/graphql-tag/-/graphql-tag-2.12.5.tgz"
+graphql-tag@^2.12.0, graphql-tag@^2.12.3, graphql-tag@^2.4.2:
+  version "2.12.6"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
   dependencies:
     tslib "^2.1.0"
 
@@ -13508,7 +13525,7 @@ optimism@^0.10.0:
   dependencies:
     "@wry/context" "^0.4.0"
 
-optimism@^0.16.0:
+optimism@^0.16.0, optimism@^0.16.1:
   version "0.16.1"
   resolved "https://registry.npmjs.org/optimism/-/optimism-0.16.1.tgz"
   dependencies:
@@ -17954,6 +17971,12 @@ ts-invariant@^0.8.0:
   dependencies:
     tslib "^2.1.0"
 
+ts-invariant@^0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.9.4.tgz#42ac6c791aade267dd9dc65276549df5c5d71cac"
+  dependencies:
+    tslib "^2.1.0"
+
 ts-pnp@1.2.0, ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.npmjs.org/ts-pnp/-/ts-pnp-1.2.0.tgz"
@@ -17970,9 +17993,9 @@ tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
 
-tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz"
+tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
 
 tsort@0.0.1:
   version "0.0.1"
@@ -19661,6 +19684,12 @@ zen-observable-ts@^0.8.21:
     tslib "^1.9.3"
     zen-observable "^0.8.0"
 
-zen-observable@^0.8.0, zen-observable@^0.8.14:
+zen-observable-ts@^1.2.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-1.2.3.tgz#c2f5ccebe812faf0cfcde547e6004f65b1a6d769"
+  dependencies:
+    zen-observable "0.8.15"
+
+zen-observable@0.8.15, zen-observable@^0.8.0, zen-observable@^0.8.14:
   version "0.8.15"
   resolved "https://registry.npmjs.org/zen-observable/-/zen-observable-0.8.15.tgz"
