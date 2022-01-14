@@ -1,0 +1,4 @@
+# Default for all changes
+# These are not additive. Any more specific
+# line will supersede the less specific.
+* @dallonasnes
