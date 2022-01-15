@@ -1,5 +1,8 @@
 # TinderChain
 
+## Developers
+Allocation of 1000 TinderCoin to reward qualifying PRs. Be sure to clarify scope and requirements in open issues before beginning work.
+
 ## How to run
 #### Docker
 1. See readme in `docker` dir
