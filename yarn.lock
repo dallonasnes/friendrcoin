@@ -1120,6 +1120,12 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.6.2":
+  version "7.16.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.7.tgz#03ff99f64106588c9c403c6ecb8c3bafbbdff1fa"
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.10.4", "@babel/template@^7.14.5", "@babel/template@^7.3.3":
   version "7.14.5"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.14.5.tgz"
@@ -1466,7 +1472,7 @@
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/properties" "^5.5.0"
 
-"@ethersproject/bignumber@5.5.0", "@ethersproject/bignumber@>=5.0.0-beta.130", "@ethersproject/bignumber@^5.1.1", "@ethersproject/bignumber@^5.4.0", "@ethersproject/bignumber@^5.4.1", "@ethersproject/bignumber@^5.5.0":
+"@ethersproject/bignumber@5.5.0", "@ethersproject/bignumber@>=5.0.0-beta.130", "@ethersproject/bignumber@^5.1.1", "@ethersproject/bignumber@^5.4.1", "@ethersproject/bignumber@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/bignumber/-/bignumber-5.5.0.tgz"
   dependencies:
@@ -1486,7 +1492,7 @@
   dependencies:
     "@ethersproject/bignumber" "^5.5.0"
 
-"@ethersproject/contracts@5.5.0", "@ethersproject/contracts@^5.4.0", "@ethersproject/contracts@^5.4.1":
+"@ethersproject/contracts@5.5.0", "@ethersproject/contracts@^5.4.1", "@ethersproject/contracts@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/contracts/-/contracts-5.5.0.tgz"
   dependencies:
@@ -1549,7 +1555,7 @@
     aes-js "3.0.0"
     scrypt-js "3.0.1"
 
-"@ethersproject/keccak256@5.5.0", "@ethersproject/keccak256@>=5.0.0-beta.127", "@ethersproject/keccak256@^5.5.0":
+"@ethersproject/keccak256@5.5.0", "@ethersproject/keccak256@>=5.0.0-beta.127", "@ethersproject/keccak256@^5.0.0-beta.130", "@ethersproject/keccak256@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/keccak256/-/keccak256-5.5.0.tgz"
   dependencies:
@@ -1560,7 +1566,7 @@
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/logger/-/logger-5.5.0.tgz"
 
-"@ethersproject/networks@5.5.2", "@ethersproject/networks@^5.4.1", "@ethersproject/networks@^5.5.0":
+"@ethersproject/networks@5.5.2", "@ethersproject/networks@^5.5.0", "@ethersproject/networks@^5.5.2":
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/networks/-/networks-5.5.2.tgz#784c8b1283cd2a931114ab428dae1bd00c07630b"
   dependencies:
@@ -1579,7 +1585,7 @@
   dependencies:
     "@ethersproject/logger" "^5.5.0"
 
-"@ethersproject/providers@5.5.2", "@ethersproject/providers@^5.4.1", "@ethersproject/providers@^5.4.4":
+"@ethersproject/providers@5.5.2", "@ethersproject/providers@^5.4.4", "@ethersproject/providers@^5.5.2":
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.5.2.tgz#131ccf52dc17afd0ab69ed444b8c0e3a27297d99"
   dependencies:
@@ -1625,7 +1631,7 @@
     "@ethersproject/logger" "^5.5.0"
     hash.js "1.1.7"
 
-"@ethersproject/signing-key@5.5.0", "@ethersproject/signing-key@^5.4.0", "@ethersproject/signing-key@^5.5.0":
+"@ethersproject/signing-key@5.5.0", "@ethersproject/signing-key@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.5.0.tgz"
   dependencies:
@@ -1636,7 +1642,7 @@
     elliptic "6.5.4"
     hash.js "1.1.7"
 
-"@ethersproject/solidity@5.5.0", "@ethersproject/solidity@^5.4.0":
+"@ethersproject/solidity@5.5.0", "@ethersproject/solidity@^5.4.0", "@ethersproject/solidity@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/solidity/-/solidity-5.5.0.tgz"
   dependencies:
@@ -1669,7 +1675,7 @@
     "@ethersproject/rlp" "^5.5.0"
     "@ethersproject/signing-key" "^5.5.0"
 
-"@ethersproject/units@5.5.0", "@ethersproject/units@^5.4.0":
+"@ethersproject/units@5.5.0", "@ethersproject/units@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/units/-/units-5.5.0.tgz"
   dependencies:
@@ -2696,10 +2702,6 @@
   version "16.4.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-16.4.6.tgz"
 
-"@types/node@11.11.6":
-  version "11.11.6"
-  resolved "https://registry.npmjs.org/@types/node/-/node-11.11.6.tgz"
-
 "@types/node@>=13.7.0":
   version "17.0.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.8.tgz#50d680c8a8a78fe30abe6906453b21ad8ab0ad7b"
@@ -2992,9 +2994,9 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@uniswap/token-lists@^1.0.0-beta.24":
-  version "1.0.0-beta.25"
-  resolved "https://registry.npmjs.org/@uniswap/token-lists/-/token-lists-1.0.0-beta.25.tgz"
+"@uniswap/token-lists@^1.0.0-beta.27":
+  version "1.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/@uniswap/token-lists/-/token-lists-1.0.0-beta.27.tgz#8b02a979b0b0024cc96f60e694a3f6db6b2ccab2"
 
 "@uniswap/v2-core@1.0.0":
   version "1.0.0"
@@ -3160,6 +3162,26 @@
   resolved "https://registry.npmjs.org/@walletconnect/window-metadata/-/window-metadata-1.0.0.tgz"
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
+
+"@web3-react/abstract-connector@^6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"
+  dependencies:
+    "@web3-react/types" "^6.0.7"
+
+"@web3-react/core@^6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@web3-react/core/-/core-6.1.9.tgz#5f5daa0545a8ea07770a699580ced552583afc97"
+  dependencies:
+    "@ethersproject/keccak256" "^5.0.0-beta.130"
+    "@web3-react/abstract-connector" "^6.0.7"
+    "@web3-react/types" "^6.0.7"
+    tiny-invariant "^1.0.6"
+    tiny-warning "^1.0.3"
+
+"@web3-react/types@^6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@web3-react/types/-/types-6.0.7.tgz#34a6204224467eedc6123abaf55fbb6baeb2809f"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -4202,6 +4224,12 @@ axios@^0.21.1, axios@^0.21.4:
   dependencies:
     follow-redirects "^1.14.0"
 
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  dependencies:
+    follow-redirects "^1.14.4"
+
 axobject-query@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/axobject-query/-/axobject-query-2.2.0.tgz"
@@ -4910,6 +4938,10 @@ bfj@^7.0.2:
     hoopy "^0.1.4"
     tryer "^1.0.1"
 
+big-integer@^1.6.16:
+  version "1.6.51"
+  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.51.tgz#0df92a5d9880560d3ff2d5fd20245c889d130686"
+
 big.js@^5.2.2:
   version "5.2.2"
   resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
@@ -4957,15 +4989,6 @@ bip39@2.5.0:
     randombytes "^2.0.1"
     safe-buffer "^5.0.1"
     unorm "^1.3.3"
-
-bip39@^3.0.2:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/bip39/-/bip39-3.0.4.tgz"
-  dependencies:
-    "@types/node" "11.11.6"
-    create-hash "^1.1.0"
-    pbkdf2 "^3.0.9"
-    randombytes "^2.0.1"
 
 bip66@^1.1.5:
   version "1.1.5"
@@ -5125,6 +5148,19 @@ braces@^3.0.1, braces@~3.0.2:
   resolved "https://registry.npmjs.org/braces/-/braces-3.0.2.tgz"
   dependencies:
     fill-range "^7.0.1"
+
+broadcast-channel@^3.4.1:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-3.7.0.tgz#2dfa5c7b4289547ac3f6705f9c00af8723889937"
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    detect-node "^2.1.0"
+    js-sha3 "0.8.0"
+    microseconds "0.2.0"
+    nano-time "1.0.0"
+    oblivious-set "1.0.0"
+    rimraf "3.0.2"
+    unload "2.2.0"
 
 brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
@@ -5331,16 +5367,6 @@ builtin-modules@^3.1.0:
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz"
-
-burner-provider@^1.0.38:
-  version "1.0.38"
-  resolved "https://registry.npmjs.org/burner-provider/-/burner-provider-1.0.38.tgz"
-  dependencies:
-    bip39 "^3.0.2"
-    eth-sig-util "^2.5.3"
-    ethereumjs-wallet "^0.6.3"
-    ethers "^4.0.46"
-    web3-provider-engine "^15.0.7"
 
 bytes@3.0.0:
   version "3.0.0"
@@ -6768,7 +6794,7 @@ detect-newline@^3.0.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/detect-newline/-/detect-newline-3.1.0.tgz"
 
-detect-node@^2.0.4:
+detect-node@^2.0.4, detect-node@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/detect-node/-/detect-node-2.1.0.tgz"
 
@@ -7694,35 +7720,36 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@2.3.14:
-  version "2.3.14"
-  resolved "https://registry.npmjs.org/eth-hooks/-/eth-hooks-2.3.14.tgz"
+eth-hooks@4.0.17:
+  version "4.0.17"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.0.17.tgz#14d0ce7dc89f1b10d0d893d3a9d690f9e9445531"
   dependencies:
-    "@ethersproject/address" "^5.4.0"
-    "@ethersproject/bignumber" "^5.4.0"
-    "@ethersproject/bytes" "^5.4.0"
-    "@ethersproject/contracts" "^5.4.0"
-    "@ethersproject/networks" "^5.4.1"
-    "@ethersproject/providers" "^5.4.1"
-    "@ethersproject/signing-key" "^5.4.0"
-    "@ethersproject/solidity" "^5.4.0"
-    "@ethersproject/units" "^5.4.0"
-    "@uniswap/token-lists" "^1.0.0-beta.24"
-    axios "^0.21.1"
-    burner-provider "^1.0.38"
-    ethers "^5.4.1"
-    observable-hooks "^4.0.5"
-    use-debounce "^7.0.0"
+    "@ethersproject/address" "^5.5.0"
+    "@ethersproject/bignumber" "^5.5.0"
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/contracts" "^5.5.0"
+    "@ethersproject/networks" "^5.5.2"
+    "@ethersproject/providers" "^5.5.2"
+    "@ethersproject/signing-key" "^5.5.0"
+    "@ethersproject/solidity" "^5.5.0"
+    "@ethersproject/units" "^5.5.0"
+    "@uniswap/token-lists" "^1.0.0-beta.27"
+    "@web3-react/abstract-connector" "^6.0.7"
+    "@web3-react/core" "^6.1.9"
+    "@web3-react/types" "^6.0.7"
+    axios "^0.24.0"
+    ethers "^5.5.3"
+    lodash.isequal "^4.5.0"
+    merge-anything "^4.0.2"
+    react-query "^3.34.7"
+    ts-invariant "^0.9.4"
+    use-debounce "^7.0.1"
+    usehooks-ts "^2.2.0"
+    web3modal "^1.9.5"
 
 eth-json-rpc-errors@^1.0.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/eth-json-rpc-errors/-/eth-json-rpc-errors-1.1.1.tgz"
-  dependencies:
-    fast-safe-stringify "^2.0.6"
-
-eth-json-rpc-errors@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/eth-json-rpc-errors/-/eth-json-rpc-errors-2.0.2.tgz"
   dependencies:
     fast-safe-stringify "^2.0.6"
 
@@ -7887,7 +7914,7 @@ eth-sig-util@^1.4.2:
     ethereumjs-abi "git+https://github.com/ethereumjs/ethereumjs-abi.git"
     ethereumjs-util "^5.1.1"
 
-eth-sig-util@^2.5.2, eth-sig-util@^2.5.3:
+eth-sig-util@^2.5.2:
   version "2.5.4"
   resolved "https://registry.npmjs.org/eth-sig-util/-/eth-sig-util-2.5.4.tgz"
   dependencies:
@@ -8197,7 +8224,7 @@ ethereumjs-vm@^2.1.0, ethereumjs-vm@^2.3.4, ethereumjs-vm@^2.6.0:
     rustbn.js "~0.2.0"
     safe-buffer "^5.1.1"
 
-ethereumjs-wallet@0.6.5, ethereumjs-wallet@^0.6.3:
+ethereumjs-wallet@0.6.5:
   version "0.6.5"
   resolved "https://registry.npmjs.org/ethereumjs-wallet/-/ethereumjs-wallet-0.6.5.tgz"
   dependencies:
@@ -8225,7 +8252,7 @@ ethers@4.0.47:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^4.0.40, ethers@^4.0.46:
+ethers@^4.0.40:
   version "4.0.49"
   resolved "https://registry.npmjs.org/ethers/-/ethers-4.0.49.tgz"
   dependencies:
@@ -8239,7 +8266,7 @@ ethers@^4.0.40, ethers@^4.0.46:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^5.0.1, ethers@^5.0.2, ethers@^5.0.24, ethers@^5.4.1, ethers@^5.4.7, ethers@^5.5.3:
+ethers@^5.0.1, ethers@^5.0.2, ethers@^5.0.24, ethers@^5.4.7, ethers@^5.5.3:
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.3.tgz#1e361516711c0c3244b6210e7e3ecabf0c75fca0"
   dependencies:
@@ -8812,6 +8839,10 @@ follow-redirects@1.5.10:
 follow-redirects@^1.0.0, follow-redirects@^1.12.1, follow-redirects@^1.14.0:
   version "1.14.1"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.1.tgz"
+
+follow-redirects@^1.14.4:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
 
 for-each@^0.3.3, for-each@~0.3.3:
   version "0.3.3"
@@ -10911,7 +10942,7 @@ is-weakref@^1.0.1:
   dependencies:
     call-bind "^1.0.2"
 
-is-what@^3.12.0:
+is-what@^3.12.0, is-what@^3.14.1:
   version "3.14.1"
   resolved "https://registry.npmjs.org/is-what/-/is-what-3.14.1.tgz"
 
@@ -12273,6 +12304,10 @@ lodash.flatten@^4.2.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/lodash.flatten/-/lodash.flatten-4.4.0.tgz"
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz"
@@ -12548,6 +12583,13 @@ match-all@^1.2.6:
   version "1.2.6"
   resolved "https://registry.npmjs.org/match-all/-/match-all-1.2.6.tgz"
 
+match-sorter@^6.0.2:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/match-sorter/-/match-sorter-6.3.1.tgz#98cc37fda756093424ddf3cbc62bfe9c75b92bda"
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    remove-accents "0.4.2"
+
 matchdep@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/matchdep/-/matchdep-2.0.0.tgz"
@@ -12652,6 +12694,13 @@ meow@^5.0.0:
     trim-newlines "^2.0.0"
     yargs-parser "^10.0.0"
 
+merge-anything@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/merge-anything/-/merge-anything-4.0.2.tgz#cb61fdd4e0604e254ff571f90869fa1af2d39e7f"
+  dependencies:
+    is-what "^3.14.1"
+    ts-toolbelt "^9.6.0"
+
 merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.1.tgz"
@@ -12755,6 +12804,10 @@ micromatch@^4.0.2, micromatch@^4.0.4:
   dependencies:
     braces "^3.0.1"
     picomatch "^2.2.3"
+
+microseconds@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/microseconds/-/microseconds-0.2.0.tgz#233b25f50c62a65d861f978a4a4f8ec18797dc39"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
@@ -13194,6 +13247,12 @@ nano-json-stream-parser@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/nano-json-stream-parser/-/nano-json-stream-parser-0.1.2.tgz"
 
+nano-time@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nano-time/-/nano-time-1.0.0.tgz#b0554f69ad89e22d0907f7a12b0993a5d96137ef"
+  dependencies:
+    big-integer "^1.6.16"
+
 nanoid@^3.0.2, nanoid@^3.1.30:
   version "3.1.30"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.1.30.tgz"
@@ -13630,15 +13689,15 @@ obliterator@^1.6.1:
   version "1.6.1"
   resolved "https://registry.npmjs.org/obliterator/-/obliterator-1.6.1.tgz"
 
+oblivious-set@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/oblivious-set/-/oblivious-set-1.0.0.tgz#c8316f2c2fb6ff7b11b6158db3234c49f733c566"
+
 oboe@2.1.4:
   version "2.1.4"
   resolved "https://registry.npmjs.org/oboe/-/oboe-2.1.4.tgz"
   dependencies:
     http-https "^1.0.0"
-
-observable-hooks@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.npmjs.org/observable-hooks/-/observable-hooks-4.0.5.tgz"
 
 obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
@@ -15763,6 +15822,14 @@ react-qr-reader@^2.2.1:
     prop-types "^15.7.2"
     webrtc-adapter "^7.2.1"
 
+react-query@^3.34.7:
+  version "3.34.8"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.34.8.tgz#a3be8523fd95f766b04c32847a1b58d8231db03c"
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    broadcast-channel "^3.4.1"
+    match-sorter "^6.0.2"
+
 react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.8.3.tgz"
@@ -16117,6 +16184,10 @@ relateurl@^0.2.7:
   version "0.2.7"
   resolved "https://registry.npmjs.org/relateurl/-/relateurl-0.2.7.tgz"
 
+remove-accents@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
+
 remove-bom-buffer@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/remove-bom-buffer/-/remove-bom-buffer-3.0.0.tgz"
@@ -16421,7 +16492,7 @@ rimraf@2.6.3:
   dependencies:
     glob "^7.1.3"
 
-rimraf@^3.0.0, rimraf@^3.0.2:
+rimraf@3.0.2, rimraf@^3.0.0, rimraf@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/rimraf/-/rimraf-3.0.2.tgz"
   dependencies:
@@ -17544,7 +17615,7 @@ style-loader@1.3.0:
     loader-utils "^2.0.0"
     schema-utils "^2.7.0"
 
-styled-components@^5.1.1, styled-components@^5.3.3:
+styled-components@^5.3.3:
   version "5.3.3"
   resolved "https://registry.npmjs.org/styled-components/-/styled-components-5.3.3.tgz"
   dependencies:
@@ -17982,6 +18053,10 @@ tiny-invariant@^1.0.2, tiny-invariant@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.1.0.tgz"
 
+tiny-invariant@^1.0.6:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.2.0.tgz#a1141f86b672a9148c72e978a19a73b9b94a15a9"
+
 tiny-warning@^1.0.0, tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
@@ -18177,6 +18252,10 @@ ts-invariant@^0.9.4:
 ts-pnp@1.2.0, ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.npmjs.org/ts-pnp/-/ts-pnp-1.2.0.tgz"
+
+ts-toolbelt@^9.6.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-9.6.0.tgz#50a25426cfed500d4a09bd1b3afb6f28879edfd5"
 
 tsconfig-paths@^3.12.0:
   version "3.12.0"
@@ -18462,6 +18541,13 @@ universalify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/universalify/-/universalify-2.0.0.tgz"
 
+unload@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/unload/-/unload-2.2.0.tgz#ccc88fdcad345faa06a92039ec0f80b488880ef7"
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    detect-node "^2.0.4"
+
 unorm@^1.3.3:
   version "1.6.0"
   resolved "https://registry.npmjs.org/unorm/-/unorm-1.6.0.tgz"
@@ -18555,13 +18641,17 @@ ursa-optional@~0.10.0:
     bindings "^1.5.0"
     nan "^2.14.2"
 
-use-debounce@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/use-debounce/-/use-debounce-7.0.0.tgz"
+use-debounce@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-7.0.1.tgz#380e6191cc13ad29f8e2149a12b5c37cc2891190"
 
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz"
+
+usehooks-ts@^2.2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.2.1.tgz#9bb9af81d4680cf9cdb9234331a37e4be39d1183"
 
 utf-8-validate@^5.0.2:
   version "5.0.5"
@@ -19075,33 +19165,6 @@ web3-provider-engine@16.0.1:
     xhr "^2.2.0"
     xtend "^4.0.1"
 
-web3-provider-engine@^15.0.7:
-  version "15.0.12"
-  resolved "https://registry.npmjs.org/web3-provider-engine/-/web3-provider-engine-15.0.12.tgz"
-  dependencies:
-    async "^2.5.0"
-    backoff "^2.5.0"
-    clone "^2.0.0"
-    cross-fetch "^2.1.0"
-    eth-block-tracker "^4.4.2"
-    eth-json-rpc-errors "^2.0.2"
-    eth-json-rpc-filters "^4.1.1"
-    eth-json-rpc-infura "^4.0.1"
-    eth-json-rpc-middleware "^4.1.5"
-    eth-sig-util "^1.4.2"
-    ethereumjs-block "^1.2.2"
-    ethereumjs-tx "^1.2.0"
-    ethereumjs-util "^5.1.5"
-    ethereumjs-vm "^2.3.4"
-    json-stable-stringify "^1.0.1"
-    promise-to-callback "^1.0.0"
-    readable-stream "^2.2.9"
-    request "^2.85.0"
-    semaphore "^1.0.3"
-    ws "^5.1.1"
-    xhr "^2.2.0"
-    xtend "^4.0.1"
-
 web3-providers-http@1.2.11:
   version "1.2.11"
   resolved "https://registry.npmjs.org/web3-providers-http/-/web3-providers-http-1.2.11.tgz"
@@ -19184,15 +19247,15 @@ web3@1.2.11:
     web3-shh "1.2.11"
     web3-utils "1.2.11"
 
-web3modal@^1.9.1:
-  version "1.9.3"
-  resolved "https://registry.npmjs.org/web3modal/-/web3modal-1.9.3.tgz"
+web3modal@^1.9.1, web3modal@^1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/web3modal/-/web3modal-1.9.5.tgz#a1d6351a11358b376af5772f79f3dcdba6c38d1b"
   dependencies:
     detect-browser "^5.1.0"
     prop-types "^15.7.2"
     react "^16.8.6"
     react-dom "^16.8.6"
-    styled-components "^5.1.1"
+    styled-components "^5.3.3"
     tslib "^1.10.0"
 
 webidl-conversions@^3.0.0:
