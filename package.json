@@ -75,7 +75,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.3",
+    "@nomiclabs/hardhat-ethers": "^2.0.4",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
