@@ -2045,9 +2045,9 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nomiclabs/hardhat-ethers@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@nomiclabs/hardhat-ethers/-/hardhat-ethers-2.0.3.tgz"
+"@nomiclabs/hardhat-ethers@^2.0.2", "@nomiclabs/hardhat-ethers@^2.0.3":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@nomiclabs/hardhat-ethers/-/hardhat-ethers-2.0.4.tgz#288889c338acaf47cabd29020e561d0077b7efcf"
 
 "@nomiclabs/hardhat-ethers@npm:hardhat-deploy-ethers":
   version "0.3.0-beta.13"
@@ -2740,9 +2740,11 @@
   version "2.3.2"
   resolved "https://registry.npmjs.org/@types/prettier/-/prettier-2.3.2.tgz"
 
-"@types/promise-poller@^1.7.0":
-  version "1.7.1"
-  resolved "https://registry.npmjs.org/@types/promise-poller/-/promise-poller-1.7.1.tgz"
+"@types/prompts@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@types/prompts/-/prompts-2.0.14.tgz#10cb8899844bb0771cabe57c1becaaaca9a3b521"
+  dependencies:
+    "@types/node" "*"
 
 "@types/prop-types@*":
   version "15.7.4"
@@ -3781,15 +3783,18 @@ aproba@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npmjs.org/aproba/-/aproba-1.2.0.tgz"
 
-arb-ts@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.npmjs.org/arb-ts/-/arb-ts-0.0.18.tgz"
+arb-ts@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/arb-ts/-/arb-ts-1.0.2.tgz#148b2364e9368bd158cf8c04e2fd64939e8d0e4d"
   dependencies:
     "@ethersproject/address" "^5.0.8"
     "@ethersproject/bignumber" "^5.1.1"
     "@ethersproject/bytes" "^5.0.8"
-    "@types/promise-poller" "^1.7.0"
-    ethers "^5.0.24"
+    "@nomiclabs/hardhat-ethers" "^2.0.2"
+    "@types/prompts" "^2.0.14"
+    dotenv "^10.0.0"
+    ethers "^5.1.0"
+    prompts "^2.4.2"
 
 archy@^1.0.0:
   version "1.0.0"
@@ -6915,6 +6920,10 @@ dotenv@8.2.0:
   version "8.2.0"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-8.2.0.tgz"
 
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+
 dotenv@^14.2.0:
   version "14.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.2.0.tgz#7e77fd5dd6cff5942c4496e1acf2d0f37a9e67aa"
@@ -8193,7 +8202,7 @@ ethers@^4.0.40:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^5.0.1, ethers@^5.0.2, ethers@^5.0.24, ethers@^5.4.7, ethers@^5.5.3:
+ethers@^5.0.1, ethers@^5.0.2, ethers@^5.1.0, ethers@^5.4.7, ethers@^5.5.3:
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.3.tgz#1e361516711c0c3244b6210e7e3ecabf0c75fca0"
   dependencies:
@@ -14975,9 +14984,9 @@ prompts@2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prompts@^2.0.1:
-  version "2.4.1"
-  resolved "https://registry.npmjs.org/prompts/-/prompts-2.4.1.tgz"
+prompts@^2.0.1, prompts@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
   dependencies:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
