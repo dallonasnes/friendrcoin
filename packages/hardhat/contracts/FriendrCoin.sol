@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
  *
  * _Available since v3.4._
  */
-contract TinderCoin is ERC20Burnable {
+contract FriendrCoin is ERC20Burnable {
     address private tokenOwner;
     address private proxyAdmin;
 

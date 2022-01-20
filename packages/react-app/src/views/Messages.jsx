@@ -17,10 +17,10 @@ const fetchMessages = async ({
   setOffset,
 }) => {
   {
-    if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
+    if (!didFetchLastPage && readContracts && readContracts.FriendrChain) {
       try {
         // have at least two before fetching more
-        const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMessagesForMatch(
+        const [nextPage, nextOffset] = await readContracts.FriendrChain.getRecentMessagesForMatch(
           sender,
           recipient,
           limit,
@@ -73,7 +73,7 @@ export default function Messages({ isLoggedIn, sender, readContracts, writeContr
         value: ethers.utils.parseEther("0.1"),
       });
     }
-    tx(writeContracts.TinderChain.sendMessage(sender, recipient, messageText, isPublic));
+    tx(writeContracts.FriendrChain.sendMessage(sender, recipient, messageText, isPublic));
     // Now need to refresh page to pick up the sent message
     setTimeout(() => document.location.reload(), 800);
   };

@@ -4,14 +4,13 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "./TinderCoin.sol";
+import "./FriendrCoin.sol";
 
-contract TinderChain is OwnableUpgradeable {
+contract FriendrChain is OwnableUpgradeable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
 
-    // TODO: distinguish profiles between persistant and with burner account
     struct Profile {
         string name;
         address _address;
@@ -60,7 +59,7 @@ contract TinderChain is OwnableUpgradeable {
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
     mapping(address => mapping(uint256 => bool)) _votes_cast_by_user; // tracking which public messages a user has already voted on
 
-    TinderCoin private tinderCoin;
+    FriendrCoin private friendrCoin;
 
     uint256 private initTokenReward;
     uint256 private defaultApprovalAmt;
@@ -76,9 +75,9 @@ contract TinderChain is OwnableUpgradeable {
     function initialize() external initializer {
         __Ownable_init();
         // mint 20% to deployer and the rest to the contract
-        tinderCoin = new TinderCoin(
-            "TINDERCOIN",
-            "TC",
+        friendrCoin = new FriendrCoin(
+            "FriendrCOIN",
+            "FRIEND",
             twoHundredMillion,
             eightHundredMillion,
             owner(),
@@ -296,12 +295,12 @@ contract TinderChain is OwnableUpgradeable {
         onlySenderOrOwner(_profile)
         returns (uint256)
     {
-        return tinderCoin.balanceOf(_profile);
+        return friendrCoin.balanceOf(_profile);
     }
 
-    // Gets wallet address of tinderCoin
+    // Gets wallet address of FriendrCoin
     function getTokenAddress() public view returns (address) {
-        return address(tinderCoin);
+        return address(friendrCoin);
     }
 
     /**
@@ -336,11 +335,11 @@ contract TinderChain is OwnableUpgradeable {
         profileCount++;
 
         // Approve this contract to spend tokens for _profile's wallet
-        tinderCoin.approveFor(_profile, defaultApprovalAmt);
+        friendrCoin.approveFor(_profile, defaultApprovalAmt);
 
         // Now send tokens from this contract's wallet to _profile's wallet
         // Be sure that we only transfer after setting profile.created_ts because otherwise vulnerable to reentrancy attack
-        tinderCoin.transferFrom(address(this), _profile, initTokenReward);
+        friendrCoin.transferFrom(address(this), _profile, initTokenReward);
     }
 
     function swipeLeft(address _userProfile, address _swipedProfile)
@@ -355,7 +354,7 @@ contract TinderChain is OwnableUpgradeable {
         onlySenderOrOwner(_userProfile)
     {
         require(
-            tinderCoin.balanceOf(_userProfile) > 0,
+            friendrCoin.balanceOf(_userProfile) > 0,
             "User doesn't have enough tokens to swipe right"
         );
         _swipedAddresses[_userProfile][_swipedProfile] = true;
@@ -378,7 +377,7 @@ contract TinderChain is OwnableUpgradeable {
             _matches_count[_swipedProfile]++;
 
             // Now need to return 1 token back to _swipedProfile since they didn't match initially and were thus charged one token
-            tinderCoin.transferFrom(address(this), _swipedProfile, 1);
+            friendrCoin.transferFrom(address(this), _swipedProfile, 1);
 
             // Now need to init default message in messages mapping
             bytes memory messageMapKey = buildAddressKeyPair(
@@ -401,7 +400,7 @@ contract TinderChain is OwnableUpgradeable {
             _messages[messageMapKey][messages_idx] = message;
             _messages_count[messageMapKey]++;
         } else {
-            tinderCoin.transferFrom(_userProfile, address(this), 1);
+            friendrCoin.transferFrom(_userProfile, address(this), 1);
         }
     }
 
@@ -468,11 +467,11 @@ contract TinderChain is OwnableUpgradeable {
 
         if (isUpvote) {
             message.upvotes++;
-            tinderCoin.transferFrom(address(this), message.author, 1);
+            friendrCoin.transferFrom(address(this), message.author, 1);
         } else {
             if (message.upvotes - message.downvotes > 0) {
                 // Can only transfer tokens away from author of publicMessage if vote count is positive
-                tinderCoin.transferFrom(message.author, address(this), 1);
+                friendrCoin.transferFrom(message.author, address(this), 1);
             }
             message.downvotes++;
         }

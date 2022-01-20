@@ -4,7 +4,7 @@ const { solidity } = require("ethereum-waffle");
 
 use(solidity);
 
-describe("TinderChain", function () {
+describe("FriendrChain", function () {
   let myContract;
   let owner, addr1, addr2, addr3;
 
@@ -38,8 +38,8 @@ describe("TinderChain", function () {
 
   beforeEach(async () => {
     [owner, addr1, addr2, addr3] = await ethers.getSigners();
-    const TinderChainFactory = await ethers.getContractFactory("TinderChain", owner);
-    myContract = await upgrades.deployProxy(TinderChainFactory, [], {
+    const FriendrChainFactory = await ethers.getContractFactory("FriendrChain", owner);
+    myContract = await upgrades.deployProxy(FriendrChainFactory, [], {
       initializer: "initialize",
     });
     await myContract.deployed();

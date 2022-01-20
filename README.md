@@ -1,7 +1,7 @@
-# TinderChain
+# FriendrChain
 
 ## Developers
-Allocation of 1000 TinderCoin to reward qualifying PRs. Be sure to clarify scope and requirements in open issues before beginning work.
+Allocation of 1000 FriendrCoin to reward qualifying PRs. Be sure to clarify scope and requirements in open issues before beginning work.
 
 ## How to run
 #### Docker
@@ -21,4 +21,4 @@ Solidity code lives in `packages/hardhat/contracts` and `packages/react-app` hou
 
 [Marketing doc](https://docs.google.com/document/d/1j1zncLV9bOxah-RwL6pvQE5fU5MIwoYLLpjnd2uhyH8/edit?usp=sharing)
 
-[Figma](https://www.figma.com/file/AQxlyKqiQvVT5SKpTLV2js/Tinder-Chain?node-id=8%3A233)
+[Figma](https://www.figma.com/file/AQxlyKqiQvVT5SKpTLV2js/Friendr-Chain?node-id=8%3A233)

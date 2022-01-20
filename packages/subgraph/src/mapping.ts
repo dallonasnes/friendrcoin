@@ -1,8 +1,8 @@
 import { BigInt, Address } from "@graphprotocol/graph-ts";
 import {
-  TinderChain,
+  FriendrChain,
   SetPurpose,
-} from "../generated/TinderChain/TinderChain";
+} from "../generated/FriendrChain/FriendrChain";
 import { Purpose, Sender } from "../generated/schema";
 
 export function handleSetPurpose(event: SetPurpose): void {

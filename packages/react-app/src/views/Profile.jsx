@@ -57,7 +57,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
               value: ethers.utils.parseEther("0.1"),
             });
           }
-          tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image, _bio, _socialProfile));
+          tx(writeContracts.FriendrChain.createUserProfileFlow(address, _name, _image, _bio, _socialProfile));
         } catch (e) {
           console.log(e);
         }
@@ -150,7 +150,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
               });
             }
             tx(
-              writeContracts.TinderChain.editProfile(
+              writeContracts.FriendrChain.editProfile(
                 address,
                 didNameChange,
                 _name,
@@ -214,6 +214,6 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
     );
   };
 
-  if (!writeContracts || !writeContracts.TinderChain) return <div>Still loading</div>;
+  if (!writeContracts || !writeContracts.FriendrChain) return <div>Still loading</div>;
   return userProfile === null ? createProfilePage() : editProfilePage();
 }

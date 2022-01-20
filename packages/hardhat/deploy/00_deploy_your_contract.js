@@ -17,7 +17,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const chainId = await getChainId();
   const {deploy} = deployments;
   const {deployer} = await getNamedAccounts();
-  const deployResult = await deploy('TinderChain', {
+  const deployResult = await deploy('FriendrChain', {
     from: deployer,
     proxy: {
         owner: deployer,
@@ -30,7 +30,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     }
   });
 
-  var TinderChain = await ethers.getContractAt("TinderChain", deployResult.address, owner);
+  var FriendrChain = await ethers.getContractAt("FriendrChain", deployResult.address, owner);
 
   let wallets = [];
   // Create Test Profiles
@@ -38,34 +38,34 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     const wallet = await ethers.Wallet.createRandom();
     const address = wallet.getAddress();
     wallets.push(wallet);
-    await TinderChain.createUserProfileFlow(address, "Test" + i.toString(), "", "bio", "https://www.youtube.com/c/sinqueso/videos");
+    await FriendrChain.createUserProfileFlow(address, "Test" + i.toString(), "", "bio", "https://www.youtube.com/c/sinqueso/videos");
   }
 
   console.log("FINISHED CREATING PROFILES")
-  console.log("ProfileCount:", await TinderChain.profileCount());
+  console.log("ProfileCount:", await FriendrChain.profileCount());
 
   // Have a few swipe right on the web client default wallet
-  await TinderChain.swipeRight(wallets[0].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
-  await TinderChain.swipeRight(wallets[2].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
-  await TinderChain.swipeRight(wallets[6].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await FriendrChain.swipeRight(wallets[0].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await FriendrChain.swipeRight(wallets[2].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
+  await FriendrChain.swipeRight(wallets[6].getAddress(), "0x88b97e35aAcC5B4C96914E56cb7DfCB565e685aA")
 
   // Have some accounts match with each other and send public messages
-  await TinderChain.swipeRight(wallets[0].getAddress(), wallets[2].getAddress())
-  await TinderChain.swipeRight(wallets[2].getAddress(), wallets[0].getAddress())
-  await TinderChain.swipeRight(wallets[2].getAddress(), wallets[6].getAddress())
-  await TinderChain.swipeRight(wallets[6].getAddress(), wallets[2].getAddress())
+  await FriendrChain.swipeRight(wallets[0].getAddress(), wallets[2].getAddress())
+  await FriendrChain.swipeRight(wallets[2].getAddress(), wallets[0].getAddress())
+  await FriendrChain.swipeRight(wallets[2].getAddress(), wallets[6].getAddress())
+  await FriendrChain.swipeRight(wallets[6].getAddress(), wallets[2].getAddress())
 
-  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "Are you a crypto kitty? Cuz I'm feline a connection between us.", true);
-  await TinderChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "Baby, I ain't going for no pump and dump.", true);
+  await FriendrChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "Are you a crypto kitty? Cuz I'm feline a connection between us.", true);
+  await FriendrChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "Baby, I ain't going for no pump and dump.", true);
 
   for (let i = 0; i < 489; i++){
-    await TinderChain.voteOnPublicMessage(0, true);
-    if (i < 328) await TinderChain.voteOnPublicMessage(0, false);
+    await FriendrChain.voteOnPublicMessage(0, true);
+    if (i < 328) await FriendrChain.voteOnPublicMessage(0, false);
   }
 
   for (let i = 0; i < 39; i++){
-    await TinderChain.voteOnPublicMessage(1, true);
-    if (i < 8) await TinderChain.voteOnPublicMessage(1, false);
+    await FriendrChain.voteOnPublicMessage(1, true);
+    if (i < 8) await FriendrChain.voteOnPublicMessage(1, false);
   }
 
   
@@ -76,10 +76,10 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     // wait for etherscan to be ready to verify
     await sleep(15000);
     await run("verify:verify", {
-      address: TinderChain.address,
-      contract: "contracts/TinderChain.sol:TinderChain",
+      address: FriendrChain.address,
+      contract: "contracts/FriendrChain.sol:FriendrChain",
       contractArguments: [],
     });
   }
 };
-module.exports.tags = ["TinderChain"];
+module.exports.tags = ["FriendrChain"];
