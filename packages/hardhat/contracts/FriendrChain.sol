@@ -1,7 +1,6 @@
 pragma solidity >=0.8.0 <0.9.0;
 //SPDX-License-Identifier: MIT
 
-import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./FriendrCoin.sol";
@@ -10,6 +9,7 @@ contract FriendrChain is OwnableUpgradeable {
     event messageSent(address sender, address receiver, uint256 messageIdx);
     event publicMessageSent(address sender, uint256 publicMessageIdx);
     event messageVoted(uint256 publicMessageIdx, bool isUpvote);
+    event swipeMatch(address swiper, address swipee);
 
     struct Profile {
         string name;
@@ -399,6 +399,7 @@ contract FriendrChain is OwnableUpgradeable {
             uint256 messages_idx = _messages_count[messageMapKey];
             _messages[messageMapKey][messages_idx] = message;
             _messages_count[messageMapKey]++;
+            emit swipeMatch(_userProfile, _swipedProfile);
         } else {
             friendrCoin.transferFrom(_userProfile, address(this), 1);
         }
