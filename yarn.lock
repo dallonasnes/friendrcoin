@@ -7656,9 +7656,9 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.0.17:
-  version "4.0.17"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.0.17.tgz#14d0ce7dc89f1b10d0d893d3a9d690f9e9445531"
+eth-hooks@4.0.18:
+  version "4.0.18"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.0.18.tgz#769d8a3cf9f2dd6f3dc51cb53b2d581aef986312"
   dependencies:
     "@ethersproject/address" "^5.5.0"
     "@ethersproject/bignumber" "^5.5.0"
