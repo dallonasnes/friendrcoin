@@ -159,9 +159,9 @@ function App(props) {
 
   useEffect(() => {
     async function getUserProfile() {
-      if (readContracts && readContracts.TinderChain) {
+      if (readContracts && readContracts.FriendrChain) {
         try {
-          const res = await readContracts.TinderChain.getUserProfile(address);
+          const res = await readContracts.FriendrChain.getUserProfile(address);
           // Check for non-nil created TS
           if (res && res.created_ts._hex !== "0x00") {
             setUserProfile(res);

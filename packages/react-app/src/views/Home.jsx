@@ -15,7 +15,7 @@ const _handleVote = ({ address, isUpvote, tx, writeContracts, messageIdx }) => {
         value: ethers.utils.parseEther("0.1"),
       });
     }
-    tx(writeContracts.TinderChain.voteOnPublicMessage(parseInt(messageIdx), isUpvote));
+    tx(writeContracts.FriendrChain.voteOnPublicMessage(parseInt(messageIdx), isUpvote));
     setTimeout(() => window.location.reload(), 500);
   } catch (e) {
     console.log(e);
@@ -105,9 +105,9 @@ const getPublicMessages = async ({
   readContracts,
   limit,
 }) => {
-  if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
+  if (!didFetchLastPage && readContracts && readContracts.FriendrChain) {
     try {
-      const [nextPage, nextOffset] = await readContracts.TinderChain.getPublicMessages(limit, offset);
+      const [nextPage, nextOffset] = await readContracts.FriendrChain.getPublicMessages(limit, offset);
       if (nextPage && nextPage.length > 0) {
         // HACK: this page loads again after userProfile loads, then fetches the first page twice
         // need to make sure the we don't duplicate messages on screen

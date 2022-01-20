@@ -13,9 +13,9 @@ const fetchMatches = async ({
   setOffset,
 }) => {
   {
-    if (!didFetchLastPage && readContracts && readContracts.TinderChain) {
+    if (!didFetchLastPage && readContracts && readContracts.FriendrChain) {
       try {
-        const [nextPage, nextOffset] = await readContracts.TinderChain.getRecentMatches(address, limit, offset);
+        const [nextPage, nextOffset] = await readContracts.FriendrChain.getRecentMatches(address, limit, offset);
         if (nextPage && nextPage.length > 0) {
           const tmpQueue = queue.concat(nextPage);
           setQueue(tmpQueue);

@@ -15,6 +15,10 @@ const isValidHTTPUrl = input => {
   }
 };
 
+const stripProtocolFromUrl = socialProfile => {
+  return socialProfile.replace(/^https?:\/\//, "");
+};
+
 export default function Profile({ isLoggedIn, address, userProfile, setUserProfile, tx, writeContracts }) {
   const createProfilePage = () => {
     const handleCreateClick = () => {
@@ -28,6 +32,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         return;
       }
       let _socialProfile = document.getElementById("socialProfile").value.trim();
+      _socialProfile = stripProtocolFromUrl(_socialProfile);
       if (!_socialProfile) {
         alert("plz link to your social media profile");
         return;
@@ -57,7 +62,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
               value: ethers.utils.parseEther("0.1"),
             });
           }
-          tx(writeContracts.TinderChain.createUserProfileFlow(address, _name, _image, _bio, _socialProfile));
+          tx(writeContracts.FriendrChain.createUserProfileFlow(address, _name, _image, _bio, _socialProfile));
         } catch (e) {
           console.log(e);
         }
@@ -77,13 +82,13 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         {isLoggedIn ? (
           <>
             <h2>You must create a profile to swipe</h2>
-            <h2>Get 100 matchcoins free when you create a profile attached to your wallet</h2>
+            <h2>Get 100 friendrcoins free when you create a profile attached to your wallet</h2>
           </>
         ) : (
           <>
             <h2>You must create a burner profile to swipe</h2>
             <h2>Or connect your crypto wallet for your account to be saved on the ETH blockchain</h2>
-            <h2>Get 100 matchcoins free when you create a profile attached to your wallet</h2>
+            <h2>Get 100 friendrcoins free when you create a profile attached to your wallet</h2>
           </>
         )}
         <label>Name</label>
@@ -119,6 +124,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         }
       }
       let _socialProfile = document.getElementById("socialProfile").value.trim();
+      _socialProfile = stripProtocolFromUrl(_socialProfile);
       if (!_socialProfile || _socialProfile === userProfile.socialProfile) {
         // do nothing if they don't update social profile
       } else if (!isValidHTTPUrl(_socialProfile)) {
@@ -150,7 +156,7 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
               });
             }
             tx(
-              writeContracts.TinderChain.editProfile(
+              writeContracts.FriendrChain.editProfile(
                 address,
                 didNameChange,
                 _name,
@@ -202,8 +208,8 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         <label>URL to a social media profile</label>
         <input type="text" id="socialProfile" placeholder={userProfile.socialMediaProfile}></input>
         <br />
-        <button onClick={() => setTimeout(window.open("//" + userProfile.socialMediaProfile, "_blank"), 1000)}>
-          Social Media Profile
+        <button onClick={() => setTimeout(window.open("https://" + userProfile.socialMediaProfile, "_blank"), 1000)}>
+          View Social Media Profile
         </button>
         <br />
         <label>Bio</label>
@@ -214,6 +220,6 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
     );
   };
 
-  if (!writeContracts || !writeContracts.TinderChain) return <div>Still loading</div>;
+  if (!writeContracts || !writeContracts.FriendrChain) return <div>Still loading</div>;
   return userProfile === null ? createProfilePage() : editProfilePage();
 }

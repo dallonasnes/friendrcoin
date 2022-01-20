@@ -11,7 +11,7 @@ import { Address } from "../components";
 
   <Events
     contracts={readContracts}
-    contractName="TinderChain"
+    contractName="FriendrChain"
     eventName="SetPurpose"
     localProvider={localProvider}
     mainnetProvider={mainnetProvider}

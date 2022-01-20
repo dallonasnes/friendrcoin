@@ -45,8 +45,8 @@ export default function Header({ isLoggedIn, setIsLoggedIn, userProfile }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
       <a href="/">
-        Matchcoin
-        <img alt="Matchcoin Logo" src={"../../logo-matchcoin.svg"} />
+        FriendrCoin
+        <img alt="FriendrCoin Logo" src={"../../logo-friendrcoin.svg"} />
       </a>
       <div>{userProfile !== null ? getLoggedInButtons() : getNotLoggedInButtons()}</div>
       <div></div>

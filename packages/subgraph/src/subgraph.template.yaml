@@ -3,11 +3,11 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: TinderChain
+    name: FriendrChain
     network: localhost
     source:
-      address: "{{localhost_TinderChainAddress}}"
-      abi: TinderChain
+      address: "{{localhost_FriendrChainAddress}}"
+      abi: FriendrChain
       startBlock: 1
     mapping:
       kind: ethereum/events
@@ -17,8 +17,8 @@ dataSources:
         - Purpose
         - Sender
       abis:
-        - name: TinderChain
-          file: ./abis/localhost_TinderChain.json
+        - name: FriendrChain
+          file: ./abis/localhost_FriendrChain.json
       eventHandlers:
         - event: SetPurpose(address,string)
           handler: handleSetPurpose

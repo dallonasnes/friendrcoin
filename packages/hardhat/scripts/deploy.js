@@ -26,11 +26,11 @@ And learn more here: https://www.npmjs.com/package/hardhat-deploy
 const main = async () => {
   console.log("\n\n 📡 Deploying...\n");
 
-  const TinderChain = await deploy("TinderChain"); // <-- add in constructor args like line 19 vvvv
+  const FriendrChain = await deploy("FriendrChain"); // <-- add in constructor args like line 19 vvvv
   // use for local token bridging
   // const mockToken = await deploy("MockERC20") // <-- add in constructor args like line 19 vvvv
 
-  //const TinderChain = await ethers.getContractAt('TinderChain', "0xaAC799eC2d00C013f1F11c37E654e59B0429DF6A") //<-- if you want to instantiate a version of a contract at a specific address!
+  //const FriendrChain = await ethers.getContractAt('FriendrChain', "0xaAC799eC2d00C013f1F11c37E654e59B0429DF6A") //<-- if you want to instantiate a version of a contract at a specific address!
   //const secondContract = await deploy("SecondContract")
 
   // const exampleToken = await deploy("ExampleToken")
@@ -48,7 +48,7 @@ const main = async () => {
 
   /*
   //If you want to send some ETH to a contract on deploy (make your constructor payable!)
-  const TinderChain = await deploy("TinderChain", [], {
+  const FriendrChain = await deploy("FriendrChain", [], {
   value: ethers.utils.parseEther("0.05")
   });
   */
@@ -56,7 +56,7 @@ const main = async () => {
   /*
   //If you want to link a library into your contract:
   // reference: https://github.com/austintgriffith/scaffold-eth/blob/using-libraries-example/packages/hardhat/scripts/deploy.js#L19
-  const TinderChain = await deploy("TinderChain", [], {}, {
+  const FriendrChain = await deploy("FriendrChain", [], {}, {
    LibraryName: **LibraryAddress**
   });
   */
@@ -64,8 +64,8 @@ const main = async () => {
   //If you want to verify your contract on tenderly.co (see setup details in the scaffold-eth README!)
   /*
   await tenderlyVerify(
-    {contractName: "TinderChain",
-     contractAddress: TinderChain.address
+    {contractName: "FriendrChain",
+     contractAddress: FriendrChain.address
   })
   */
 

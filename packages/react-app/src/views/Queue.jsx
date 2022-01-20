@@ -8,7 +8,7 @@ const checkForMatch = async ({ readContracts, swiper, swipee, didJustMatch, setD
   console.log("looking for match!");
   console.log("swiper", swiper);
   console.log("swipee", swipee);
-  const isMatch = await readContracts.TinderChain.getIsMatch(swiper, swipee);
+  const isMatch = await readContracts.FriendrChain.getIsMatch(swiper, swipee);
   debugger;
   console.log("Is match?", isMatch);
   setDidJustMatch(isMatch);
@@ -27,11 +27,11 @@ const fetchProfiles = async ({
   isLoggedIn,
 }) => {
   {
-    if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.TinderChain) {
+    if (queue.length <= 2 && !didFetchLastPage && readContracts && readContracts.FriendrChain) {
       // have at least two before fetching more
       // and if user is not logged in, then isBurner wallet is true
       try {
-        const [nextPage, nextOffset] = await readContracts.TinderChain.getUnseenProfiles(
+        const [nextPage, nextOffset] = await readContracts.FriendrChain.getUnseenProfiles(
           address,
           limit,
           offset,
@@ -55,7 +55,7 @@ const fetchProfiles = async ({
   }
 };
 
-// TODO: yourLocalBalance should refer to tinder token balance
+// TODO: yourLocalBalance should refer to Friendr token balance
 
 // TODO: can change yourLocalBalance between 0 and 1 to test different views
 // TODO: can test "match" page by clicking on heart button (user must have at least 1 token in yourLocalBalance variable)
@@ -187,8 +187,8 @@ export default function Queue({
         }
 
         isRightSwipe
-          ? tx(writeContracts.TinderChain.swipeRight(address, swipedProfile._address))
-          : tx(writeContracts.TinderChain.swipeLeft(address, swipedProfile._address));
+          ? tx(writeContracts.FriendrChain.swipeRight(address, swipedProfile._address))
+          : tx(writeContracts.FriendrChain.swipeLeft(address, swipedProfile._address));
 
         if (isRightSwipe) {
           // TODO: debug this
@@ -221,12 +221,11 @@ export default function Queue({
     // needs to allows swiping between the images
     const showNextProfile = () => {
       if (currentProfile.name) {
-        console.log("FIRST IMAGE: ", currentProfile.images[0]);
         return (
           <div style={{ marginTop: "20px" }}>
             <img
               alt="Default avatar"
-              src={currentProfile.images[0] !== "" ? currentProfile.images[0] : "../../queueAvatar.svg"}
+              src={currentProfile.image !== "" ? currentProfile.image : "../../queueAvatar.svg"}
             />
             <p>{currentProfile.name}</p>
             <p>{currentProfile.bio}</p>
