@@ -221,12 +221,11 @@ export default function Queue({
     // needs to allows swiping between the images
     const showNextProfile = () => {
       if (currentProfile.name) {
-        console.log("FIRST IMAGE: ", currentProfile.images[0]);
         return (
           <div style={{ marginTop: "20px" }}>
             <img
               alt="Default avatar"
-              src={currentProfile.images[0] !== "" ? currentProfile.images[0] : "../../queueAvatar.svg"}
+              src={currentProfile.image !== "" ? currentProfile.image : "../../queueAvatar.svg"}
             />
             <p>{currentProfile.name}</p>
             <p>{currentProfile.bio}</p>
