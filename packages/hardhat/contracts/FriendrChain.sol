@@ -68,7 +68,7 @@ contract FriendrChain is OwnableUpgradeable {
     uint256 public profileCount;
     uint256 public publicMessageCount;
 
-    uint256 private constant oneBillion = 1000 * 1000 * 1000;
+    uint256 private constant oneBillion = 1000 * 1000 * 1000 * (10 ** 18); // need to multiply it into wei
     uint256 private constant twoHundredMillion = oneBillion / 5;
     uint256 private constant eightHundredMillion = twoHundredMillion * 4;
 
