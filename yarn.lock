@@ -11463,6 +11463,10 @@ jmespath@0.15.0:
   version "0.15.0"
   resolved "https://registry.npmjs.org/jmespath/-/jmespath-0.15.0.tgz"
 
+js-sha256@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/js-sha256/-/js-sha256-0.9.0.tgz#0b89ac166583e91ef9123644bd3c5334ce9d0966"
+
 js-sha3@0.5.7, js-sha3@^0.5.7:
   version "0.5.7"
   resolved "https://registry.npmjs.org/js-sha3/-/js-sha3-0.5.7.tgz"
@@ -15897,7 +15901,7 @@ read@1.0.5:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-"readable-stream@2 || 3", readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.1, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.1.0, readable-stream@^3.1.1, readable-stream@^3.4.0, readable-stream@^3.6.0:
+"readable-stream@2 || 3", readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.1, readable-stream@^3.0.2, readable-stream@^3.0.6, readable-stream@^3.1.0, readable-stream@^3.1.1, readable-stream@^3.4.0, readable-stream@^3.5.0, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.0.tgz"
   dependencies:
@@ -17249,6 +17253,13 @@ stream-browserify@^2.0.1:
   dependencies:
     inherits "~2.0.1"
     readable-stream "^2.0.2"
+
+stream-browserify@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-3.0.0.tgz#22b0a2850cdf6503e73085da1fc7b7d0c2122f2f"
+  dependencies:
+    inherits "~2.0.4"
+    readable-stream "^3.5.0"
 
 stream-each@^1.1.0:
   version "1.2.3"
@@ -18760,9 +18771,9 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-walletlink@^2.1.5:
-  version "2.1.7"
-  resolved "https://registry.npmjs.org/walletlink/-/walletlink-2.1.7.tgz"
+walletlink@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.4.4.tgz#dc2a71d1d235335ef844cfb83da7eb9c264521d0"
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     bind-decorator "^1.0.11"
@@ -18771,9 +18782,12 @@ walletlink@^2.1.5:
     eth-block-tracker "4.4.3"
     eth-json-rpc-filters "4.2.2"
     eth-rpc-errors "4.0.2"
+    js-sha256 "0.9.0"
     json-rpc-engine "6.1.0"
+    keccak "^3.0.1"
     preact "^10.5.9"
     rxjs "^6.6.3"
+    stream-browserify "^3.0.0"
 
 warning@^4.0.1, warning@^4.0.3:
   version "4.0.3"
