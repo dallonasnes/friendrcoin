@@ -59,7 +59,7 @@ contract FriendrChain is OwnableUpgradeable {
     mapping(uint256 => PublicMessage) private _public_messages; // indexed list of public messages
     mapping(address => mapping(uint256 => bool)) _votes_cast_by_user; // tracking which public messages a user has already voted on
 
-    FriendrCoin private friendrCoin;
+    FriendrCoin private friendrCoin; // note that coins are issued in wei, so we need to multiply all by (10 ** 18)
 
     uint256 private initTokenReward;
     uint256 private defaultApprovalAmt;
@@ -68,9 +68,9 @@ contract FriendrChain is OwnableUpgradeable {
     uint256 public profileCount;
     uint256 public publicMessageCount;
 
-    uint256 private constant oneBillion = 1000 * 1000 * 1000 * (10 ** 18); // need to multiply it into wei
-    uint256 private constant twoHundredMillion = oneBillion / 5;
-    uint256 private constant eightHundredMillion = twoHundredMillion * 4;
+    uint256 private constant oneHundredMillion = 1000 * 1000 * 1000 * (10**18); // need to multiply it into wei
+    uint256 private constant twentyMillion = oneHundredMillion / 5;
+    uint256 private constant eightyMillion = twentyMillion * 4;
 
     function initialize() external initializer {
         __Ownable_init();
@@ -78,15 +78,15 @@ contract FriendrChain is OwnableUpgradeable {
         friendrCoin = new FriendrCoin(
             "FriendrCOIN",
             "FRIEND",
-            twoHundredMillion,
-            eightHundredMillion,
+            twentyMillion,
+            eightyMillion,
             owner(),
             address(this)
         );
         profileCount = 0; // Init to 0
         publicMessageCount = 0; // Init to 0
-        initTokenReward = 100;
-        defaultApprovalAmt = 10000000;
+        initTokenReward = 100 * (10**18);
+        defaultApprovalAmt = 10000000 * (10**18);
         defaultMessageText = "This is the beginning of your message history.";
     }
 
@@ -377,7 +377,11 @@ contract FriendrChain is OwnableUpgradeable {
             _matches_count[_swipedProfile]++;
 
             // Now need to return 1 token back to _swipedProfile since they didn't match initially and were thus charged one token
-            friendrCoin.transferFrom(address(this), _swipedProfile, 1);
+            friendrCoin.transferFrom(
+                address(this),
+                _swipedProfile,
+                1 * (10**18)
+            );
 
             // Now need to init default message in messages mapping
             bytes memory messageMapKey = buildAddressKeyPair(
@@ -401,7 +405,7 @@ contract FriendrChain is OwnableUpgradeable {
             _messages_count[messageMapKey]++;
             emit swipeMatch(_userProfile, _swipedProfile);
         } else {
-            friendrCoin.transferFrom(_userProfile, address(this), 1);
+            friendrCoin.transferFrom(_userProfile, address(this), 1 * (10**18));
         }
     }
 
@@ -468,11 +472,19 @@ contract FriendrChain is OwnableUpgradeable {
 
         if (isUpvote) {
             message.upvotes++;
-            friendrCoin.transferFrom(address(this), message.author, 1);
+            friendrCoin.transferFrom(
+                address(this),
+                message.author,
+                1 * (10**18)
+            );
         } else {
             if (message.upvotes - message.downvotes > 0) {
                 // Can only transfer tokens away from author of publicMessage if vote count is positive
-                friendrCoin.transferFrom(message.author, address(this), 1);
+                friendrCoin.transferFrom(
+                    message.author,
+                    address(this),
+                    1 * (10**18)
+                );
             }
             message.downvotes++;
         }

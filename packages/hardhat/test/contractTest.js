@@ -49,17 +49,17 @@ describe("FriendrChain", function () {
     it("should deploy with correct values", async () => {
       expect(await myContract.profileCount()).to.equal(0);
       expect(await myContract.publicMessageCount()).to.equal(0);
-      expect(await myContract.getInitTokenReward()).to.equal(100);
-      expect(await myContract.getDefaultApprovalAmt()).to.equal(10000000);
+      expect((await myContract.getInitTokenReward()) / (10**18)).to.equal(100);
+      expect((await myContract.getDefaultApprovalAmt()) / (10 ** 18)).to.equal(10000000);
       expect(await myContract.defaultMessageText()).to.equal("This is the beginning of your message history.");
     });
 
     it("should give contract owner 20% of tokens", async () => {
-      expect(await myContract.getTokenBalanceOfUser(owner.address)).to.equal(1000*1000*200);
+      expect((await myContract.getTokenBalanceOfUser(owner.address)) / (10**18)).to.equal(1000*1000*200);
     });
 
     it("should give contract wallet 80% of tokens", async () => {
-      expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800);
+      expect((await myContract.getTokenBalanceOfUser(myContract.address)) / (10**18)).to.equal(1000*1000*800);
     });
   });
 
@@ -92,8 +92,8 @@ describe("FriendrChain", function () {
 
     it("should allow contract to transact on behalf of new user", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
-      expect(await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(100);
-      expect(await myContract.getTokenBalanceOfUser(myContract.address)).to.equal(1000*1000*800 - 100);
+      expect((await myContract.getTokenBalanceOfUser(addr1.address)) / (10**18)).to.equal(100);
+      expect((await myContract.getTokenBalanceOfUser(myContract.address)) / (10**18)).to.equal(1000*1000*800 - 100);
 
     });
 
@@ -130,13 +130,13 @@ describe("FriendrChain", function () {
 
     it("should allow an existing user to see how many swipe tokens they have", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
-      expect (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(100);
+      expect((await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18)).to.equal(100);
     });
 
     it("should allow only the contract owner to see how many swipe tokens someone else has", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       // works for owner
-      expect (await myContract.getTokenBalanceOfUser(addr1.address)).to.equal(100);
+      expect ((await myContract.getTokenBalanceOfUser(addr1.address)) / (10**18)).to.equal(100);
       // doesn't work for a different address
       await (expect(myContract.connect(addr2).getTokenBalanceOfUser(addr1.address))).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
@@ -285,14 +285,14 @@ describe("FriendrChain", function () {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
-      const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
-      const startTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+      const startTokenCount1 = (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18);
+      const startTokenCount2 = (await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)) / (10**18);
 
       await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
 
       // assert both swiper and swipee still have correct number of tokens
-      const endTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
-      const endTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+      const endTokenCount1 = (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18);
+      const endTokenCount2 = (await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)) / (10**18);
 
       expect(endTokenCount1).to.equal(startTokenCount1 - 1);
       expect(endTokenCount2).to.equal(startTokenCount2);
@@ -304,15 +304,15 @@ describe("FriendrChain", function () {
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
       // get start token count for first two profiles
-      const startTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
-      const startTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+      const startTokenCount1 = (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18);
+      const startTokenCount2 = (await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)) / (10**18);
 
       // use first profile to swipe left
       await myContract.connect(addr1).swipeLeft(addr1.address, addr2.address);
 
       // assert both swiper and swipee still have same number of tokens
-      const endTokenCount1 = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
-      const endTokenCount2 = await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address);
+      const endTokenCount1 = (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18);
+      const endTokenCount2 = (await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)) / (10**18);
       
       expect(startTokenCount1).to.equal(endTokenCount1);
       expect(startTokenCount2).to.equal(endTokenCount2);
@@ -323,17 +323,17 @@ describe("FriendrChain", function () {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
-      const startTokenBalance = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      const startTokenBalance = (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18);
 
       // acct1 swipes right on acct2 and acct1 is charged one token
       await myContract.connect(addr1).swipeRight(addr1.address, addr2.address);
-      expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance - 1);
+      expect((await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18)).to.equal(startTokenBalance - 1);
 
       // acct2 swipes right on acct1, then both have original number of tokens
       await myContract.connect(addr2).swipeRight(addr2.address, addr1.address);
 
-      expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance);
-      expect(await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)).to.equal(startTokenBalance);
+      expect((await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18)).to.equal(startTokenBalance);
+      expect((await myContract.connect(addr2).getTokenBalanceOfUser(addr2.address)) / (10**18)).to.equal(startTokenBalance);
     });
 
     it("should not allow someone with no tokens to swipe right", async () => {
@@ -353,10 +353,10 @@ describe("FriendrChain", function () {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
 
-      const startTokenBalance = await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address);
+      const startTokenBalance = (await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18);
       // owner can swipe and cause charge to swiper
       await myContract.swipeRight(addr1.address, addr2.address);
-      expect(await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)).to.equal(startTokenBalance - 1);
+      expect((await myContract.connect(addr1).getTokenBalanceOfUser(addr1.address)) / (10**18)).to.equal(startTokenBalance - 1);
       
       // fails if addr1 tries to swipe for addr2
       await expect(myContract.connect(addr2).swipeRight(addr1.address, addr2.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
@@ -608,35 +608,35 @@ describe("FriendrChain", function () {
     it("should send a token from contract wallet to the vote author's wallet if their message is upvoted and send it back if the message is downvoted", async () => {
       await setupPublicMessages(1);
 
-      const contractTokenBalanceStart = await myContract.getTokenBalanceOfUser(myContract.address);
-      const authorTokenBalanceStart = await myContract.getTokenBalanceOfUser(addr2.address);
+      const contractTokenBalanceStart = (await myContract.getTokenBalanceOfUser(myContract.address)) / (10**18);
+      const authorTokenBalanceStart = (await myContract.getTokenBalanceOfUser(addr2.address)) / (10**18);
 
       // vote
       await myContract.connect(addr1).voteOnPublicMessage(0, true);
 
-      const contractTokenBalanceEnd = await myContract.getTokenBalanceOfUser(myContract.address);
-      const authorTokenBalanceEnd = await myContract.getTokenBalanceOfUser(addr2.address);
+      const contractTokenBalanceEnd = (await myContract.getTokenBalanceOfUser(myContract.address)) / (10**18);
+      const authorTokenBalanceEnd = (await myContract.getTokenBalanceOfUser(addr2.address)) / (10**18);
 
       expect(contractTokenBalanceEnd).to.equal(Number(contractTokenBalanceStart) - 1);
       expect(authorTokenBalanceEnd).to.equal(Number(authorTokenBalanceStart) + 1);
 
       await myContract.voteOnPublicMessage(0, false);
-      expect(Number(await myContract.getTokenBalanceOfUser(myContract.address))).to.equal(contractTokenBalanceStart);
-      expect(Number(await myContract.getTokenBalanceOfUser(addr2.address))).to.equal(authorTokenBalanceStart);
+      expect(Number((await myContract.getTokenBalanceOfUser(myContract.address))) / (10**18)).to.equal(contractTokenBalanceStart);
+      expect(Number((await myContract.getTokenBalanceOfUser(addr2.address))) / (10**18)).to.equal(authorTokenBalanceStart);
     });
 
     it("should not send a token from the vote author's wallet if their message is downvoted below 0", async () => {
       await setupPublicMessages(1);
 
-      const contractTokenBalanceStart = await myContract.getTokenBalanceOfUser(myContract.address);
-      const authorTokenBalanceStart = await myContract.getTokenBalanceOfUser(addr2.address);
+      const contractTokenBalanceStart = (await myContract.getTokenBalanceOfUser(myContract.address)) / (10**18);
+      const authorTokenBalanceStart = (await myContract.getTokenBalanceOfUser(addr2.address)) / (10**18);
 
       // downvote
       await myContract.connect(addr1).voteOnPublicMessage(0, false);
 
       // but token counts remain the same
-      expect(Number(await myContract.getTokenBalanceOfUser(myContract.address))).to.equal(contractTokenBalanceStart);
-      expect(Number(await myContract.getTokenBalanceOfUser(addr2.address))).to.equal(authorTokenBalanceStart);
+      expect(Number((await myContract.getTokenBalanceOfUser(myContract.address))) / (10**18)).to.equal(contractTokenBalanceStart);
+      expect(Number((await myContract.getTokenBalanceOfUser(addr2.address))) / (10**18)).to.equal(authorTokenBalanceStart);
 
       const [messages, offset] = await myContract.getPublicMessages(10, 0);
       expect(offset).to.equal(1);
