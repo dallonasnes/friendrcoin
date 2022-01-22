@@ -1,4 +1,5 @@
 # Default for all changes
 # These are not additive. Any more specific
 # line will supersede the less specific.
-* @dallonasnes
+packages/react-app/ @dallonasnes
+packages/hardhat/ @dallonasnes
