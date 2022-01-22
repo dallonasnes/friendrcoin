@@ -5232,19 +5232,19 @@ bn.js@^5.0.0, bn.js@^5.1.1, bn.js@^5.1.2:
   version "5.2.0"
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-5.2.0.tgz"
 
-bnc-notify@^1.5.0:
-  version "1.7.0"
-  resolved "https://registry.npmjs.org/bnc-notify/-/bnc-notify-1.7.0.tgz"
+bnc-notify@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-1.9.2.tgz#f077559643ae0eed69759524dff904b7a9f2f07f"
   dependencies:
     bignumber.js "^9.0.0"
-    bnc-sdk "^3.4.1"
+    bnc-sdk "^3.5.0"
     lodash.debounce "^4.0.8"
     regenerator-runtime "^0.13.3"
     uuid "^3.3.3"
 
-bnc-sdk@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/bnc-sdk/-/bnc-sdk-3.4.1.tgz"
+bnc-sdk@^3.5.0:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-3.7.1.tgz#efc1eee6e24027a62165f1f9a1a67cd2a1cfed35"
   dependencies:
     crypto-es "^1.2.2"
     rxjs "^6.6.3"
