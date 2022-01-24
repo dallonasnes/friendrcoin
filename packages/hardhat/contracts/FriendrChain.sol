@@ -40,9 +40,7 @@ contract FriendrChain is OwnableUpgradeable {
 
     modifier onlySenderOrOwner(address _profile) {
         require(
-            _profile == _msgSender() ||
-                owner() == _msgSender() ||
-                address(this) == _msgSender(),
+            _profile == _msgSender() || owner() == _msgSender(),
             "Caller is neither the target address nor owner nor proxy admin."
         );
         _;
@@ -96,7 +94,6 @@ contract FriendrChain is OwnableUpgradeable {
 
     // Used by FE login flow to determine if wallet user has already created a profile
     // If Profile object created_ts == 0, then it is a default profile (not yet created)
-    // FE needs to decode image
     function getUserProfile(address _profile)
         public
         view

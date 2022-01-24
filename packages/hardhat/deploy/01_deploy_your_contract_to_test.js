@@ -28,4 +28,4 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   console.log("FriendrCoin address:", await FriendrChain.getTokenAddress());
 }
 
-module.exports.tags = ["FriendrChain"];
+module.exports.tags = ["FriendrChainDefaultDeploy"];

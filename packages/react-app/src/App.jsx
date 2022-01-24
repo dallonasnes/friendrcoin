@@ -42,7 +42,7 @@ const providers = [
 function App(props) {
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
-  const networkOptions = ["localhost", "mainnet", "rinkeby"];
+  const networkOptions = ["matic"];
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -159,7 +159,7 @@ function App(props) {
 
   useEffect(() => {
     async function getUserProfile() {
-      if (readContracts && readContracts.FriendrChain) {
+      if (address && readContracts && readContracts.FriendrChain) {
         try {
           const res = await readContracts.FriendrChain.getUserProfile(address);
           // Check for non-nil created TS

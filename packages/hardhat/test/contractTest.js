@@ -1,4 +1,4 @@
-const { ethers, upgrades } = require("hardhat");
+const { ethers, upgrades, deployments } = require("hardhat");
 const { use, expect } = require("chai");
 const { solidity } = require("ethereum-waffle");
 
@@ -38,11 +38,9 @@ describe("FriendrChain", function () {
 
   beforeEach(async () => {
     [owner, addr1, addr2, addr3] = await ethers.getSigners();
-    const FriendrChainFactory = await ethers.getContractFactory("FriendrChain", owner);
-    myContract = await upgrades.deployProxy(FriendrChainFactory, [], {
-      initializer: "initialize",
-    });
-    await myContract.deployed();
+    await deployments.fixture(['FriendrChainDefaultDeploy']);
+    let tmp = await deployments.get("FriendrChain");
+    myContract = await ethers.getContractAt("FriendrChain", tmp.address, owner)
   });
 
   describe("Deployment", () => {
@@ -61,7 +59,7 @@ describe("FriendrChain", function () {
     it("should give contract wallet 80% of tokens", async () => {
       expect((await myContract.getTokenBalanceOfUser(myContract.address)) / (10**18)).to.equal(1000*1000*800);
     });
-  });
+});
 
   describe("Onboarding Flow", () => {
     it("should allow a new user to sign up", async () => {
