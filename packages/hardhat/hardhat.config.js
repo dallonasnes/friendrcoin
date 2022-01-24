@@ -28,7 +28,7 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = "localhost";
+const defaultNetwork = "matic";
 
 const mainnetGwei = 21;
 
@@ -95,6 +95,10 @@ module.exports = {
       accounts: [privateKey()],
       
     },
+    matic: {
+      url: 'https://polygon-mainnet.g.alchemy.com/v2/Fj7tN5zWdJpWwxybbr_42oj_--QnUssS',
+      accounts: [privateKey()],
+    }
     // kovan: {
     //   url: `https://rinkeby.infura.io/v3/${process.env.KOVAN_INFURA_KEY}`,
     //   accounts: [`${process.env.KOVAN_DEPLOYER_PRIV_KEY}`],
