@@ -69,8 +69,6 @@ export default function Queue({
   tx,
   yourLocalBalance,
 }) {
-  console.log("QUEUE IS-LOGGED-IN", isLoggedIn);
-
   const loggedInView = ({ yourLocalBalance, userProfile, handleSwipe, showNextProfile }) => {
     return userProfile === null ? (
       <div>
