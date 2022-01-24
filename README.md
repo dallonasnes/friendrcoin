@@ -16,9 +16,9 @@ Allocation of 1000 FriendrCoin to reward qualifying PRs. Be sure to clarify scop
 1. Run `yarn test`
 
 #### Test deployments
-Notice that in `packages/hardhat/deploy` there are two files - one for local and one for test.
+Notice that in `packages/hardhat/deploy` there are two files - one for local and one for a remote network.
 
-Right now, running `yarn deploy` will run both, which is not what you want. If you want to run locally, delete the test file `01_deploy_your_contract_to_test.js` but DO NOT COMMIT THAT DELETION. Similarly, if you want to deploy to a test net, delete the local file but DO NOT COMMIT THAT DELETION. To deploy to a test net, eg rinkeby, run `yarn deploy --network rinkeby` after setting up your `test_prv_key.txt` file with your deploy wallet's private key. Do not commit private keys.
+Right now, running `yarn deploy` will run both, which is not what you want. If you want to run locally, delete the test file `01_deploy_your_contract_to_test.js` but DO NOT COMMIT THAT DELETION. Similarly, if you want to deploy to a network, delete the local file but DO NOT COMMIT THAT DELETION. To deploy to a test net, eg rinkeby, run `yarn deploy --network rinkeby` after setting up your `test_prv_key.txt` file with your deploy wallet's private key. Do not commit private keys.
 
 ## File structure
 Solidity code lives in `packages/hardhat/contracts` and `packages/react-app` houses the FE code
