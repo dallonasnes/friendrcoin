@@ -13662,9 +13662,9 @@ node-releases@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.1.tgz"
 
-node-watch@^0.7.0, node-watch@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/node-watch/-/node-watch-0.7.1.tgz"
+node-watch@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.7.3.tgz#6d4db88e39c8d09d3ea61d6568d80e5975abc7ab"
 
 nodeify@^1.0.1:
   version "1.0.1"
