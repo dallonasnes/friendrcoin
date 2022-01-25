@@ -144,7 +144,6 @@ function App(props) {
       if (address && readContracts && readContracts.FriendrChain) {
         try {
           const res = await readContracts.FriendrChain.getUserProfile(address);
-          debugger;
           // Check for non-nil created TS
           if (res && res.created_ts._hex !== "0x00") {
             setUserProfile(res);
