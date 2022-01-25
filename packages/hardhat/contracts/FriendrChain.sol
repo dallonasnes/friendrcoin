@@ -18,7 +18,7 @@ contract FriendrChain is OwnableUpgradeable {
         string bio;
         string socialMediaProfile;
         uint256 created_ts;
-        uint256 deleted_ts; // TODO: create delete profile endpoint
+        uint256 deleted_ts;
     }
 
     struct Message {
@@ -99,7 +99,12 @@ contract FriendrChain is OwnableUpgradeable {
         view
         returns (Profile memory)
     {
-        return _profiles[_profile];
+        Profile storage profile = _profiles[_profile];
+        if (profile.deleted_ts != 0) {
+            // return the 0 address which we define to be nil
+            return _profiles[address(0)];
+        }
+        return profile;
     }
 
     function getUnseenProfiles(
@@ -293,14 +298,24 @@ contract FriendrChain is OwnableUpgradeable {
         string memory bio,
         string memory _socialMediaProfile
     ) public {
+        require(
+            _profile != address(0),
+            "Cannot create a profile at the 0 address"
+        );
         // This function adds tokens to the profile upon creation
         // So require that a profile cannot already exist for the given address
         // Use updateUserProfile method to update existing profile (it does not pay tokens)
         Profile storage profile = _profiles[_profile];
-        require(
-            profile.created_ts == 0,
-            "Cannot create a profile that already exists."
-        );
+        if (profile.deleted_ts != 0) {
+            // calling create for a deleted profile means to re-activate it
+            profile.deleted_ts = 0;
+        } else {
+            // if the profile is not deleted, then we ensure it doesn't already exist
+            require(
+                profile.created_ts == 0,
+                "Cannot create a profile that already exists."
+            );
+        }
 
         profile.name = name;
         profile._address = _profile;
@@ -503,6 +518,14 @@ contract FriendrChain is OwnableUpgradeable {
             "Profile is not yet created"
         );
         _profiles[_profile].image = "";
+    }
+
+    function deleteProfile(address _profile) public {
+        require(
+            _profiles[_profile].created_ts > 0,
+            "Profile is not yet created"
+        );
+        _profiles[_profile].deleted_ts = block.timestamp;
     }
 
     /**

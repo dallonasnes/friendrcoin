@@ -173,6 +173,41 @@ describe("FriendrChain", function () {
       await expect(myContract.connect(addr2).deleteProfileImage(addr1.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
     });
 
+    it("should allow an existing user to delete their profile", async () => {
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).deleteProfile(addr1.address);
+      const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
+      expect(profile.name).to.eql("");
+    });
+
+    it("should allow an existing user to reactivate their deleted profile", async () => {
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr1).deleteProfile(addr1.address);
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
+      expect(profile.name).to.eql(name1);
+    });
+
+    it.skip("should only allow the contract owner to delete someone else's profile", async () => {
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      // works for owner
+      await myContract.deleteProfile(addr1.address);
+      const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
+      expect(await profile.name).to.eql("");
+      // doesn't work for another acct
+      await expect(myContract.connect(addr2).deleteProfile(addr1.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+    });
+
+    it.skip("should only allow the contract owner to delete someone else's images", async () => {
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      // works for owner
+      await myContract.deleteProfileImage(addr1.address);
+      const profile = await myContract.connect(addr1).getUserProfile(addr1.address);
+      expect(await profile.image).to.eql("");
+      // doesn't work for another acct
+      await expect(myContract.connect(addr2).deleteProfileImage(addr1.address)).to.be.revertedWith("Caller is neither the target address nor owner nor proxy admin.");
+    });
+
     it("should allow an existing user to edit their profile bio", async () => {
       await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
       await myContract.connect(addr1).editProfile(addr1.address, false, "", false, "", true, "new bio", false, "",);
