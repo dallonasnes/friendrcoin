@@ -41,7 +41,6 @@ const getLoggedInButtons = () => {
 };
 
 export default function Header({ isLoggedIn, setIsLoggedIn, userProfile }) {
-  console.log("HEADER LOGGED IN:", isLoggedIn);
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
       <a href="/">
