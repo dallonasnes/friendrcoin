@@ -26,7 +26,7 @@ import Footer from "./components/Footer";
 const { ethers } = require("ethers");
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.matic; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 const NETWORKCHECK = true;
 
@@ -55,10 +55,8 @@ function App(props) {
   // 🔭 block explorer URL
   const blockExplorer = targetNetwork.blockExplorer;
   // load all your providers
-  const localProvider = useStaticJsonRPC([
-    process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : targetNetwork.rpcUrl,
-  ]);
-  const mainnetProvider = useStaticJsonRPC(providers);
+  const localProvider = useStaticJsonRPC([targetNetwork.rpcUrl]);
+  const mainnetProvider = useStaticJsonRPC([targetNetwork.rpcUrl]);
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider();
@@ -146,6 +144,7 @@ function App(props) {
       if (address && readContracts && readContracts.FriendrChain) {
         try {
           const res = await readContracts.FriendrChain.getUserProfile(address);
+          debugger;
           // Check for non-nil created TS
           if (res && res.created_ts._hex !== "0x00") {
             setUserProfile(res);

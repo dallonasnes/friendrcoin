@@ -28,7 +28,7 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = "localhost";
+const defaultNetwork = "matic";
 
 const mainnetGwei = 21;
 
@@ -47,10 +47,8 @@ function mnemonic() {
 
 function privateKey() {
   try {
-    if (defaultNetwork === "localhost") return;
-    if (defaultNetwork === "rinkeby") return fs.readFileSync("./test_prv_key.txt").toString().trim();
     if (defaultNetwork === "matic") return fs.readFileSync("./prod_prv_key.txt").toString().trim();
-    return;
+    return fs.readFileSync("./test_prv_key.txt").toString().trim();;
   } catch (e) {
     if (defaultNetwork !== "localhost") {
       console.log(
@@ -96,10 +94,10 @@ module.exports = {
     //   accounts: [privateKey()],
       
     // },
-    // matic: {
-    //   url: 'https://polygon-mainnet.g.alchemy.com/v2/Fj7tN5zWdJpWwxybbr_42oj_--QnUssS',
-    //   accounts: [privateKey()],
-    // },
+    matic: {
+      url: 'https://polygon-mainnet.g.alchemy.com/v2/Fj7tN5zWdJpWwxybbr_42oj_--QnUssS',
+      accounts: [privateKey()],
+    },
     // kovan: {
     //   url: `https://rinkeby.infura.io/v3/${process.env.KOVAN_INFURA_KEY}`,
     //   accounts: [`${process.env.KOVAN_DEPLOYER_PRIV_KEY}`],

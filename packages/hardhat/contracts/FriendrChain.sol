@@ -97,7 +97,6 @@ contract FriendrChain is OwnableUpgradeable {
     function getUserProfile(address _profile)
         public
         view
-        onlySenderOrOwner(_profile)
         returns (Profile memory)
     {
         return _profiles[_profile];
@@ -108,12 +107,7 @@ contract FriendrChain is OwnableUpgradeable {
         uint256 limit,
         uint256 offset,
         bool isBurner
-    )
-        public
-        view
-        onlySenderOrOwner(_profile)
-        returns (Profile[] memory, uint256)
-    {
+    ) public view returns (Profile[] memory, uint256) {
         require(
             offset < profileCount,
             "Cannot fetch profiles indexed beyond those that exist in system"
@@ -156,7 +150,6 @@ contract FriendrChain is OwnableUpgradeable {
     function getIsMatch(address swiper, address swipee)
         public
         view
-        onlySenderOrOwner(swiper)
         returns (bool)
     {
         return
@@ -172,12 +165,7 @@ contract FriendrChain is OwnableUpgradeable {
         address _profile,
         uint256 limit,
         uint256 offset
-    )
-        public
-        view
-        onlySenderOrOwner(_profile)
-        returns (Profile[] memory, uint256)
-    {
+    ) public view returns (Profile[] memory, uint256) {
         // Fetch a page of matches
         uint256 matchesCount = _matches_count[_profile];
         require(
@@ -213,12 +201,7 @@ contract FriendrChain is OwnableUpgradeable {
         address _address2,
         uint256 limit,
         uint256 offset
-    )
-        public
-        view
-        onlySenderOrOwner(_address1)
-        returns (Message[] memory, uint256)
-    {
+    ) public view returns (Message[] memory, uint256) {
         require(
             _address1 != _address2,
             "Cannot send/receive messages to/from self."
@@ -289,7 +272,6 @@ contract FriendrChain is OwnableUpgradeable {
     function getTokenBalanceOfUser(address _profile)
         public
         view
-        onlySenderOrOwner(_profile)
         returns (uint256)
     {
         return friendrCoin.balanceOf(_profile);
@@ -310,7 +292,7 @@ contract FriendrChain is OwnableUpgradeable {
         string memory _image,
         string memory bio,
         string memory _socialMediaProfile
-    ) public onlySenderOrOwner(_profile) {
+    ) public {
         // This function adds tokens to the profile upon creation
         // So require that a profile cannot already exist for the given address
         // Use updateUserProfile method to update existing profile (it does not pay tokens)
@@ -339,17 +321,11 @@ contract FriendrChain is OwnableUpgradeable {
         friendrCoin.transferFrom(address(this), _profile, initTokenReward);
     }
 
-    function swipeLeft(address _userProfile, address _swipedProfile)
-        public
-        onlySenderOrOwner(_userProfile)
-    {
+    function swipeLeft(address _userProfile, address _swipedProfile) public {
         _swipedAddresses[_userProfile][_swipedProfile] = true;
     }
 
-    function swipeRight(address _userProfile, address _swipedProfile)
-        public
-        onlySenderOrOwner(_userProfile)
-    {
+    function swipeRight(address _userProfile, address _swipedProfile) public {
         require(
             friendrCoin.balanceOf(_userProfile) > 0,
             "User doesn't have enough tokens to swipe right"
@@ -411,7 +387,7 @@ contract FriendrChain is OwnableUpgradeable {
         address _receiver,
         string memory _text,
         bool _isPublic
-    ) public onlySenderOrOwner(_sender) {
+    ) public {
         bytes memory matchKeyPair = fetchMessageKeyPair(_sender, _receiver);
         uint256 messageCount = _messages_count[matchKeyPair];
 
@@ -498,7 +474,7 @@ contract FriendrChain is OwnableUpgradeable {
         string memory newBio,
         bool editSocialMediaProfileLink,
         string memory newSocialMediaProfileLink
-    ) public onlySenderOrOwner(_profile) {
+    ) public {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
@@ -521,10 +497,7 @@ contract FriendrChain is OwnableUpgradeable {
         }
     }
 
-    function deleteProfileImage(address _profile)
-        public
-        onlySenderOrOwner(_profile)
-    {
+    function deleteProfileImage(address _profile) public {
         require(
             _profiles[_profile].created_ts > 0,
             "Profile is not yet created"
