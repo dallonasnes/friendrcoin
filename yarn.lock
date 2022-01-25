@@ -15825,9 +15825,9 @@ react-blockies@^1.4.1:
   dependencies:
     prop-types "^15.5.10"
 
-react-css-theme-switcher@^0.2.2:
-  version "0.2.3"
-  resolved "https://registry.npmjs.org/react-css-theme-switcher/-/react-css-theme-switcher-0.2.3.tgz"
+react-css-theme-switcher@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-css-theme-switcher/-/react-css-theme-switcher-0.3.0.tgz#a527f52c378474cb74ee4d83867aa6face424400"
 
 react-dev-utils@^11.0.0:
   version "11.0.4"
