@@ -26,7 +26,7 @@ import Footer from "./components/Footer";
 const { ethers } = require("ethers");
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.matic; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 const NETWORKCHECK = true;
 
@@ -42,7 +42,7 @@ const providers = [
 function App(props) {
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
-  const networkOptions = ["localhost", "mainnet", "rinkeby"];
+  const networkOptions = ["matic"];
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -55,16 +55,15 @@ function App(props) {
   // 🔭 block explorer URL
   const blockExplorer = targetNetwork.blockExplorer;
   // load all your providers
-  const localProvider = useStaticJsonRPC([
-    process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : targetNetwork.rpcUrl,
-  ]);
-  const mainnetProvider = useStaticJsonRPC(providers);
+  const localProvider = useStaticJsonRPC([targetNetwork.rpcUrl]);
+  const mainnetProvider = useStaticJsonRPC([targetNetwork.rpcUrl]);
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider();
     if (injectedProvider && injectedProvider.provider && typeof injectedProvider.provider.disconnect == "function") {
       await injectedProvider.provider.disconnect();
     }
+    setIsLoggedIn(false);
     setTimeout(() => {
       window.location.reload();
     }, 1);
@@ -92,18 +91,11 @@ function App(props) {
   // You can warn the user if you would like them to be on a specific network
   const localChainId = localProvider && localProvider._network && localProvider._network.chainId;
 
-  // For more hooks, check out 🔗eth-hooks at: https://www.npmjs.com/package/eth-hooks
-
   // Use a local faucet for debug mode instead of a network transaction
   const tx = DEBUG_TRANSACTIONS ? Transactor(localProvider, gasPrice) : Transactor(userSigner, gasPrice);
 
   // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
   const yourLocalBalance = useBalance(localProvider, address);
-
-  // Just plug in different 🛰 providers to get your balance on different chains:
-  const yourMainnetBalance = useBalance(mainnetProvider, address);
-
-  // const contractConfig = useContractConfig();
 
   const contractConfig = { deployedContracts: deployedContracts || {}, externalContracts: externalContracts || {} };
 
@@ -113,19 +105,10 @@ function App(props) {
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
   const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
 
-  // If you want to call a function on a new block
-  useOnBlock(mainnetProvider, () => {
-    // console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
-  });
-
-  /*
-  const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
-  console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
-  */
-
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
     setInjectedProvider(new ethers.providers.Web3Provider(provider));
+    setIsLoggedIn(true);
 
     provider.on("chainChanged", chainId => {
       // console.log(`chain changed to ${chainId}! updating providers`);
@@ -153,13 +136,12 @@ function App(props) {
   const [isLoggedIn, setIsLoggedIn] = DEBUG_TRANSACTIONS
     ? useState(true)
     : useState(Boolean(web3Modal && web3Modal.cachedProvider));
-  console.log("APP MAIN - IS LOGGED IN", isLoggedIn);
 
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
     async function getUserProfile() {
-      if (readContracts && readContracts.FriendrChain) {
+      if (address && readContracts && readContracts.FriendrChain) {
         try {
           const res = await readContracts.FriendrChain.getUserProfile(address);
           // Check for non-nil created TS

@@ -58,9 +58,9 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await FriendrChain.sendMessage(wallets[2].getAddress(), wallets[0].getAddress(), "Are you a crypto kitty? Cuz I'm feline a connection between us.", true);
   await FriendrChain.sendMessage(wallets[2].getAddress(), wallets[6].getAddress(), "Baby, I ain't going for no pump and dump.", true);
 
-  for (let i = 0; i < 489; i++){
+  for (let i = 0; i < 89; i++){
     await FriendrChain.voteOnPublicMessage(0, true);
-    if (i < 328) await FriendrChain.voteOnPublicMessage(0, false);
+    if (i < 28) await FriendrChain.voteOnPublicMessage(0, false);
   }
 
   for (let i = 0; i < 39; i++){

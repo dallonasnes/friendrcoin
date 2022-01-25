@@ -45,7 +45,6 @@ const renderMatches = ({ queue }) => {
 };
 
 export default function Matches({ isLoggedIn, address, readContracts }) {
-  console.log("MATCHES IS-LOGGED-IN", isLoggedIn);
   const [queue, setQueue] = useState([]);
   const [offset, setOffset] = useState(0);
   const [didFetchLastPage, setDidFetchLastPage] = useState(false);

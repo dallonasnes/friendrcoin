@@ -47,10 +47,8 @@ function mnemonic() {
 
 function privateKey() {
   try {
-    if (defaultNetwork === "localhost") return "";
-    if (defaultNetwork === "rinkeby") return fs.readFileSync("./test_prv_key.txt").toString().trim();
     if (defaultNetwork === "matic") return fs.readFileSync("./prod_prv_key.txt").toString().trim();
-    return "";
+    return fs.readFileSync("./test_prv_key.txt").toString().trim();;
   } catch (e) {
     if (defaultNetwork !== "localhost") {
       console.log(
@@ -91,11 +89,11 @@ module.exports = {
       
       */
     },
-    rinkeby: {
-      url: `https://rinkeby.infura.io/v3/8f28023429a147b0b49964121b21950d`,
-      accounts: [privateKey()],
+    // rinkeby: {
+    //   url: `https://rinkeby.infura.io/v3/8f28023429a147b0b49964121b21950d`,
+    //   accounts: [privateKey()],
       
-    },
+    // },
     matic: {
       url: 'https://polygon-mainnet.g.alchemy.com/v2/Fj7tN5zWdJpWwxybbr_42oj_--QnUssS',
       accounts: [privateKey()],
