@@ -161,7 +161,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userProfile={userProfile} />
+      <Header userProfile={userProfile} />
 
       <Switch>
         <Route exact path="/">

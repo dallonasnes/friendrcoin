@@ -5,19 +5,15 @@ import { LoggedInButton } from "./Button";
 import { ButtonLink } from "./Links";
 
 const getNotLoggedInButtons = () => {
-  return ["Home", "About Us", "How It Works", "Contact"].map(text =>
+  return ["Home", "About the Project"].map(text =>
     text === "Home" ? (
-      <a href={"/"}>
-        <LoggedInButton>
-          <ButtonLink to={"/"}>{text}</ButtonLink>
-        </LoggedInButton>
-      </a>
+      <LoggedInButton>
+        <ButtonLink to={"/"}>{text}</ButtonLink>
+      </LoggedInButton>
     ) : (
-      <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
-        <LoggedInButton>
-          <ButtonLink to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</ButtonLink>
-        </LoggedInButton>
-      </a>
+      <LoggedInButton>
+        <ButtonLink to={"https://github.com/dallonasnes/friendrcoin"}>{text}</ButtonLink>
+      </LoggedInButton>
     ),
   );
 };
@@ -25,22 +21,18 @@ const getNotLoggedInButtons = () => {
 const getLoggedInButtons = () => {
   return ["Home", "Queue", "Matches"].map(text =>
     text === "Home" ? (
-      <a href={"/"}>
-        <LoggedInButton>
-          <ButtonLink to={"/"}>{text}</ButtonLink>
-        </LoggedInButton>
-      </a>
+      <LoggedInButton>
+        <ButtonLink to={"/"}>{text}</ButtonLink>
+      </LoggedInButton>
     ) : (
-      <a href={`/${text.toLowerCase().replaceAll(" ", "-")}`}>
-        <LoggedInButton>
-          <Link to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</Link>
-        </LoggedInButton>
-      </a>
+      <LoggedInButton>
+        <Link to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</Link>
+      </LoggedInButton>
     ),
   );
 };
 
-export default function Header({ isLoggedIn, setIsLoggedIn, userProfile }) {
+export default function Header({ userProfile }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "30px" }}>
       <a href="/">
