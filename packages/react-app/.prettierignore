@@ -1,2 +1,4 @@
 **/public*
 **/*.css
+**/dist/*
+**/build/*
