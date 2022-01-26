@@ -46,7 +46,7 @@ const fetchProfiles = async ({
         }
         setOffset(parseInt(nextOffset._hex));
       } catch (e) {
-        if (e.toString().toLowerCase().includes("indexed beyond those that exist")) {
+        if (e.toString().toLowerCase().includes("indexed beyond")) {
           setDidFetchLastPage(true);
         } else {
           console.log(e);
@@ -56,11 +56,6 @@ const fetchProfiles = async ({
   }
 };
 
-// TODO: yourLocalBalance should refer to Friendr token balance
-
-// TODO: can change yourLocalBalance between 0 and 1 to test different views
-// TODO: can test "match" page by clicking on heart button (user must have at least 1 token in yourLocalBalance variable)
-// ^ it uses a timer so shows for 5 seconds with a button to start message, then goes back to match screen
 export default function Queue({
   isLoggedIn,
   userProfile,
