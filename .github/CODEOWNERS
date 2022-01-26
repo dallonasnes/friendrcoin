@@ -3,3 +3,7 @@
 # line will supersede the less specific.
 packages/react-app/ @dallonasnes
 packages/hardhat/ @dallonasnes
+
+# No need to review dependabot changes
+*package.json
+yarn.lock
