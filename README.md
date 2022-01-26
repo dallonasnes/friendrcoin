@@ -1,5 +1,5 @@
 # FriendrCoin
-Also known as the Metaverse's first dating app, FriendrCoin is a decentralized friend-matching application built on top of Ethereum. The dApp supports creating a profile, swiping on other profiles, matching, messaging and selecting messages to be shown on the public dashboard. Public dashboard messages have voting functionality where upvotes pay one FriendrCoin to the author's wallet and downvotes remove one FriendrCoin from the author's wallet (negative balance not allowed).
+Also known as the Metaverse's first dating app, [FriendrCoin](https://friendrcoin.com) is a decentralized friend-matching application built on top of Ethereum. The dApp supports creating a profile, swiping on other profiles, matching, messaging and selecting messages to be shown on the public dashboard. Public dashboard messages have voting functionality where upvotes pay one FriendrCoin to the author's wallet and downvotes remove one FriendrCoin from the author's wallet (negative balance not allowed).
 
 Each right swipe costs 1 FriendrCoin and a match returns that FriendrCoin to your wallet. Left swipes are free. Note that creating/editing your profile, swiping, messaging and voting are transactions that incur a gas fee payable in Matic.
 
@@ -7,9 +7,11 @@ This dApp is deployed on [Polygon mainnet](https://polygon.technology/) polygon 
 
 You can trade or provide liquidity for FriendrCoin on [Quickswap](https://quickswap.exchange/). Note that you may need to import the token by pasting in the below coin address.
 
-Contract address: `0xc1cDb7cD85692E49728bBDD1e74905bbafa2d888`
+Web app: `https://friendrcoin.com`
 
 Coin address: `0x351A1D8463d076501fcd366f51F21FD521094F7E`
+
+Contract address: `0xc1cDb7cD85692E49728bBDD1e74905bbafa2d888`
 
 ## Developers
 Allocation of 1000 FriendrCoin to reward qualifying PRs. Be sure to clarify scope and requirements in open issues before beginning work.
