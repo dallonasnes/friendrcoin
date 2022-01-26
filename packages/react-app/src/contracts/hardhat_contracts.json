@@ -1,0 +1,2156 @@
+{
+  "137": {
+    "matic": {
+      "name": "matic",
+      "chainId": "137",
+      "contracts": {
+        "DefaultProxyAdmin": {
+          "address": "0x9B45A0Cb140153e049F4D3e296df899cc1E3EB71",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "owner",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract TransparentUpgradeableProxy",
+                  "name": "proxy",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "newAdmin",
+                  "type": "address"
+                }
+              ],
+              "name": "changeProxyAdmin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract TransparentUpgradeableProxy",
+                  "name": "proxy",
+                  "type": "address"
+                }
+              ],
+              "name": "getProxyAdmin",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract TransparentUpgradeableProxy",
+                  "name": "proxy",
+                  "type": "address"
+                }
+              ],
+              "name": "getProxyImplementation",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract TransparentUpgradeableProxy",
+                  "name": "proxy",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "implementation",
+                  "type": "address"
+                }
+              ],
+              "name": "upgrade",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract TransparentUpgradeableProxy",
+                  "name": "proxy",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "implementation",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                }
+              ],
+              "name": "upgradeAndCall",
+              "outputs": [],
+              "stateMutability": "payable",
+              "type": "function"
+            }
+          ]
+        },
+        "FriendrChain": {
+          "address": "0xc1cDb7cD85692E49728bBDD1e74905bbafa2d888",
+          "abi": [
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "previousAdmin",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "newAdmin",
+                  "type": "address"
+                }
+              ],
+              "name": "AdminChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "implementation",
+                  "type": "address"
+                }
+              ],
+              "name": "Upgraded",
+              "type": "event"
+            },
+            {
+              "stateMutability": "payable",
+              "type": "fallback"
+            },
+            {
+              "inputs": [],
+              "name": "admin",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newAdmin",
+                  "type": "address"
+                }
+              ],
+              "name": "changeAdmin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "implementation",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newImplementation",
+                  "type": "address"
+                }
+              ],
+              "name": "upgradeTo",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newImplementation",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                }
+              ],
+              "name": "upgradeToAndCall",
+              "outputs": [],
+              "stateMutability": "payable",
+              "type": "function"
+            },
+            {
+              "stateMutability": "payable",
+              "type": "receive"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "messageIdx",
+                  "type": "uint256"
+                }
+              ],
+              "name": "messageSent",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "publicMessageIdx",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bool",
+                  "name": "isUpvote",
+                  "type": "bool"
+                }
+              ],
+              "name": "messageVoted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "publicMessageIdx",
+                  "type": "uint256"
+                }
+              ],
+              "name": "publicMessageSent",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "swiper",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "swipee",
+                  "type": "address"
+                }
+              ],
+              "name": "swipeMatch",
+              "type": "event"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_image",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "bio",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_socialMediaProfile",
+                  "type": "string"
+                }
+              ],
+              "name": "createUserProfileFlow",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "defaultMessageText",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "deleteProfile",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "deleteProfileImage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editName",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newName",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editImage",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newImage",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editBio",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newBio",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editSocialMediaProfileLink",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newSocialMediaProfileLink",
+                  "type": "string"
+                }
+              ],
+              "name": "editProfile",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getDefaultApprovalAmt",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getInitTokenReward",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "swiper",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "swipee",
+                  "type": "address"
+                }
+              ],
+              "name": "getIsMatch",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getPublicMessages",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "string",
+                          "name": "text",
+                          "type": "string"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "sender",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "bool",
+                          "name": "isPublic",
+                          "type": "bool"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "created_ts",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "deleted_ts",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct FriendrChain.Message",
+                      "name": "message",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "upvotes",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "downvotes",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "author",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "authorImg",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "idx",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.PublicMessage[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getRecentMatches",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "_address",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "image",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "bio",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "socialMediaProfile",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Profile[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_address1",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_address2",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getRecentMessagesForMatch",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "text",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "sender",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "isPublic",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Message[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getTokenAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "getTokenBalanceOfUser",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isBurner",
+                  "type": "bool"
+                }
+              ],
+              "name": "getUnseenProfiles",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "_address",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "image",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "bio",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "socialMediaProfile",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Profile[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "getUserProfile",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "_address",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "image",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "bio",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "socialMediaProfile",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Profile",
+                  "name": "",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "initialize",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "profileCount",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "publicMessageCount",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_sender",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_text",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "_isPublic",
+                  "type": "bool"
+                }
+              ],
+              "name": "sendMessage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_newDefaultApprovalAmt",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setDefaultApprovalAmt",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_text",
+                  "type": "string"
+                }
+              ],
+              "name": "setDefaultMessageText",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_newReward",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setInitTokenReward",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_userProfile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_swipedProfile",
+                  "type": "address"
+                }
+              ],
+              "name": "swipeLeft",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_userProfile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_swipedProfile",
+                  "type": "address"
+                }
+              ],
+              "name": "swipeRight",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "publicMessageIdx",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isUpvote",
+                  "type": "bool"
+                }
+              ],
+              "name": "voteOnPublicMessage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialLogic",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "initialAdmin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "_data",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "payable",
+              "type": "constructor"
+            }
+          ]
+        },
+        "FriendrChain_Implementation": {
+          "address": "0x03e3f5f807924e615187Aa4D82eaa4f647EEc7a8",
+          "abi": [
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "receiver",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "messageIdx",
+                  "type": "uint256"
+                }
+              ],
+              "name": "messageSent",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "publicMessageIdx",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bool",
+                  "name": "isUpvote",
+                  "type": "bool"
+                }
+              ],
+              "name": "messageVoted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "publicMessageIdx",
+                  "type": "uint256"
+                }
+              ],
+              "name": "publicMessageSent",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "swiper",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "swipee",
+                  "type": "address"
+                }
+              ],
+              "name": "swipeMatch",
+              "type": "event"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_image",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "bio",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_socialMediaProfile",
+                  "type": "string"
+                }
+              ],
+              "name": "createUserProfileFlow",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "defaultMessageText",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "deleteProfile",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "deleteProfileImage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editName",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newName",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editImage",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newImage",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editBio",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newBio",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "editSocialMediaProfileLink",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "string",
+                  "name": "newSocialMediaProfileLink",
+                  "type": "string"
+                }
+              ],
+              "name": "editProfile",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getDefaultApprovalAmt",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getInitTokenReward",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "swiper",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "swipee",
+                  "type": "address"
+                }
+              ],
+              "name": "getIsMatch",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getPublicMessages",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "string",
+                          "name": "text",
+                          "type": "string"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "sender",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "bool",
+                          "name": "isPublic",
+                          "type": "bool"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "created_ts",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "deleted_ts",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct FriendrChain.Message",
+                      "name": "message",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "upvotes",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "downvotes",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "author",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "authorImg",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "idx",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.PublicMessage[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getRecentMatches",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "_address",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "image",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "bio",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "socialMediaProfile",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Profile[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_address1",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_address2",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getRecentMessagesForMatch",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "text",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "sender",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "isPublic",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Message[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getTokenAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "getTokenBalanceOfUser",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "limit",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offset",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isBurner",
+                  "type": "bool"
+                }
+              ],
+              "name": "getUnseenProfiles",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "_address",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "image",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "bio",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "socialMediaProfile",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Profile[]",
+                  "name": "",
+                  "type": "tuple[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_profile",
+                  "type": "address"
+                }
+              ],
+              "name": "getUserProfile",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "string",
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "_address",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "image",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "bio",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "socialMediaProfile",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "created_ts",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "deleted_ts",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct FriendrChain.Profile",
+                  "name": "",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "initialize",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "profileCount",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "publicMessageCount",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_sender",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_receiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_text",
+                  "type": "string"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "_isPublic",
+                  "type": "bool"
+                }
+              ],
+              "name": "sendMessage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_newDefaultApprovalAmt",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setDefaultApprovalAmt",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_text",
+                  "type": "string"
+                }
+              ],
+              "name": "setDefaultMessageText",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_newReward",
+                  "type": "uint256"
+                }
+              ],
+              "name": "setInitTokenReward",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_userProfile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_swipedProfile",
+                  "type": "address"
+                }
+              ],
+              "name": "swipeLeft",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_userProfile",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_swipedProfile",
+                  "type": "address"
+                }
+              ],
+              "name": "swipeRight",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "publicMessageIdx",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isUpvote",
+                  "type": "bool"
+                }
+              ],
+              "name": "voteOnPublicMessage",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "FriendrChain_Proxy": {
+          "address": "0xc1cDb7cD85692E49728bBDD1e74905bbafa2d888",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialLogic",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "initialAdmin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "_data",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "payable",
+              "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "previousAdmin",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "newAdmin",
+                  "type": "address"
+                }
+              ],
+              "name": "AdminChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "implementation",
+                  "type": "address"
+                }
+              ],
+              "name": "Upgraded",
+              "type": "event"
+            },
+            {
+              "stateMutability": "payable",
+              "type": "fallback"
+            },
+            {
+              "inputs": [],
+              "name": "admin",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newAdmin",
+                  "type": "address"
+                }
+              ],
+              "name": "changeAdmin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "implementation",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newImplementation",
+                  "type": "address"
+                }
+              ],
+              "name": "upgradeTo",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newImplementation",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                }
+              ],
+              "name": "upgradeToAndCall",
+              "outputs": [],
+              "stateMutability": "payable",
+              "type": "function"
+            },
+            {
+              "stateMutability": "payable",
+              "type": "receive"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
