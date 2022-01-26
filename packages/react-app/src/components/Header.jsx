@@ -7,13 +7,17 @@ import { ButtonLink } from "./Links";
 const getNotLoggedInButtons = () => {
   return ["Home", "About the Project"].map(text =>
     text === "Home" ? (
-      <LoggedInButton>
-        <ButtonLink to={"/"}>{text}</ButtonLink>
-      </LoggedInButton>
+      <a href="/">
+        <LoggedInButton>
+          <ButtonLink to={"/"}>{text}</ButtonLink>
+        </LoggedInButton>
+      </a>
     ) : (
-      <LoggedInButton>
-        <ButtonLink to={"https://github.com/dallonasnes/friendrcoin"}>{text}</ButtonLink>
-      </LoggedInButton>
+      <a href="https://github.com/dallonasnes/friendrcoin" target="_blank">
+        <LoggedInButton>
+          <ButtonLink to={"https://github.com/dallonasnes/friendrcoin"}>{text}</ButtonLink>
+        </LoggedInButton>
+      </a>
     ),
   );
 };
@@ -21,9 +25,11 @@ const getNotLoggedInButtons = () => {
 const getLoggedInButtons = () => {
   return ["Home", "Queue", "Matches"].map(text =>
     text === "Home" ? (
-      <LoggedInButton>
-        <ButtonLink to={"/"}>{text}</ButtonLink>
-      </LoggedInButton>
+      <a href="/">
+        <LoggedInButton>
+          <ButtonLink to={"/"}>{text}</ButtonLink>
+        </LoggedInButton>
+      </a>
     ) : (
       <LoggedInButton>
         <Link to={`/${text.toLowerCase().replaceAll(" ", "-")}`}>{text}</Link>
