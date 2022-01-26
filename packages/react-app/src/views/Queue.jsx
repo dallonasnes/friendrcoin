@@ -46,9 +46,10 @@ const fetchProfiles = async ({
         }
         setOffset(parseInt(nextOffset._hex));
       } catch (e) {
-        console.log(e);
         if (e.toString().toLowerCase().includes("indexed beyond those that exist")) {
           setDidFetchLastPage(true);
+        } else {
+          console.log(e);
         }
       }
     }
