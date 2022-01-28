@@ -200,20 +200,25 @@ export default function Profile({ isLoggedIn, address, userProfile, setUserProfi
         <label>Name</label>
         <input type="text" id="name" placeholder={userProfile.name}></input>
         <br />
-        <br />
+        <p>{userProfile.name}</p>
         <label>URL to an avatar image</label>
         <input type="text" id="image" placeholder={userProfile.image}></input>
+        <br />
+        <p>{userProfile.image}</p>
         <img src={userProfile.image} style={{ "border-radius": "50%" }}></img>
         <br />
         <label>URL to a social media profile</label>
         <input type="text" id="socialProfile" placeholder={userProfile.socialMediaProfile}></input>
         <br />
+        <p>{userProfile.socialMediaProfile}</p>
         <button onClick={() => setTimeout(window.open("https://" + userProfile.socialMediaProfile, "_blank"), 1000)}>
           View Social Media Profile
         </button>
         <br />
         <label>Bio</label>
         <input type="text" id="bio" placeholder={userProfile.bio}></input>
+        <br />
+        <p>{userProfile.bio}</p>
         <br />
         <button onClick={() => handleEditClick()}>Submit edits</button>
       </>

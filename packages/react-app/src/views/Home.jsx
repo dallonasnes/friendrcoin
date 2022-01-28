@@ -125,7 +125,12 @@ const getPublicMessages = async ({
       }
       setOffset(parseInt(nextOffset._hex));
     } catch (e) {
-      console.log(e);
+      if (e.toString().toLowerCase().includes("indexed beyond total number")) {
+        // do nothing for now
+        setDidFetchLastPage(true);
+      } else {
+        console.log(e);
+      }
     }
   }
 };
