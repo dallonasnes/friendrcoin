@@ -112,15 +112,21 @@ contract FriendrChain is OwnableUpgradeable {
         uint256 limit,
         uint256 offset,
         bool isBurner
-    ) public view returns (Profile[] memory, uint256) {
+    ) public view returns (Profile[] memory, uint256, uint256) {
         require(
             offset < profileCount,
             "Cannot fetch profiles indexed beyond those that exist in system"
         );
         uint256 profileRtnCount = 0;
+        uint256 ownTokenBalanceTier = getTokenTier(getTokenBalanceOfUser(_profile));
+            
         Profile[] memory profiles = new Profile[](limit);
+
+        uint256 missedProfiles = 0;
+
         while (profileRtnCount < limit && offset < profileCount) {
             // get account at index offset
+            
             address currAcct = _accounts[offset];
             // skip if _profile is the same as currAct
             if (_profile != currAcct) {
@@ -130,12 +136,20 @@ contract FriendrChain is OwnableUpgradeable {
                     ? false
                     : _swipedAddresses[_profile][currAcct];
                 if (!alreadySwiped) {
-                    // get profile for currAcct
-                    Profile memory profToShowInQueue = _profiles[currAcct];
-                    // if profToShowInQueue is not deleted, then add it to rtnList
-                    if (profToShowInQueue.deleted_ts == 0) {
-                        profiles[profileRtnCount] = profToShowInQueue;
-                        profileRtnCount++;
+                    uint256 counterpartyTokenBalance = getTokenBalanceOfUser(currAcct);
+                    if (getTokenTier(counterpartyTokenBalance) <= ownTokenBalanceTier)
+                    {
+                         // get profile for currAcct
+                        Profile memory profToShowInQueue = _profiles[currAcct];
+                        // if profToShowInQueue is not deleted, then add it to rtnList
+                        if (profToShowInQueue.deleted_ts == 0) {
+                            profiles[profileRtnCount] = profToShowInQueue;
+                            profileRtnCount++;
+                        }
+                    }
+                    else
+                    {
+                        missedProfiles++;
                     }
                 }
             }
@@ -149,7 +163,7 @@ contract FriendrChain is OwnableUpgradeable {
             profilesToRtn[i] = profiles[i];
         }
 
-        return (profilesToRtn, offset);
+        return (profilesToRtn, offset, missedProfiles);
     }
 
     function getIsMatch(address swiper, address swipee)
@@ -569,6 +583,23 @@ contract FriendrChain is OwnableUpgradeable {
         return _votes_cast_by_user[voter][publicMessageIdx];
     }
 
+
+    function getTokenTier(uint256 tokenCount)
+        private
+        view
+        returns (uint256)
+    {
+        uint256 myTier = 0;
+        while (tokenCount != 0)
+        {
+            tokenCount /= 10;
+
+            myTier++;
+        }
+
+        return myTier;
+    }
+    
     /**
      * Owner-only getters and setters
      */
