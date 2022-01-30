@@ -288,6 +288,28 @@ describe("FriendrChain", function () {
 
     });
 
+    it("should only provide unseen profiles at tiers lower or equal to self", async () => {
+      // create 3 accounts
+      await myContract.connect(addr1).createUserProfileFlow(addr1.address, name1, img, bio1, socialMediaProf);
+      await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
+      await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img, bio3, socialMediaProf);
+
+      await myContract.friendrCoin.transferFrom(myContract.address, addr3.address, 900);
+
+      let [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0, false); 
+      let [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0, false); 
+      let [acct3UnseenProfiles, acct3Offset] = await myContract.connect(addr3).getUnseenProfiles(addr3.address, 10, 0, false);
+  
+      expect(acct1UnseenProfiles.map((profile) => profile._address)).to.eql([addr2.address]);
+      expect(acct1Offset).to.equal(3);
+
+      expect(acct2UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address]);
+      expect(acct2Offset).to.equal(3);
+
+      expect(acct3UnseenProfiles.map((profile) => profile._address)).to.eql([addr1.address, addr2.address]);
+      expect(acct3Offset).to.equal(3);
+    });
+
     it.skip("should not fetch deleted profiles for the queue", async () => {
       // TODO: setup endpoint for deleted profile
     });
