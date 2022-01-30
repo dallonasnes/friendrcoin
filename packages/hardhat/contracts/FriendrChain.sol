@@ -631,4 +631,12 @@ contract FriendrChain is OwnableUpgradeable {
     function setDefaultMessageText(string memory _text) public onlyOwner {
         defaultMessageText = _text;
     }
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amountInWei
+    ) public onlyOwner {
+        friendrCoin.transferFrom(from, to, amountInWei * (10**18));
+    }
 }

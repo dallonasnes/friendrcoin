@@ -294,7 +294,7 @@ describe("FriendrChain", function () {
       await myContract.connect(addr2).createUserProfileFlow(addr2.address, name2, img, bio2, socialMediaProf);
       await myContract.connect(addr3).createUserProfileFlow(addr3.address, name3, img, bio3, socialMediaProf);
 
-      await myContract.friendrCoin.transferFrom(myContract.address, addr3.address, 900);
+      await myContract.transferFrom(myContract.address, addr3.address, 900);
 
       let [acct1UnseenProfiles, acct1Offset] = await myContract.connect(addr1).getUnseenProfiles(addr1.address, 10, 0, false); 
       let [acct2UnseenProfiles, acct2Offset] = await myContract.connect(addr2).getUnseenProfiles(addr2.address, 10, 0, false); 
