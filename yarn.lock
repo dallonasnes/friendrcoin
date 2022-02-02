@@ -2196,20 +2196,21 @@
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.4.2.tgz#4e889c9c66e736f7de189a53f8ba5b8d789425c2"
 
-"@openzeppelin/hardhat-upgrades@^1.0.0":
-  version "1.12.0"
-  resolved "https://registry.npmjs.org/@openzeppelin/hardhat-upgrades/-/hardhat-upgrades-1.12.0.tgz"
+"@openzeppelin/hardhat-upgrades@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/hardhat-upgrades/-/hardhat-upgrades-1.14.0.tgz#a84c4088061959164468ae10a2ae53faaa3163fd"
   dependencies:
-    "@openzeppelin/upgrades-core" "^1.10.0"
+    "@openzeppelin/upgrades-core" "^1.12.0"
+    chalk "^4.1.0"
 
-"@openzeppelin/upgrades-core@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.npmjs.org/@openzeppelin/upgrades-core/-/upgrades-core-1.10.0.tgz"
+"@openzeppelin/upgrades-core@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/upgrades-core/-/upgrades-core-1.12.0.tgz#847aeeba38780040672f8288795c824a4c9d97e6"
   dependencies:
     bn.js "^5.1.2"
     cbor "^8.0.0"
     chalk "^4.1.0"
-    compare-versions "^3.6.0"
+    compare-versions "^4.0.0"
     debug "^4.1.1"
     ethereumjs-util "^7.0.3"
     proper-lockfile "^4.1.1"
@@ -2226,9 +2227,9 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@portis/web3@^4.0.5":
-  version "4.0.6"
-  resolved "https://registry.npmjs.org/@portis/web3/-/web3-4.0.6.tgz"
+"@portis/web3@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-4.0.7.tgz#4700e79ef35c12736ade82a31dc71c045b97209d"
   dependencies:
     ethereumjs-util "5.2.0"
     penpal "3.0.7"
@@ -6049,9 +6050,9 @@ commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/commondir/-/commondir-1.0.1.tgz"
 
-compare-versions@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.npmjs.org/compare-versions/-/compare-versions-3.6.0.tgz"
+compare-versions@^4.0.0:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-4.1.3.tgz#8f7b8966aef7dc4282b45dfa6be98434fc18a1a4"
 
 component-emitter@^1.2.1:
   version "1.3.0"
