@@ -2234,9 +2234,9 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@portis/web3@^4.0.5":
-  version "4.0.6"
-  resolved "https://registry.npmjs.org/@portis/web3/-/web3-4.0.6.tgz"
+"@portis/web3@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-4.0.7.tgz#4700e79ef35c12736ade82a31dc71c045b97209d"
   dependencies:
     ethereumjs-util "5.2.0"
     penpal "3.0.7"
