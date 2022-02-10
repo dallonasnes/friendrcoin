@@ -13251,9 +13251,9 @@ murmurhash3js@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/murmurhash3js/-/murmurhash3js-3.0.1.tgz"
 
-mustache@^3.1.0:
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/mustache/-/mustache-3.2.1.tgz"
+mustache@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.2.0.tgz#e5892324d60a12ec9c2a73359edca52972bf6f64"
 
 mute-stdout@^1.0.0:
   version "1.0.1"
