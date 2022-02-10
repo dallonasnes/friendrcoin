@@ -5,6 +5,8 @@ Each right swipe costs 1 FriendrCoin and a match returns that FriendrCoin to you
 
 This dApp is deployed on [Polygon mainnet](https://polygon.technology/) polygon gas fees are quite low (less than 0.01 USD on average, compared to ~$100 USD on Ethereum mainnet). Note that gas fees are paid in [Matic](https://coinmarketcap.com/currencies/polygon/). You can get small amounts of Matic from the [matic faucet](https://matic.supply/). To do so, be sure you have added Polygon Mainnet as a network in your Metamask wallet by following [these](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) instructions.
 
+[This video tutorial](https://www.youtube.com/watch?v=cAimNpK7alQ) demonstrates the above steps.
+
 You can trade or provide liquidity for FriendrCoin on [Quickswap](https://quickswap.exchange/). Note that you may need to import the token by pasting in the below coin address.
 
 Web app: `https://friendrcoin.com`
