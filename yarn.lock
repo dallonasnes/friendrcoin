@@ -9522,9 +9522,9 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2
   version "4.2.6"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.6.tgz"
 
-graphiql@^1.5.16:
-  version "1.5.16"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.5.16.tgz#76876e6a9c07b7be26b9126b7c6801d6a7e27e3b"
+graphiql@^1.5.19:
+  version "1.5.19"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.5.19.tgz#dc965daef462fc49a1ecd20f8427e6597e5cda90"
   dependencies:
     "@graphiql/toolkit" "^0.4.2"
     codemirror "^5.58.2"
