@@ -32,9 +32,9 @@
     lodash "^4.17.21"
     resize-observer-polyfill "^1.5.0"
 
-"@apollo/client@^3.5.7":
-  version "3.5.7"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.5.7.tgz#38051c0a414ebf784319fa5131faa19df24fa9ec"
+"@apollo/client@^3.5.10":
+  version "3.5.10"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.5.10.tgz#43463108a6e07ae602cca0afc420805a19339a71"
   dependencies:
     "@graphql-typed-document-node/core" "^3.0.0"
     "@wry/context" "^0.6.0"
