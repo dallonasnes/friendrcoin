@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@apollo/client": "^3.5.7",
+    "@apollo/client": "^3.5.10",
     "@apollo/react-hooks": "^4.0.0",
     "@portis/web3": "^4.0.7",
     "@ramp-network/ramp-instant-sdk": "^3.0.0",
@@ -55,7 +55,7 @@
     "web3modal": "^1.9.1"
   },
   "devDependencies": {
-    "@apollo/client": "^3.5.7",
+    "@apollo/client": "^3.5.10",
     "@testing-library/dom": "^8.11.3",
     "@types/react": "^17.0.38",
     "autoprefixer": "^10.4.2",
