@@ -1478,7 +1478,7 @@
     "@ethersproject/properties" "^5.0.3"
     "@ethersproject/strings" "^5.0.4"
 
-"@ethersproject/abi@5.6.0", "@ethersproject/abi@^5.0.0-beta.146", "@ethersproject/abi@^5.0.1", "@ethersproject/abi@^5.1.2", "@ethersproject/abi@^5.4.0", "@ethersproject/abi@^5.6.0":
+"@ethersproject/abi@5.6.0", "@ethersproject/abi@^5.0.0-beta.146", "@ethersproject/abi@^5.0.1", "@ethersproject/abi@^5.1.2", "@ethersproject/abi@^5.4.0", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.0":
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.6.0.tgz#ea07cbc1eec2374d32485679c12408005895e9f3"
   dependencies:
@@ -1492,7 +1492,7 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.0"
 
-"@ethersproject/abstract-provider@5.6.0", "@ethersproject/abstract-provider@^5.6.0":
+"@ethersproject/abstract-provider@5.6.0", "@ethersproject/abstract-provider@^5.5.1", "@ethersproject/abstract-provider@^5.6.0":
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/abstract-provider/-/abstract-provider-5.6.0.tgz#0c4ac7054650dbd9c476cf5907f588bbb6ef3061"
   dependencies:
@@ -1650,7 +1650,7 @@
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
-"@ethersproject/providers@5.6.1", "@ethersproject/providers@^5.4.4", "@ethersproject/providers@^5.5.2":
+"@ethersproject/providers@5.6.1", "@ethersproject/providers@^5.4.4", "@ethersproject/providers@^5.5.3":
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.6.1.tgz#9a05f00ecbac59565bf6907c8d2af8ac33303b48"
   dependencies:
@@ -4387,11 +4387,11 @@ axios@^0.21.1, axios@^0.21.2:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
   dependencies:
-    follow-redirects "^1.14.4"
+    follow-redirects "^1.14.7"
 
 axios@^0.26.1:
   version "0.26.1"
@@ -7842,16 +7842,18 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.0.18:
-  version "4.0.18"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.0.18.tgz#769d8a3cf9f2dd6f3dc51cb53b2d581aef986312"
+eth-hooks@4.0.45:
+  version "4.0.45"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.0.45.tgz#d6645368034881e0d1c69804ceb40199c71e2bf2"
   dependencies:
+    "@ethersproject/abi" "^5.5.0"
+    "@ethersproject/abstract-provider" "^5.5.1"
     "@ethersproject/address" "^5.5.0"
     "@ethersproject/bignumber" "^5.5.0"
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/contracts" "^5.5.0"
     "@ethersproject/networks" "^5.5.2"
-    "@ethersproject/providers" "^5.5.2"
+    "@ethersproject/providers" "^5.5.3"
     "@ethersproject/signing-key" "^5.5.0"
     "@ethersproject/solidity" "^5.5.0"
     "@ethersproject/units" "^5.5.0"
@@ -7859,14 +7861,14 @@ eth-hooks@4.0.18:
     "@web3-react/abstract-connector" "^6.0.7"
     "@web3-react/core" "^6.1.9"
     "@web3-react/types" "^6.0.7"
-    axios "^0.24.0"
-    ethers "^5.5.3"
+    axios "^0.25.0"
+    ethers "^5.5.4"
     lodash.isequal "^4.5.0"
-    merge-anything "^4.0.2"
-    react-query "^3.34.7"
+    merge-anything "^5.0.2"
+    react-query "^3.34.16"
     ts-invariant "^0.9.4"
     use-debounce "^7.0.1"
-    usehooks-ts "^2.2.0"
+    usehooks-ts "^2.2.2"
     web3modal "^1.9.5"
 
 eth-json-rpc-errors@^1.0.1:
@@ -8368,7 +8370,7 @@ ethers@^4.0.40:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^5.0.1, ethers@^5.0.2, ethers@^5.1.0, ethers@^5.4.7, ethers@^5.5.3, ethers@^5.6.1:
+ethers@^5.0.1, ethers@^5.0.2, ethers@^5.1.0, ethers@^5.4.7, ethers@^5.5.4, ethers@^5.6.1:
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.6.1.tgz#a56cd67f1595b745dc3dde0ccf2b5de53a41a6d0"
   dependencies:
@@ -8921,7 +8923,7 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
-follow-redirects@^1.0.0, follow-redirects@^1.12.1, follow-redirects@^1.14.0, follow-redirects@^1.14.4, follow-redirects@^1.14.8:
+follow-redirects@^1.0.0, follow-redirects@^1.12.1, follow-redirects@^1.14.0, follow-redirects@^1.14.7, follow-redirects@^1.14.8:
   version "1.14.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
 
@@ -10901,9 +10903,13 @@ is-weakref@^1.0.1:
   dependencies:
     call-bind "^1.0.2"
 
-is-what@^3.12.0, is-what@^3.14.1:
+is-what@^3.12.0:
   version "3.14.1"
   resolved "https://registry.npmjs.org/is-what/-/is-what-3.14.1.tgz"
+
+is-what@^4.1.6:
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/is-what/-/is-what-4.1.7.tgz#c41dc1d2d2d6a9285c624c2505f61849c8b1f9cc"
 
 is-windows@^1.0.1, is-windows@^1.0.2:
   version "1.0.2"
@@ -12639,11 +12645,11 @@ meow@^5.0.0:
     trim-newlines "^2.0.0"
     yargs-parser "^10.0.0"
 
-merge-anything@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/merge-anything/-/merge-anything-4.0.2.tgz#cb61fdd4e0604e254ff571f90869fa1af2d39e7f"
+merge-anything@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/merge-anything/-/merge-anything-5.0.2.tgz#b023af9b8f48e2fc71eb859d4ad834ba667f4150"
   dependencies:
-    is-what "^3.14.1"
+    is-what "^4.1.6"
     ts-toolbelt "^9.6.0"
 
 merge-descriptors@1.0.1:
@@ -15477,9 +15483,9 @@ react-qr-reader@^2.2.1:
     prop-types "^15.7.2"
     webrtc-adapter "^7.2.1"
 
-react-query@^3.34.7:
-  version "3.34.8"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.34.8.tgz#a3be8523fd95f766b04c32847a1b58d8231db03c"
+react-query@^3.34.16:
+  version "3.34.16"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.34.16.tgz#279ea180bcaeaec49c7864b29d1711ee9f152594"
   dependencies:
     "@babel/runtime" "^7.5.5"
     broadcast-channel "^3.4.1"
@@ -18191,9 +18197,9 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz"
 
-usehooks-ts@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.2.1.tgz#9bb9af81d4680cf9cdb9234331a37e4be39d1183"
+usehooks-ts@^2.2.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.4.2.tgz#a9a5df9d04dcce993d7e8ec088965ba44dfcd9cc"
 
 utf-8-validate@^5.0.2:
   version "5.0.5"
