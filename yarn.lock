@@ -2582,9 +2582,9 @@
     fs-extra "^9.0.1"
     js-yaml "^3.14.0"
 
-"@testing-library/dom@^8.0.0", "@testing-library/dom@^8.11.3":
-  version "8.11.3"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.11.3.tgz#38fd63cbfe14557021e88982d931e33fb7c1a808"
+"@testing-library/dom@^8.0.0", "@testing-library/dom@^8.11.4":
+  version "8.11.4"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.11.4.tgz#dc94d830b862e7a20686b0379eefd931baf0445b"
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
@@ -14625,15 +14625,7 @@ pretty-format@^26.0.0, pretty-format@^26.6.2:
     ansi-styles "^4.0.0"
     react-is "^17.0.1"
 
-pretty-format@^27.0.2:
-  version "27.4.6"
-  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-27.4.6.tgz#1b784d2f53c68db31797b2348fa39b49e31846b7"
-  dependencies:
-    ansi-regex "^5.0.1"
-    ansi-styles "^5.0.0"
-    react-is "^17.0.1"
-
-pretty-format@^27.5.1:
+pretty-format@^27.0.2, pretty-format@^27.5.1:
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-27.5.1.tgz#2181879fdea51a7a5851fb39d920faa63f01d88e"
   dependencies:
