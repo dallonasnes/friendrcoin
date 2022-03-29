@@ -3207,32 +3207,32 @@
     "@uniswap/lib" "1.1.1"
     "@uniswap/v2-core" "1.0.0"
 
-"@walletconnect/browser-utils@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.7.6.tgz#c9a2516cf8d475067345f854aa81aa22a71d0e0d"
+"@walletconnect/browser-utils@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.7.7.tgz#4ae0db1ddf49be179ea556af842db3b7afce973d"
   dependencies:
     "@walletconnect/safe-json" "1.0.0"
-    "@walletconnect/types" "^1.7.6"
+    "@walletconnect/types" "^1.7.7"
     "@walletconnect/window-getters" "1.0.0"
     "@walletconnect/window-metadata" "1.0.0"
     detect-browser "5.2.0"
 
-"@walletconnect/client@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/client/-/client-1.7.6.tgz#0fdae23cb1ccb39cf4d41e6dd80b4971dba7c0c5"
+"@walletconnect/client@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/client/-/client-1.7.7.tgz#4570475b0aeed05e53b0c7b01a352a895c0b455b"
   dependencies:
-    "@walletconnect/core" "^1.7.6"
-    "@walletconnect/iso-crypto" "^1.7.6"
-    "@walletconnect/types" "^1.7.6"
-    "@walletconnect/utils" "^1.7.6"
+    "@walletconnect/core" "^1.7.7"
+    "@walletconnect/iso-crypto" "^1.7.7"
+    "@walletconnect/types" "^1.7.7"
+    "@walletconnect/utils" "^1.7.7"
 
-"@walletconnect/core@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/core/-/core-1.7.6.tgz#5f6dce401b350d32bc722e55e0d6629332d0d75b"
+"@walletconnect/core@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/core/-/core-1.7.7.tgz#71d0c71beda8d10c636a4eae8e81e3b7ecefbe86"
   dependencies:
-    "@walletconnect/socket-transport" "^1.7.6"
-    "@walletconnect/types" "^1.7.6"
-    "@walletconnect/utils" "^1.7.6"
+    "@walletconnect/socket-transport" "^1.7.7"
+    "@walletconnect/types" "^1.7.7"
+    "@walletconnect/utils" "^1.7.7"
 
 "@walletconnect/crypto@^1.0.2":
   version "1.0.2"
@@ -3255,22 +3255,22 @@
   version "1.0.0"
   resolved "https://registry.npmjs.org/@walletconnect/environment/-/environment-1.0.0.tgz"
 
-"@walletconnect/http-connection@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/http-connection/-/http-connection-1.7.6.tgz#57c3a7ab41f7bc9f57a72a5b96c9339e329a1511"
+"@walletconnect/http-connection@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/http-connection/-/http-connection-1.7.7.tgz#77bcce7c4c067e1e745da1a1c6174ff0daa76018"
   dependencies:
-    "@walletconnect/types" "^1.7.6"
-    "@walletconnect/utils" "^1.7.6"
+    "@walletconnect/types" "^1.7.7"
+    "@walletconnect/utils" "^1.7.7"
     eventemitter3 "4.0.7"
     xhr2-cookies "1.1.0"
 
-"@walletconnect/iso-crypto@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/iso-crypto/-/iso-crypto-1.7.6.tgz#4962634a3c2d4085fb753b6caaf1d250198f4f1f"
+"@walletconnect/iso-crypto@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/iso-crypto/-/iso-crypto-1.7.7.tgz#a7f703f9c2a05aafe5b8cced8941c7732701e579"
   dependencies:
     "@walletconnect/crypto" "^1.0.2"
-    "@walletconnect/types" "^1.7.6"
-    "@walletconnect/utils" "^1.7.6"
+    "@walletconnect/types" "^1.7.7"
+    "@walletconnect/utils" "^1.7.7"
 
 "@walletconnect/jsonrpc-types@^1.0.0":
   version "1.0.0"
@@ -3289,13 +3289,13 @@
   version "1.4.0"
   resolved "https://registry.npmjs.org/@walletconnect/mobile-registry/-/mobile-registry-1.4.0.tgz"
 
-"@walletconnect/qrcode-modal@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/qrcode-modal/-/qrcode-modal-1.7.6.tgz#e23d55b10c8f15f2d62d1354255a7bfdfb483973"
+"@walletconnect/qrcode-modal@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/qrcode-modal/-/qrcode-modal-1.7.7.tgz#a7567370bf915a50fb8edc99f6ceb70ce9be2bfc"
   dependencies:
-    "@walletconnect/browser-utils" "^1.7.6"
+    "@walletconnect/browser-utils" "^1.7.7"
     "@walletconnect/mobile-registry" "^1.4.0"
-    "@walletconnect/types" "^1.7.6"
+    "@walletconnect/types" "^1.7.7"
     copy-to-clipboard "^3.3.1"
     preact "10.4.1"
     qrcode "1.4.4"
@@ -3312,39 +3312,39 @@
   version "1.0.0"
   resolved "https://registry.npmjs.org/@walletconnect/safe-json/-/safe-json-1.0.0.tgz"
 
-"@walletconnect/socket-transport@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/socket-transport/-/socket-transport-1.7.6.tgz#4f381e60fe759de21722411a19c163bb0fc87ce0"
+"@walletconnect/socket-transport@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/socket-transport/-/socket-transport-1.7.7.tgz#2cf68b95c4c10f257189370d2456d99c9c206a0f"
   dependencies:
-    "@walletconnect/types" "^1.7.6"
-    "@walletconnect/utils" "^1.7.6"
+    "@walletconnect/types" "^1.7.7"
+    "@walletconnect/utils" "^1.7.7"
     ws "7.5.3"
 
-"@walletconnect/types@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-1.7.6.tgz#98d696478e930b6ed064001e663c4fd80f458e6b"
+"@walletconnect/types@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-1.7.7.tgz#71c623b36a93e373370b1772e82fea2d801adf54"
 
-"@walletconnect/utils@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-1.7.6.tgz#71965c8d85df249c74efb1def1c780553264b7a4"
+"@walletconnect/utils@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-1.7.7.tgz#684522fa20ccf9ec2944f0497ca70254cb6d4729"
   dependencies:
-    "@walletconnect/browser-utils" "^1.7.6"
+    "@walletconnect/browser-utils" "^1.7.7"
     "@walletconnect/encoding" "^1.0.1"
     "@walletconnect/jsonrpc-utils" "^1.0.0"
-    "@walletconnect/types" "^1.7.6"
+    "@walletconnect/types" "^1.7.7"
     bn.js "4.11.8"
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@walletconnect/web3-provider@^1.7.6":
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.7.6.tgz#40a58418ae046e7b2e2f7ad4d183cd3997d227d5"
+"@walletconnect/web3-provider@^1.7.7":
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.7.7.tgz#3d2f8d7a0fcdc118615283978c6a7c9f2a852b71"
   dependencies:
-    "@walletconnect/client" "^1.7.6"
-    "@walletconnect/http-connection" "^1.7.6"
-    "@walletconnect/qrcode-modal" "^1.7.6"
-    "@walletconnect/types" "^1.7.6"
-    "@walletconnect/utils" "^1.7.6"
+    "@walletconnect/client" "^1.7.7"
+    "@walletconnect/http-connection" "^1.7.7"
+    "@walletconnect/qrcode-modal" "^1.7.7"
+    "@walletconnect/types" "^1.7.7"
+    "@walletconnect/utils" "^1.7.7"
     web3-provider-engine "16.0.1"
 
 "@walletconnect/window-getters@1.0.0", "@walletconnect/window-getters@^1.0.0":
