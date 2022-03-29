@@ -9498,19 +9498,19 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.0.tgz#8d0c439b9f0a3e43c634b35486ade98e827dfad5"
+graphiql@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.1.tgz#81164e696f370cf888a7fc318c792129eeb349d4"
   dependencies:
     "@graphiql/toolkit" "^0.4.2"
     codemirror "^5.58.2"
     codemirror-graphql "^1.2.14"
     copy-to-clipboard "^3.2.0"
-    dset "^3.1.0"
     entities "^2.0.0"
     escape-html "^1.0.3"
     graphql-language-service "^5.0.1"
     markdown-it "^12.2.0"
+    set-value "^4.1.0"
 
 graphql-config@^4.1.0:
   version "4.1.0"
@@ -10755,6 +10755,10 @@ is-plain-object@^5.0.0:
 is-potential-custom-element-name@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/is-potential-custom-element-name/-/is-potential-custom-element-name-1.0.1.tgz"
+
+is-primitive@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/is-primitive/-/is-primitive-3.0.1.tgz#98c4db1abff185485a657fc2905052b940524d05"
 
 is-promise@~1, is-promise@~1.0.0:
   version "1.0.1"
@@ -16406,6 +16410,13 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-extendable "^0.1.1"
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
+
+set-value@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/set-value/-/set-value-4.1.0.tgz#aa433662d87081b75ad88a4743bd450f044e7d09"
+  dependencies:
+    is-plain-object "^2.0.4"
+    is-primitive "^3.0.1"
 
 setimmediate@1.0.4:
   version "1.0.4"
