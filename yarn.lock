@@ -5943,9 +5943,9 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
 
-codemirror-graphql@^1.2.14:
-  version "1.2.14"
-  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-1.2.14.tgz#069df62347a1db5aca6a1a74ad2f933392d2a6b9"
+codemirror-graphql@^1.2.15:
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-1.2.15.tgz#0a7ba091ee429763aa31075e1c06ce1ed29a655f"
   dependencies:
     "@codemirror/stream-parser" "^0.19.2"
     graphql-language-service "^5.0.1"
@@ -9496,13 +9496,13 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.1.tgz#81164e696f370cf888a7fc318c792129eeb349d4"
+graphiql@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.2.tgz#f3debd55b7bbcc8a5ea5022060f7a24c6b9c9aee"
   dependencies:
     "@graphiql/toolkit" "^0.4.2"
     codemirror "^5.58.2"
-    codemirror-graphql "^1.2.14"
+    codemirror-graphql "^1.2.15"
     copy-to-clipboard "^3.2.0"
     entities "^2.0.0"
     escape-html "^1.0.3"
