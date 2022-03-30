@@ -14876,9 +14876,9 @@ qrcode-terminal@^0.12.0:
   version "0.12.0"
   resolved "https://registry.npmjs.org/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz"
 
-qrcode.react@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-3.0.0.tgz#b1f2ce499e2a3ef3fce6a959248a98d5a8c9963b"
+qrcode.react@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-3.0.1.tgz#0cb1d7cfdf3955737fbd3509c193985795ca0612"
 
 qrcode@1.4.4:
   version "1.4.4"
