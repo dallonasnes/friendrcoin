@@ -2582,7 +2582,7 @@
     fs-extra "^9.0.1"
     js-yaml "^3.14.0"
 
-"@testing-library/dom@^8.0.0", "@testing-library/dom@^8.12.0":
+"@testing-library/dom@^8.12.0", "@testing-library/dom@^8.5.0":
   version "8.12.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.12.0.tgz#fef5e545533fb084175dda6509ee71d7d2f72e23"
   dependencies:
@@ -2609,12 +2609,12 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react@^12.1.4":
-  version "12.1.4"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-12.1.4.tgz#09674b117e550af713db3f4ec4c0942aa8bbf2c0"
+"@testing-library/react@^13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-13.0.0.tgz#8cdaf4667c6c2b082eb0513731551e9db784e8bc"
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@testing-library/dom" "^8.0.0"
+    "@testing-library/dom" "^8.5.0"
     "@types/react-dom" "*"
 
 "@testing-library/user-event@^14.0.0":
