@@ -9496,9 +9496,9 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.2.tgz#f3debd55b7bbcc8a5ea5022060f7a24c6b9c9aee"
+graphiql@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.3.tgz#4696755cbba851c93aea9deacbcf4229044a705d"
   dependencies:
     "@graphiql/toolkit" "^0.4.2"
     codemirror "^5.58.2"
