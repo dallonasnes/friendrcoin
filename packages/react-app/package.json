@@ -49,7 +49,7 @@
     "react-css-theme-switcher": "^0.3.0",
     "react-dom": "^18.0.0",
     "react-qr-reader": "^2.2.1",
-    "react-router-dom": "^6.2.2",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "walletlink": "^2.5.0",
     "web3modal": "^1.9.1"
