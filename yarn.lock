@@ -1734,9 +1734,9 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.0"
 
-"@graphiql/toolkit@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.4.2.tgz#34de819add64672f3f7d4830dffb2094fb8d5366"
+"@graphiql/toolkit@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.4.3.tgz#2653d045693d902f7faaf87b9047e8786397ec48"
   dependencies:
     "@n1ru4l/push-pull-async-iterable-iterator" "^3.1.0"
     meros "^1.1.4"
@@ -9496,11 +9496,11 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.3.tgz#4696755cbba851c93aea9deacbcf4229044a705d"
+graphiql@^1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.4.tgz#3a447eae85d839eb207a07fc3aabc6f3a10df46d"
   dependencies:
-    "@graphiql/toolkit" "^0.4.2"
+    "@graphiql/toolkit" "^0.4.3"
     codemirror "^5.58.2"
     codemirror-graphql "^1.2.15"
     copy-to-clipboard "^3.2.0"
