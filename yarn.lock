@@ -5794,12 +5794,12 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
 
-codemirror-graphql@^1.2.16:
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-1.2.16.tgz#21722300a189320333ee923c1644d4c3e1a0990b"
+codemirror-graphql@^1.2.17:
+  version "1.2.17"
+  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-1.2.17.tgz#09f2812c65067c6b818b2db560dc6b14599b0cf2"
   dependencies:
     "@codemirror/stream-parser" "^0.19.2"
-    graphql-language-service "^5.0.2"
+    graphql-language-service "^5.0.3"
 
 codemirror@^5.58.2:
   version "5.63.3"
@@ -9284,23 +9284,23 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.5.tgz#f8add7f93680f53069a8ab3052fe9fd536375320"
+graphiql@^1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.8.6.tgz#45c1e68cf988b884c1db6db9ff8bafe4e70dcb54"
   dependencies:
     "@graphiql/toolkit" "^0.4.3"
     codemirror "^5.58.2"
-    codemirror-graphql "^1.2.16"
+    codemirror-graphql "^1.2.17"
     copy-to-clipboard "^3.2.0"
     entities "^2.0.0"
     escape-html "^1.0.3"
-    graphql-language-service "^5.0.2"
+    graphql-language-service "^5.0.3"
     markdown-it "^12.2.0"
     set-value "^4.1.0"
 
-graphql-language-service@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.0.2.tgz#50bb6ccaf488e4d4ff5f73efbb9c1b328afc2026"
+graphql-language-service@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.0.3.tgz#6986fef10f622b00417be0b5d914032b06aec654"
   dependencies:
     nullthrows "^1.0.0"
     vscode-languageserver-types "^3.15.1"
