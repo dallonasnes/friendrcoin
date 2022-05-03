@@ -6074,11 +6074,11 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     sha.js "^2.4.8"
 
 cross-fetch@^2.1.0, cross-fetch@^2.1.1:
-  version "2.2.5"
-  resolved "https://registry.npmjs.org/cross-fetch/-/cross-fetch-2.2.5.tgz"
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.6.tgz#2ef0bb39a24ac034787965c457368a28730e220a"
   dependencies:
-    node-fetch "2.6.1"
-    whatwg-fetch "2.0.4"
+    node-fetch "^2.6.7"
+    whatwg-fetch "^2.0.4"
 
 cross-spawn@^6.0.5:
   version "6.0.5"
@@ -12909,11 +12909,7 @@ node-fetch@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
 
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
-
-node-fetch@^2.3.0, node-fetch@^2.6.0, node-fetch@^2.6.1, "node-fetch@https://registry.npmjs.org/@achingbrain/node-fetch/-/node-fetch-2.6.7.tgz":
+node-fetch@^2.3.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7, "node-fetch@https://registry.npmjs.org/@achingbrain/node-fetch/-/node-fetch-2.6.7.tgz":
   version "2.6.7"
   uid "1b5d62978f2ed07b99444f64f0df39f960a6d34d"
   resolved "https://registry.npmjs.org/@achingbrain/node-fetch/-/node-fetch-2.6.7.tgz#1b5d62978f2ed07b99444f64f0df39f960a6d34d"
@@ -18537,9 +18533,9 @@ whatwg-encoding@^1.0.5:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@2.0.4:
+whatwg-fetch@^2.0.4:
   version "2.0.4"
-  resolved "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 whatwg-fetch@^3.4.1, whatwg-fetch@^3.6.2:
   version "3.6.2"
