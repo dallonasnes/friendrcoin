@@ -4958,9 +4958,9 @@ bn.js@^5.0.0, bn.js@^5.1.1, bn.js@^5.1.2:
   version "5.2.0"
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-5.2.0.tgz"
 
-bnc-notify@^1.9.4:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-1.9.4.tgz#a455a6ddc45e50c7816f7c6291fc3611d6f55445"
+bnc-notify@^1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-1.9.5.tgz#232cef2af1fbce294a08d6e185b890d281aadb08"
   dependencies:
     bignumber.js "^9.0.0"
     bnc-sdk "4.1.0"
