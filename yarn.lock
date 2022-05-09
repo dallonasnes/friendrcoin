@@ -7543,9 +7543,9 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.2.15:
-  version "4.2.15"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.2.15.tgz#eec2c61325ee1ba6dc24abded5eeaa3fcef2792d"
+eth-hooks@4.2.21:
+  version "4.2.21"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.2.21.tgz#de6688948aaefbb6c63bc274b9bec96ad9fcb2d3"
   dependencies:
     "@ethersproject/abi" "^5.6.1"
     "@ethersproject/abstract-provider" "^5.6.0"
