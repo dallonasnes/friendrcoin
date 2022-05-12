@@ -2109,9 +2109,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
 
-"@ramp-network/ramp-instant-sdk@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@ramp-network/ramp-instant-sdk/-/ramp-instant-sdk-3.1.0.tgz#9435aa2c77665e210feaf90fbb12b9bfd0694cdd"
+"@ramp-network/ramp-instant-sdk@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@ramp-network/ramp-instant-sdk/-/ramp-instant-sdk-3.1.1.tgz#468bf7b9e28bb7074ab6b720df8aa7ce4aec971e"
   dependencies:
     body-scroll-lock "^3.1.5"
 
