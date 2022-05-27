@@ -8748,9 +8748,9 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-fortmatic@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/fortmatic/-/fortmatic-2.3.0.tgz#b81d8fe76fc28d7ca922a536f60310f45d9e3a14"
+fortmatic@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/fortmatic/-/fortmatic-2.4.0.tgz#0546803d5c6187c06b3367eba66235cf4a195ece"
 
 forwarded@0.2.0:
   version "0.2.0"
