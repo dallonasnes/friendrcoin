@@ -3646,16 +3646,15 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
 
-antd@4.20.6:
-  version "4.20.6"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.20.6.tgz#0d46a4b6128a717b4cad7ac6902311a0210f1d6f"
+antd@4.20.7:
+  version "4.20.7"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.20.7.tgz#7f4e2f5f3620044323355386091967045cfe2c24"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
     "@ant-design/react-slick" "~0.28.1"
     "@babel/runtime" "^7.12.5"
     "@ctrl/tinycolor" "^3.4.0"
-    "@types/qs" "^6.9.7"
     classnames "^2.2.6"
     copy-to-clipboard "^3.2.0"
     lodash "^4.17.21"
