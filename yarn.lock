@@ -2078,17 +2078,17 @@
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.6.0.tgz#c91cf64bc27f573836dba4122758b4743418c1b3"
 
-"@openzeppelin/hardhat-upgrades@^1.17.0":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/hardhat-upgrades/-/hardhat-upgrades-1.17.0.tgz#24ea0f366c3b2df985263cf8b1b796afd04d7e13"
+"@openzeppelin/hardhat-upgrades@^1.18.0":
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/hardhat-upgrades/-/hardhat-upgrades-1.18.0.tgz#81d1b6e099fd91bf7f7157dea6b739af18284870"
   dependencies:
-    "@openzeppelin/upgrades-core" "^1.14.1"
+    "@openzeppelin/upgrades-core" "^1.15.0"
     chalk "^4.1.0"
     proper-lockfile "^4.1.1"
 
-"@openzeppelin/upgrades-core@^1.14.1":
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/upgrades-core/-/upgrades-core-1.14.1.tgz#a0e1c83f9811186ac49d286e6b43ae129097422b"
+"@openzeppelin/upgrades-core@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/upgrades-core/-/upgrades-core-1.15.0.tgz#58e3137915f6dbf025107be6072be02ab443b4ea"
   dependencies:
     bn.js "^5.1.2"
     cbor "^8.0.0"
