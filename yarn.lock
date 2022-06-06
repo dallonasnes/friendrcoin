@@ -1688,9 +1688,9 @@
     "@n1ru4l/push-pull-async-iterable-iterator" "^3.1.0"
     meros "^1.1.4"
 
-"@graphprotocol/graph-cli@^0.30.3":
-  version "0.30.3"
-  resolved "https://registry.yarnpkg.com/@graphprotocol/graph-cli/-/graph-cli-0.30.3.tgz#0645eadbf344bb5a890fe157b6b80c48eb804285"
+"@graphprotocol/graph-cli@^0.30.4":
+  version "0.30.4"
+  resolved "https://registry.yarnpkg.com/@graphprotocol/graph-cli/-/graph-cli-0.30.4.tgz#c1b353eb3362450259b78acc9f969e67c9f55858"
   dependencies:
     assemblyscript "0.19.10"
     binary-install-raw "0.0.13"
