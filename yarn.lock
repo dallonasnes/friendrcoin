@@ -9500,9 +9500,9 @@ hardhat-gas-reporter@^1.0.8:
     eth-gas-reporter "^0.2.24"
     sha1 "^1.1.1"
 
-hardhat@2.9.8, hardhat@^2.9.8:
-  version "2.9.8"
-  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.9.8.tgz#a09ca8fa2fe3fd0e59851e76c0c371721192122c"
+hardhat@2.9.9, hardhat@^2.9.9:
+  version "2.9.9"
+  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.9.9.tgz#05c1015eb73e0230309534b00deeb080724aace0"
   dependencies:
     "@ethereumjs/block" "^3.6.2"
     "@ethereumjs/blockchain" "^5.5.2"
@@ -17816,10 +17816,6 @@ undertaker@^1.2.1:
     object.defaults "^1.0.0"
     object.reduce "^1.0.0"
     undertaker-registry "^1.0.0"
-
-undici@^4.14.1:
-  version "4.15.1"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-4.15.1.tgz#c2c0e75f232178f0e6781f6b46c81ccc15065f6e"
 
 undici@^5.4.0:
   version "5.4.0"
