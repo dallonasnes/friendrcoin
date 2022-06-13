@@ -46,9 +46,9 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apollo/client@^3.6.7":
-  version "3.6.7"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.6.7.tgz#a73e36d29df2c321fa4f5dba6d87e10fac2b55a0"
+"@apollo/client@^3.6.8":
+  version "3.6.8"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.6.8.tgz#97e876fdbc4c287652a61895fd2b6f0b157a7667"
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/context" "^0.6.0"
