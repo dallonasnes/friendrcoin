@@ -35,7 +35,7 @@
     "axios": "^0.27.2",
     "bnc-notify": "^1.9.5",
     "dotenv": "^16.0.1",
-    "eth-hooks": "4.2.21",
+    "eth-hooks": "4.2.38",
     "ethers": "^5.6.8",
     "fortmatic": "^2.4.0",
     "graphiql": "^1.9.7",
