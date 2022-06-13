@@ -52,7 +52,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "walletlink": "^2.5.0",
-    "web3modal": "^1.9.7"
+    "web3modal": "^1.9.8"
   },
   "devDependencies": {
     "@apollo/client": "^3.6.7",
