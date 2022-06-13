@@ -7656,9 +7656,9 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.2.21:
-  version "4.2.21"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.2.21.tgz#de6688948aaefbb6c63bc274b9bec96ad9fcb2d3"
+eth-hooks@4.2.38:
+  version "4.2.38"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.2.38.tgz#a802d6017be4e0fdaee68431e5202c968d3746a7"
   dependencies:
     "@ethersproject/abi" "^5.6.1"
     "@ethersproject/abstract-provider" "^5.6.0"
@@ -7680,8 +7680,8 @@ eth-hooks@4.2.21:
     merge-anything "^5.0.2"
     react-query "^3.38.*"
     ts-invariant "^0.9.4"
-    use-debounce "^8.0.0"
-    usehooks-ts "^2.5.2"
+    use-debounce "^8.0.1"
+    usehooks-ts "^2.5.4"
     web3modal "^1.9.7"
 
 eth-json-rpc-errors@^1.0.1:
@@ -17982,17 +17982,17 @@ ursa-optional@~0.10.0:
     bindings "^1.5.0"
     nan "^2.14.2"
 
-use-debounce@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.0.tgz#fd8d24858dd0d1986bb9a45af4d0aa6ce99226d2"
+use-debounce@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.1.tgz#5f3e11b067bdf9f2c554a20b4764e38b48022664"
 
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz"
 
-usehooks-ts@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.5.2.tgz#c6229a4dd59f7081e0b78569b23e7bb6f966e569"
+usehooks-ts@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.5.4.tgz#e28ce0c1140e3ae172d9b8d2fca07dff68a476ab"
 
 utf-8-validate@^5.0.2:
   version "5.0.5"
