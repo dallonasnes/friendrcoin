@@ -3651,9 +3651,9 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
 
-antd@4.21.1:
-  version "4.21.1"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.21.1.tgz#919e0f61f4742e6cd3995ac05c841584de6725cc"
+antd@4.21.2:
+  version "4.21.2"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.21.2.tgz#07cf60b3100cca0484ed2eee3f7068785d670a20"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
