@@ -1668,16 +1668,16 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
-"@graphiql/react@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.4.1.tgz#c424951f4e1b2ffa22aa514b18663d7a848ff31f"
+"@graphiql/react@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.4.2.tgz#2a12c7cf0f3945022c2231ce4e814561f2363ef7"
   dependencies:
     "@graphiql/toolkit" "^0.6.0"
     codemirror "^5.65.3"
-    codemirror-graphql "^1.3.1"
+    codemirror-graphql "^1.3.2"
     copy-to-clipboard "^3.2.0"
     escape-html "^1.0.3"
-    graphql-language-service "^5.0.5"
+    graphql-language-service "^5.0.6"
     markdown-it "^12.2.0"
     set-value "^4.1.0"
 
@@ -5793,11 +5793,11 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
 
-codemirror-graphql@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-1.3.1.tgz#c852b12b6909783681a5e37d61d1627a78f9c7a6"
+codemirror-graphql@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-1.3.2.tgz#e9d1d18b4a160f0016a28465805284636ee42d2a"
   dependencies:
-    graphql-language-service "^5.0.5"
+    graphql-language-service "^5.0.6"
 
 codemirror@^5.65.3:
   version "5.65.3"
@@ -9341,19 +9341,19 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.9.8:
-  version "1.9.8"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.9.8.tgz#95601eb32459701976a0b235cbfb588600f80adc"
+graphiql@^1.9.9:
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.9.9.tgz#dfc1760e7552140247e591e3c66d1ccc389ea71f"
   dependencies:
-    "@graphiql/react" "^0.4.1"
+    "@graphiql/react" "^0.4.2"
     "@graphiql/toolkit" "^0.6.0"
     entities "^2.0.0"
-    graphql-language-service "^5.0.5"
+    graphql-language-service "^5.0.6"
     markdown-it "^12.2.0"
 
-graphql-language-service@^5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.0.5.tgz#894c08bee50070c97cc53ae514847aeef41bc0ac"
+graphql-language-service@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.0.6.tgz#7fd1e6479e5c3074b070c760fa961d9ad1ed7c72"
   dependencies:
     nullthrows "^1.0.0"
     vscode-languageserver-types "^3.15.1"
