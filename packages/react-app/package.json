@@ -44,7 +44,7 @@
     "node-watch": "^0.7.3",
     "postcss": "^8.4.14",
     "qrcode.react": "^3.0.2",
-    "react": "^18.1.0",
+    "react": "^18.2.0",
     "react-blockies": "^1.4.1",
     "react-css-theme-switcher": "^0.3.0",
     "react-dom": "^18.2.0",
