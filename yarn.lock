@@ -1628,7 +1628,7 @@
     "@ethersproject/constants" "^5.6.1"
     "@ethersproject/logger" "^5.6.0"
 
-"@ethersproject/wallet@5.6.2":
+"@ethersproject/wallet@5.6.2", "@ethersproject/wallet@^5.6.2":
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/wallet/-/wallet-5.6.2.tgz#cd61429d1e934681e413f4bc847a5f2f87e3a03c"
   dependencies:
@@ -7656,9 +7656,9 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.2.39:
-  version "4.2.39"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.2.39.tgz#ccb2cf862b4b4f41f2fe45319be777e65f5f2d98"
+eth-hooks@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.3.1.tgz#38600c187d7eda47f7250c05f7bad0a13f21cc88"
   dependencies:
     "@ethersproject/abi" "^5.6.3"
     "@ethersproject/abstract-provider" "^5.6.1"
@@ -7671,6 +7671,7 @@ eth-hooks@4.2.39:
     "@ethersproject/signing-key" "^5.6.2"
     "@ethersproject/solidity" "^5.6.1"
     "@ethersproject/units" "^5.6.1"
+    "@ethersproject/wallet" "^5.6.2"
     "@uniswap/token-lists" "^1.0.0-beta.28"
     "@web3-react/abstract-connector" "^6.0.7"
     "@web3-react/core" "^6.1.9"
