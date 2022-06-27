@@ -2438,12 +2438,15 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tenderly/hardhat-tenderly@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@tenderly/hardhat-tenderly/-/hardhat-tenderly-1.0.15.tgz#6982e4d17641b235c0aea3746253d468c7d98454"
+"@tenderly/hardhat-tenderly@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@tenderly/hardhat-tenderly/-/hardhat-tenderly-1.1.1.tgz#88a939b8a0cf53782fb65e64f17cad786838bb66"
   dependencies:
+    "@nomiclabs/hardhat-ethers" "^2.0.6"
     axios "^0.21.1"
+    ethers "^5.6.8"
     fs-extra "^9.0.1"
+    hardhat-deploy "^0.11.10"
     js-yaml "^3.14.0"
 
 "@testing-library/dom@^8.14.0", "@testing-library/dom@^8.5.0":
