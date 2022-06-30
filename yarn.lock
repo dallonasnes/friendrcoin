@@ -1668,9 +1668,9 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
-"@graphiql/react@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.4.2.tgz#2a12c7cf0f3945022c2231ce4e814561f2363ef7"
+"@graphiql/react@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.4.3.tgz#29ca3125c7a349de5e9beb2aef660137fbcbde2e"
   dependencies:
     "@graphiql/toolkit" "^0.6.0"
     codemirror "^5.65.3"
@@ -9359,11 +9359,11 @@ graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
 
-graphiql@^1.9.9:
-  version "1.9.9"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.9.9.tgz#dfc1760e7552140247e591e3c66d1ccc389ea71f"
+graphiql@^1.9.10:
+  version "1.9.10"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-1.9.10.tgz#ba7113ed8b1bc988d00d8d7cc51901b51b684bde"
   dependencies:
-    "@graphiql/react" "^0.4.2"
+    "@graphiql/react" "^0.4.3"
     "@graphiql/toolkit" "^0.6.0"
     entities "^2.0.0"
     graphql-language-service "^5.0.6"

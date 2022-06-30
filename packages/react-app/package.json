@@ -38,7 +38,7 @@
     "eth-hooks": "4.3.1",
     "ethers": "^5.6.9",
     "fortmatic": "^2.4.0",
-    "graphiql": "^1.9.9",
+    "graphiql": "^1.9.10",
     "graphql": "^16.5.0",
     "isomorphic-fetch": "^3.0.0",
     "node-watch": "^0.7.3",
