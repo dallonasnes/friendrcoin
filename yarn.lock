@@ -3694,9 +3694,9 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
 
-antd@4.21.6:
-  version "4.21.6"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.21.6.tgz#ab8441e132dca4e1418d7b3fba8caf9c93d9f74d"
+antd@4.21.7:
+  version "4.21.7"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.21.7.tgz#a542cbd46539c4de426245efa7bb459ae25cbcf5"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
@@ -3718,7 +3718,7 @@ antd@4.21.6:
     rc-image "~5.7.0"
     rc-input "~0.0.1-alpha.5"
     rc-input-number "~7.3.0"
-    rc-mentions "~1.8.0"
+    rc-mentions "~1.9.0"
     rc-menu "~9.6.0"
     rc-motion "^2.5.1"
     rc-notification "~4.6.0"
@@ -3735,7 +3735,7 @@ antd@4.21.6:
     rc-table "~7.25.0"
     rc-tabs "~11.16.0"
     rc-textarea "~0.3.0"
-    rc-tooltip "~5.1.1"
+    rc-tooltip "~5.2.0"
     rc-tree "~5.6.5"
     rc-tree-select "~5.4.0"
     rc-trigger "^5.2.10"
@@ -14992,16 +14992,16 @@ rc-input@~0.0.1-alpha.5:
     classnames "^2.2.1"
     rc-util "^5.18.1"
 
-rc-mentions@~1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/rc-mentions/-/rc-mentions-1.8.0.tgz#4c0c41605064303f7aedec47d4d07e0bbfcc2dc3"
+rc-mentions@~1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/rc-mentions/-/rc-mentions-1.9.0.tgz#0ddff6ab442dce58efa7b9f5ae561b0051173334"
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.6"
     rc-menu "~9.6.0"
     rc-textarea "^0.3.0"
     rc-trigger "^5.0.4"
-    rc-util "^5.0.1"
+    rc-util "^5.22.5"
 
 rc-menu@~9.6.0:
   version "9.6.0"
@@ -15163,9 +15163,9 @@ rc-textarea@^0.3.0, rc-textarea@~0.3.0:
     rc-resize-observer "^1.0.0"
     rc-util "^5.7.0"
 
-rc-tooltip@^5.0.1, rc-tooltip@~5.1.1:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/rc-tooltip/-/rc-tooltip-5.1.1.tgz"
+rc-tooltip@^5.0.1, rc-tooltip@~5.2.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/rc-tooltip/-/rc-tooltip-5.2.1.tgz#6ba602ea908e418b4b83afe35e543d6885cdbfcc"
   dependencies:
     "@babel/runtime" "^7.11.2"
     rc-trigger "^5.0.0"
