@@ -17900,8 +17900,8 @@ undertaker@^1.2.1:
     undertaker-registry "^1.0.0"
 
 undici@^5.4.0:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-5.5.1.tgz#baaf25844a99eaa0b22e1ef8d205bffe587c8f43"
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.8.0.tgz#dec9a8ccd90e5a1d81d43c0eab6503146d649a4f"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
