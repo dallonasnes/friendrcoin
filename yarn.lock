@@ -1357,7 +1357,7 @@
     "@ethersproject/properties" "^5.0.3"
     "@ethersproject/strings" "^5.0.4"
 
-"@ethersproject/abi@5.6.4", "@ethersproject/abi@^5.0.0-beta.146", "@ethersproject/abi@^5.1.2", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.3":
+"@ethersproject/abi@5.6.4", "@ethersproject/abi@^5.0.0-beta.146", "@ethersproject/abi@^5.1.2", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.3", "@ethersproject/abi@^5.6.4":
   version "5.6.4"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.6.4.tgz#f6e01b6ed391a505932698ecc0d9e7a99ee60362"
   dependencies:
@@ -1510,7 +1510,7 @@
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/logger/-/logger-5.6.0.tgz#d7db1bfcc22fd2e4ab574cba0bb6ad779a9a3e7a"
 
-"@ethersproject/networks@5.6.4", "@ethersproject/networks@^5.6.3":
+"@ethersproject/networks@5.6.4", "@ethersproject/networks@^5.6.3", "@ethersproject/networks@^5.6.4":
   version "5.6.4"
   resolved "https://registry.yarnpkg.com/@ethersproject/networks/-/networks-5.6.4.tgz#51296d8fec59e9627554f5a8a9c7791248c8dc07"
   dependencies:
@@ -3108,9 +3108,9 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@uniswap/token-lists@^1.0.0-beta.28":
-  version "1.0.0-beta.28"
-  resolved "https://registry.yarnpkg.com/@uniswap/token-lists/-/token-lists-1.0.0-beta.28.tgz#76bb6ec25e76ae6bece9efc11b9b68079b2b9402"
+"@uniswap/token-lists@^1.0.0-beta.30":
+  version "1.0.0-beta.30"
+  resolved "https://registry.yarnpkg.com/@uniswap/token-lists/-/token-lists-1.0.0-beta.30.tgz#2103ca23b8007c59ec71718d34cdc97861c409e5"
 
 "@uniswap/v2-core@1.0.0":
   version "1.0.0"
@@ -7726,34 +7726,35 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.3.1.tgz#38600c187d7eda47f7250c05f7bad0a13f21cc88"
+eth-hooks@4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.5.1.tgz#4cacf4cbe4c35b11b990062befabd7036bb562bf"
   dependencies:
-    "@ethersproject/abi" "^5.6.3"
+    "@ethersproject/abi" "^5.6.4"
     "@ethersproject/abstract-provider" "^5.6.1"
     "@ethersproject/address" "^5.6.1"
     "@ethersproject/bignumber" "^5.6.2"
     "@ethersproject/bytes" "^5.6.1"
     "@ethersproject/contracts" "^5.6.2"
-    "@ethersproject/networks" "^5.6.3"
+    "@ethersproject/networks" "^5.6.4"
     "@ethersproject/providers" "^5.6.8"
     "@ethersproject/signing-key" "^5.6.2"
     "@ethersproject/solidity" "^5.6.1"
     "@ethersproject/units" "^5.6.1"
     "@ethersproject/wallet" "^5.6.2"
-    "@uniswap/token-lists" "^1.0.0-beta.28"
+    "@uniswap/token-lists" "^1.0.0-beta.30"
     "@web3-react/abstract-connector" "^6.0.7"
     "@web3-react/core" "^6.1.9"
     "@web3-react/types" "^6.0.7"
     ethers "^5.6.8"
     lodash.isequal "^4.5.0"
     merge-anything "^5.0.2"
-    react-query "^3.39.1"
+    react-query "^3.39.2"
     ts-invariant "^0.10.3"
-    use-debounce "^8.0.1"
-    usehooks-ts "^2.5.4"
+    use-debounce "^8.0.2"
+    usehooks-ts "^2.6.0"
     web3modal "^1.9.8"
+    zustand "https://pkg.csb.dev/pmndrs/zustand/commit/a9a05f74/zustand/_pkg.tgz"
 
 eth-json-rpc-errors@^1.0.1:
   version "1.1.1"
@@ -15346,9 +15347,9 @@ react-qr-reader@^2.2.1:
     prop-types "^15.7.2"
     webrtc-adapter "^7.2.1"
 
-react-query@^3.39.1:
-  version "3.39.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.39.1.tgz#3876c0fdac7a3b5a84e195534e5fa8fbdd628847"
+react-query@^3.39.2:
+  version "3.39.2"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.39.2.tgz#9224140f0296f01e9664b78ed6e4f69a0cc9216f"
   dependencies:
     "@babel/runtime" "^7.5.5"
     broadcast-channel "^3.4.1"
@@ -18064,17 +18065,21 @@ ursa-optional@~0.10.0:
     bindings "^1.5.0"
     nan "^2.14.2"
 
-use-debounce@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.1.tgz#5f3e11b067bdf9f2c554a20b4764e38b48022664"
+use-debounce@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.2.tgz#bd1b522c7b5b5d9dc249824fd2e4c3e4137b1ea9"
+
+use-sync-external-store@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
 
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz"
 
-usehooks-ts@^2.5.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.5.4.tgz#e28ce0c1140e3ae172d9b8d2fca07dff68a476ab"
+usehooks-ts@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.6.0.tgz#aebab367da2350a0bee1c3749bc6dd4bcce3eaae"
 
 utf-8-validate@^5.0.2:
   version "5.0.5"
@@ -19362,3 +19367,10 @@ zen-observable@0.8.15, zen-observable@^0.8.0, zen-observable@^0.8.14:
 zksync-web3@^0.7.8:
   version "0.7.8"
   resolved "https://registry.yarnpkg.com/zksync-web3/-/zksync-web3-0.7.8.tgz#a6e2cf8539cb725474afaa26feb8400d3842a1fc"
+
+"zustand@https://pkg.csb.dev/pmndrs/zustand/commit/a9a05f74/zustand/_pkg.tgz":
+  version "4.0.0-rc.2"
+  uid bf983298578b557841cde5baf76ea7a32bd0d90f
+  resolved "https://pkg.csb.dev/pmndrs/zustand/commit/a9a05f74/zustand/_pkg.tgz#bf983298578b557841cde5baf76ea7a32bd0d90f"
+  dependencies:
+    use-sync-external-store "1.2.0"
