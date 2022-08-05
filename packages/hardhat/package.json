@@ -17,7 +17,7 @@
     "@openzeppelin/contracts": "^4.7.2",
     "@openzeppelin/contracts-upgradeable": "^4.7.2",
     "@openzeppelin/hardhat-upgrades": "^1.19.1",
-    "@tenderly/hardhat-tenderly": "^1.1.4",
+    "@tenderly/hardhat-tenderly": "^1.1.5",
     "chai": "^4.3.6",
     "chalk": "^5.0.1",
     "dotenv": "^16.0.1",
