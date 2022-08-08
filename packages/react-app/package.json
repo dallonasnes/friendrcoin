@@ -57,7 +57,7 @@
   "devDependencies": {
     "@apollo/client": "^3.6.9",
     "@testing-library/dom": "^8.16.1",
-    "@types/react": "^18.0.15",
+    "@types/react": "^18.0.17",
     "autoprefixer": "^10.4.8",
     "chalk": "^5.0.1",
     "eslint": "^8.21.0",
