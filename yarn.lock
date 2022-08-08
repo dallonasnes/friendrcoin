@@ -7735,9 +7735,9 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.5.1.tgz#4cacf4cbe4c35b11b990062befabd7036bb562bf"
+eth-hooks@4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.6.0.tgz#c12f5010d86550c1436dfe0dfd0b7a7bb8e08d2a"
   dependencies:
     "@ethersproject/abi" "^5.6.4"
     "@ethersproject/abstract-provider" "^5.6.1"
@@ -7763,7 +7763,7 @@ eth-hooks@4.5.1:
     use-debounce "^8.0.2"
     usehooks-ts "^2.6.0"
     web3modal "^1.9.8"
-    zustand "https://pkg.csb.dev/pmndrs/zustand/commit/a9a05f74/zustand/_pkg.tgz"
+    zustand "4.0.0"
 
 eth-json-rpc-errors@^1.0.1:
   version "1.1.1"
@@ -19382,9 +19382,8 @@ zksync-web3@^0.7.8:
   version "0.7.8"
   resolved "https://registry.yarnpkg.com/zksync-web3/-/zksync-web3-0.7.8.tgz#a6e2cf8539cb725474afaa26feb8400d3842a1fc"
 
-"zustand@https://pkg.csb.dev/pmndrs/zustand/commit/a9a05f74/zustand/_pkg.tgz":
-  version "4.0.0-rc.2"
-  uid bf983298578b557841cde5baf76ea7a32bd0d90f
-  resolved "https://pkg.csb.dev/pmndrs/zustand/commit/a9a05f74/zustand/_pkg.tgz#bf983298578b557841cde5baf76ea7a32bd0d90f"
+zustand@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.0.0.tgz#739cba69209ffe67b31e7d6741c25b51496114a7"
   dependencies:
     use-sync-external-store "1.2.0"
