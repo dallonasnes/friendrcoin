@@ -7735,9 +7735,9 @@ eth-gas-reporter@^0.2.24:
     sha1 "^1.1.1"
     sync-request "^6.0.0"
 
-eth-hooks@4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.6.0.tgz#c12f5010d86550c1436dfe0dfd0b7a7bb8e08d2a"
+eth-hooks@4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/eth-hooks/-/eth-hooks-4.6.2.tgz#2e21ce61759d49f9908846856704ba5d7aa0a864"
   dependencies:
     "@ethersproject/abi" "^5.6.4"
     "@ethersproject/abstract-provider" "^5.6.1"
@@ -7755,12 +7755,12 @@ eth-hooks@4.6.0:
     "@web3-react/abstract-connector" "^6.0.7"
     "@web3-react/core" "^6.1.9"
     "@web3-react/types" "^6.0.7"
-    ethers "^5.6.8"
+    ethers "^5.6.9"
     lodash.isequal "^4.5.0"
     merge-anything "^5.0.2"
     react-query "^3.39.2"
     ts-invariant "^0.10.3"
-    use-debounce "^8.0.2"
+    use-debounce "^8.0.3"
     usehooks-ts "^2.6.0"
     web3modal "^1.9.8"
     zustand "4.0.0"
@@ -18079,9 +18079,9 @@ ursa-optional@~0.10.0:
     bindings "^1.5.0"
     nan "^2.14.2"
 
-use-debounce@^8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.2.tgz#bd1b522c7b5b5d9dc249824fd2e4c3e4137b1ea9"
+use-debounce@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.3.tgz#2b4d7d7307a9397acb6520b7a1dea14c2c3d108c"
 
 use-sync-external-store@1.2.0:
   version "1.2.0"
