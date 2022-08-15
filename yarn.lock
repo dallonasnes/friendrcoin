@@ -2550,7 +2550,7 @@
     "@testing-library/dom" "^8.5.0"
     "@types/react-dom" "^18.0.0"
 
-"@testing-library/user-event@^14.4.3":
+"@testing-library/user-event@^14.4.2", "@testing-library/user-event@^14.4.3":
   version "14.4.3"
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.4.3.tgz#af975e367743fa91989cd666666aec31a8f50591"
 
@@ -3725,15 +3725,16 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
 
-antd@4.22.4:
-  version "4.22.4"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.22.4.tgz#38b375f93ac5f5e3e6b73bb7029f9c38f8ed157f"
+antd@4.22.5:
+  version "4.22.5"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.22.5.tgz#4617a12dee3a427fc82e5d15bfb9232025622e05"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
     "@ant-design/react-slick" "~0.29.1"
     "@babel/runtime" "^7.18.3"
     "@ctrl/tinycolor" "^3.4.0"
+    "@testing-library/user-event" "^14.4.2"
     classnames "^2.2.6"
     copy-to-clipboard "^3.2.0"
     lodash "^4.17.21"
@@ -3743,7 +3744,7 @@ antd@4.22.4:
     rc-checkbox "~2.3.0"
     rc-collapse "~3.3.0"
     rc-dialog "~8.9.0"
-    rc-drawer "~5.1.0-alpha.1"
+    rc-drawer "~5.1.0"
     rc-dropdown "~4.0.0"
     rc-field-form "~1.27.0"
     rc-image "~5.7.0"
@@ -14977,9 +14978,9 @@ rc-dialog@~8.9.0:
     rc-motion "^2.3.0"
     rc-util "^5.21.0"
 
-rc-drawer@~5.1.0-alpha.1:
-  version "5.1.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/rc-drawer/-/rc-drawer-5.1.0-alpha.2.tgz#402b37d65f43dd9e3dd2fba3ace2c88aba979fd3"
+rc-drawer@~5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/rc-drawer/-/rc-drawer-5.1.0.tgz#c1b8a46e5c064ba46a16233fbcfb1ccec6a73c10"
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.6"
