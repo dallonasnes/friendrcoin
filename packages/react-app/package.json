@@ -34,7 +34,7 @@
     "authereum": "^0.1.14",
     "axios": "^0.27.2",
     "bnc-notify": "^1.9.5",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.2",
     "eth-hooks": "4.6.2",
     "ethers": "^5.7.0",
     "fortmatic": "^2.4.0",
