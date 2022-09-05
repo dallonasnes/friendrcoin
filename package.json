@@ -85,7 +85,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.7.0",
-    "hardhat": "^2.10.2",
+    "hardhat": "^2.11.0",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",
     "prettier-plugin-solidity": "^1.0.0-dev.23",
