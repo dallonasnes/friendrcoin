@@ -1610,11 +1610,11 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@graphiql/react@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.12.0.tgz#0cb59084f97cc2a4ed31e5927177687a6e01c001"
+"@graphiql/react@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.13.0.tgz#83050db5bdc29fa5fe3306e0b0613074272931dd"
   dependencies:
-    "@graphiql/toolkit" "^0.7.1"
+    "@graphiql/toolkit" "^0.7.3"
     "@reach/combobox" "^0.17.0"
     "@reach/dialog" "^0.17.0"
     "@reach/listbox" "^0.17.0"
@@ -1628,9 +1628,9 @@
     markdown-it "^12.2.0"
     set-value "^4.1.0"
 
-"@graphiql/toolkit@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.7.1.tgz#7e39a2b1a47bf8116b31859ca538673bd5177ff4"
+"@graphiql/toolkit@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.7.3.tgz#0f8009a26eef01c0bb2168bb2c2421ee8b6d987a"
   dependencies:
     "@n1ru4l/push-pull-async-iterable-iterator" "^3.1.0"
     meros "^1.1.4"
@@ -9709,12 +9709,12 @@ grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
 
-graphiql@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.4.tgz#4452ad6a6a694c87cb32abbcec6ea24b3c6abef7"
+graphiql@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.6.tgz#1fe992db6dbc71b494994ea9e4df6789e5c57eea"
   dependencies:
-    "@graphiql/react" "^0.12.0"
-    "@graphiql/toolkit" "^0.7.1"
+    "@graphiql/react" "^0.13.0"
+    "@graphiql/toolkit" "^0.7.3"
     entities "^2.0.0"
     graphql-language-service "^5.1.0"
     markdown-it "^12.2.0"
