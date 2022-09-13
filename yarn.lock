@@ -4501,12 +4501,12 @@ authereum@^0.1.14:
     web3-provider-engine "15.0.4"
     web3-utils "1.2.1"
 
-autoprefixer@^10.4.2, autoprefixer@^10.4.9:
-  version "10.4.9"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.9.tgz#40f932f7d0535264823882031f9254ea72c693e5"
+autoprefixer@^10.4.10, autoprefixer@^10.4.2:
+  version "10.4.10"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.10.tgz#a1d8891d1516155eb13a772b1289efdc61de14ef"
   dependencies:
     browserslist "^4.21.3"
-    caniuse-lite "^1.0.30001394"
+    caniuse-lite "^1.0.30001399"
     fraction.js "^4.2.0"
     normalize-range "^0.1.2"
     picocolors "^1.0.0"
@@ -5823,9 +5823,9 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30001370, caniuse-lite@^1.0.30001394:
-  version "1.0.30001397"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001397.tgz#010d9d56e3b8abcd8df261d0a94b22426271a15f"
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30001370, caniuse-lite@^1.0.30001399:
+  version "1.0.30001399"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001399.tgz#1bf994ca375d7f33f8d01ce03b7d5139e8587873"
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
