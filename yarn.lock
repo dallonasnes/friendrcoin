@@ -2028,9 +2028,20 @@
   dependencies:
     "@multiformats/multiaddr" "^10.1.1"
 
-"@multiformats/multiaddr@^10.1.1", "@multiformats/multiaddr@^10.1.5", "@multiformats/multiaddr@^10.2.0", "@multiformats/multiaddr@^10.4.0":
+"@multiformats/multiaddr@^10.1.1", "@multiformats/multiaddr@^10.1.5", "@multiformats/multiaddr@^10.2.0":
   version "10.4.1"
   resolved "https://registry.yarnpkg.com/@multiformats/multiaddr/-/multiaddr-10.4.1.tgz#28759a0bf6e087dcfea246fb7113caf3c7931675"
+  dependencies:
+    dns-over-http-resolver "^2.1.0"
+    err-code "^3.0.1"
+    is-ip "^5.0.0"
+    multiformats "^9.4.5"
+    uint8arrays "^3.0.0"
+    varint "^6.0.0"
+
+"@multiformats/multiaddr@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@multiformats/multiaddr/-/multiaddr-11.0.0.tgz#a00166476548ab375533c93b997d2912ee14e343"
   dependencies:
     dns-over-http-resolver "^2.1.0"
     err-code "^3.0.1"
@@ -10519,33 +10530,33 @@ ipfs-block@~0.8.1:
     cids "~0.7.0"
     class-is "^1.1.0"
 
-ipfs-core-types@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.12.0.tgz#3ae1b95638145e90bfb15ffd463e2098c44061c3"
+ipfs-core-types@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.12.1.tgz#7342adb5553d7f66ad7cc6f326e32fd40a701d29"
   dependencies:
     "@ipld/dag-pb" "^2.1.3"
     "@libp2p/interface-keychain" "^1.0.3"
     "@libp2p/interface-peer-id" "^1.0.4"
     "@libp2p/interface-peer-info" "^1.0.2"
     "@libp2p/interface-pubsub" "^2.0.0"
-    "@multiformats/multiaddr" "^10.4.0"
+    "@multiformats/multiaddr" "^11.0.0"
     "@types/node" "^18.0.0"
     interface-datastore "^7.0.0"
     ipfs-unixfs "^7.0.0"
     multiformats "^9.5.1"
 
-ipfs-core-utils@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.16.0.tgz#4f5837256158cb0286d240943de00ace38733820"
+ipfs-core-utils@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.16.1.tgz#ea2118e58d27a554c517e7935e1f5edbf1e75b71"
   dependencies:
     "@libp2p/logger" "^2.0.0"
-    "@multiformats/multiaddr" "^10.4.0"
+    "@multiformats/multiaddr" "^11.0.0"
     "@multiformats/multiaddr-to-uri" "^9.0.1"
     any-signal "^3.0.0"
     blob-to-it "^1.0.1"
     browser-readablestream-to-it "^1.0.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.12.0"
+    ipfs-core-types "^0.12.1"
     ipfs-unixfs "^7.0.0"
     ipfs-utils "^9.0.6"
     it-all "^1.0.4"
@@ -10615,21 +10626,21 @@ ipfs-http-client@34.0.0:
     tar-stream "^2.0.1"
     through2 "^3.0.1"
 
-ipfs-http-client@^58.0.0:
-  version "58.0.0"
-  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-58.0.0.tgz#c9cc72fbc926529eed62bf028d2bb667cd0648f6"
+ipfs-http-client@^58.0.1:
+  version "58.0.1"
+  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-58.0.1.tgz#24a6278e03a78d008f104cecb1e4250367cc3f2f"
   dependencies:
     "@ipld/dag-cbor" "^7.0.0"
     "@ipld/dag-json" "^8.0.1"
     "@ipld/dag-pb" "^2.1.3"
     "@libp2p/logger" "^2.0.0"
     "@libp2p/peer-id" "^1.1.10"
-    "@multiformats/multiaddr" "^10.4.0"
+    "@multiformats/multiaddr" "^11.0.0"
     any-signal "^3.0.0"
     dag-jose "^2.0.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.12.0"
-    ipfs-core-utils "^0.16.0"
+    ipfs-core-types "^0.12.1"
+    ipfs-core-utils "^0.16.1"
     ipfs-utils "^9.0.6"
     it-first "^1.0.6"
     it-last "^1.0.4"
