@@ -2298,9 +2298,9 @@
   version "4.7.3"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.3.tgz#939534757a81f8d69cc854c7692805684ff3111e"
 
-"@openzeppelin/hardhat-upgrades@^1.20.0":
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/hardhat-upgrades/-/hardhat-upgrades-1.20.0.tgz#fe1bddc4ab591ccf185caf4cfa269a4851b73599"
+"@openzeppelin/hardhat-upgrades@^1.20.1":
+  version "1.20.1"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/hardhat-upgrades/-/hardhat-upgrades-1.20.1.tgz#19462b52869e00232760fe919a016767c3f2c287"
   dependencies:
     "@openzeppelin/upgrades-core" "^1.18.0"
     chalk "^4.1.0"
