@@ -1692,25 +1692,25 @@
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
 
-"@ipld/dag-cbor@^7.0.0", "@ipld/dag-cbor@^7.0.1":
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/@ipld/dag-cbor/-/dag-cbor-7.0.3.tgz#aa31b28afb11a807c3d627828a344e5521ac4a1e"
+"@ipld/dag-cbor@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ipld/dag-cbor/-/dag-cbor-8.0.0.tgz#92ab1deac7cee9c9277a42a1a362a6447b3d3280"
   dependencies:
     cborg "^1.6.0"
-    multiformats "^9.5.4"
+    multiformats "^10.0.2"
 
-"@ipld/dag-json@^8.0.1":
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/@ipld/dag-json/-/dag-json-8.0.7.tgz#d7e91dc1ab8141ec97075c52d87d78cb780daea1"
+"@ipld/dag-json@^9.0.0":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@ipld/dag-json/-/dag-json-9.0.1.tgz#28e007a5c5e0a76b64f99c2856c0466ee92af1f3"
   dependencies:
     cborg "^1.5.4"
-    multiformats "^9.5.4"
+    multiformats "^10.0.2"
 
-"@ipld/dag-pb@^2.1.3":
-  version "2.1.15"
-  resolved "https://registry.yarnpkg.com/@ipld/dag-pb/-/dag-pb-2.1.15.tgz#416d1a720bd3b1c3b876ec73d8a15e7bd121f09b"
+"@ipld/dag-pb@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ipld/dag-pb/-/dag-pb-3.0.0.tgz#b7173ae83753e9a7bdeae69934ce68ea3656a037"
   dependencies:
-    multiformats "^9.5.4"
+    multiformats "^10.0.2"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -1964,9 +1964,9 @@
     "@libp2p/interface-peer-id" "^1.0.0"
     "@multiformats/multiaddr" "^10.2.0"
 
-"@libp2p/interface-pubsub@^2.0.0":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@libp2p/interface-pubsub/-/interface-pubsub-2.0.1.tgz#cc13f5f6ee8a8ef92066bc534b93680ad80ffc55"
+"@libp2p/interface-pubsub@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@libp2p/interface-pubsub/-/interface-pubsub-3.0.0.tgz#c25683178dd1ed7f7c07b2e59c0c8cbf36af83f5"
   dependencies:
     "@libp2p/interface-connection" "^3.0.0"
     "@libp2p/interface-peer-id" "^1.0.0"
@@ -5371,11 +5371,11 @@ blakejs@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/blakejs/-/blakejs-1.1.1.tgz"
 
-blob-to-it@^1.0.1:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/blob-to-it/-/blob-to-it-1.0.4.tgz#f6caf7a4e90b7bb9215fa6a318ed6bd8ad9898cb"
+blob-to-it@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/blob-to-it/-/blob-to-it-2.0.0.tgz#4010afb81f92219f510c88a6b4a323313db5522b"
   dependencies:
-    browser-readablestream-to-it "^1.0.3"
+    browser-readablestream-to-it "^2.0.0"
 
 block-stream@*:
   version "0.0.9"
@@ -5535,9 +5535,9 @@ browser-process-hrtime@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz"
 
-browser-readablestream-to-it@^1.0.1, browser-readablestream-to-it@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/browser-readablestream-to-it/-/browser-readablestream-to-it-1.0.3.tgz#ac3e406c7ee6cdf0a502dd55db33bab97f7fba76"
+browser-readablestream-to-it@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/browser-readablestream-to-it/-/browser-readablestream-to-it-2.0.0.tgz#9011df0e2be2ab4b83a108e039532e132d437962"
 
 browser-stdout@1.3.1:
   version "1.3.1"
@@ -6819,12 +6819,12 @@ d@1, d@^1.0.1:
     es5-ext "^0.10.50"
     type "^1.0.1"
 
-dag-jose@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/dag-jose/-/dag-jose-2.0.1.tgz#802e3fd159af3ba39a042df09ba3a14bbc63306c"
+dag-jose@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/dag-jose/-/dag-jose-3.0.1.tgz#0c474eff3e70ad522b5d42e848786358c11ea7c6"
   dependencies:
-    "@ipld/dag-cbor" "^7.0.1"
-    multiformats "^9.6.4"
+    "@ipld/dag-cbor" "^8.0.0"
+    multiformats "^10.0.1"
 
 damerau-levenshtein@^1.0.8:
   version "1.0.8"
@@ -10534,45 +10534,45 @@ ipfs-block@~0.8.1:
     cids "~0.7.0"
     class-is "^1.1.0"
 
-ipfs-core-types@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.12.1.tgz#7342adb5553d7f66ad7cc6f326e32fd40a701d29"
+ipfs-core-types@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/ipfs-core-types/-/ipfs-core-types-0.13.0.tgz#eb2f27df7b91940e39b201b08affc9a65f63f503"
   dependencies:
-    "@ipld/dag-pb" "^2.1.3"
+    "@ipld/dag-pb" "^3.0.0"
     "@libp2p/interface-keychain" "^1.0.3"
     "@libp2p/interface-peer-id" "^1.0.4"
     "@libp2p/interface-peer-info" "^1.0.2"
-    "@libp2p/interface-pubsub" "^2.0.0"
+    "@libp2p/interface-pubsub" "^3.0.0"
     "@multiformats/multiaddr" "^11.0.0"
     "@types/node" "^18.0.0"
     interface-datastore "^7.0.0"
-    ipfs-unixfs "^7.0.0"
-    multiformats "^9.5.1"
+    ipfs-unixfs "^8.0.0"
+    multiformats "^10.0.0"
 
-ipfs-core-utils@^0.16.1:
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.16.1.tgz#ea2118e58d27a554c517e7935e1f5edbf1e75b71"
+ipfs-core-utils@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/ipfs-core-utils/-/ipfs-core-utils-0.17.0.tgz#cb3581e66b588c2d80f6d8b05d15d0262447093a"
   dependencies:
     "@libp2p/logger" "^2.0.0"
     "@multiformats/multiaddr" "^11.0.0"
     "@multiformats/multiaddr-to-uri" "^9.0.1"
     any-signal "^3.0.0"
-    blob-to-it "^1.0.1"
-    browser-readablestream-to-it "^1.0.1"
+    blob-to-it "^2.0.0"
+    browser-readablestream-to-it "^2.0.0"
     err-code "^3.0.1"
-    ipfs-core-types "^0.12.1"
-    ipfs-unixfs "^7.0.0"
+    ipfs-core-types "^0.13.0"
+    ipfs-unixfs "^8.0.0"
     ipfs-utils "^9.0.6"
-    it-all "^1.0.4"
-    it-map "^1.0.6"
-    it-peekable "^1.0.2"
+    it-all "^2.0.0"
+    it-map "^2.0.0"
+    it-peekable "^2.0.0"
     it-to-stream "^1.0.0"
     merge-options "^3.0.4"
-    multiformats "^9.5.1"
+    multiformats "^10.0.0"
     nanoid "^4.0.0"
     parse-duration "^1.0.0"
     timeout-abort-controller "^3.0.0"
-    uint8arrays "^3.0.0"
+    uint8arrays "^4.0.2"
 
 ipfs-http-client@34.0.0:
   version "34.0.0"
@@ -10630,33 +10630,33 @@ ipfs-http-client@34.0.0:
     tar-stream "^2.0.1"
     through2 "^3.0.1"
 
-ipfs-http-client@^58.0.1:
-  version "58.0.1"
-  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-58.0.1.tgz#24a6278e03a78d008f104cecb1e4250367cc3f2f"
+ipfs-http-client@^59.0.0:
+  version "59.0.0"
+  resolved "https://registry.yarnpkg.com/ipfs-http-client/-/ipfs-http-client-59.0.0.tgz#66bc208d6bcbaaf238c054b3c0c0beffa2774190"
   dependencies:
-    "@ipld/dag-cbor" "^7.0.0"
-    "@ipld/dag-json" "^8.0.1"
-    "@ipld/dag-pb" "^2.1.3"
+    "@ipld/dag-cbor" "^8.0.0"
+    "@ipld/dag-json" "^9.0.0"
+    "@ipld/dag-pb" "^3.0.0"
     "@libp2p/logger" "^2.0.0"
     "@libp2p/peer-id" "^1.1.10"
     "@multiformats/multiaddr" "^11.0.0"
     any-signal "^3.0.0"
-    dag-jose "^2.0.1"
+    dag-jose "^3.0.1"
     err-code "^3.0.1"
-    ipfs-core-types "^0.12.1"
-    ipfs-core-utils "^0.16.1"
+    ipfs-core-types "^0.13.0"
+    ipfs-core-utils "^0.17.0"
     ipfs-utils "^9.0.6"
-    it-first "^1.0.6"
-    it-last "^1.0.4"
+    it-first "^2.0.0"
+    it-last "^2.0.0"
     merge-options "^3.0.4"
-    multiformats "^9.5.1"
+    multiformats "^10.0.0"
     parse-duration "^1.0.0"
     stream-to-it "^0.2.2"
-    uint8arrays "^3.0.0"
+    uint8arrays "^4.0.2"
 
-ipfs-unixfs@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-7.0.0.tgz#24741aafa5845c6bbf4c6c736e132e3027d95392"
+ipfs-unixfs@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-8.0.0.tgz#342c09edab3cbed8baf26f661d81a0f72ab420e6"
   dependencies:
     err-code "^3.0.1"
     protobufjs "^7.0.0"
@@ -11275,13 +11275,13 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-it-all@^1.0.4:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/it-all/-/it-all-1.0.6.tgz#852557355367606295c4c3b7eff0136f07749335"
+it-all@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/it-all/-/it-all-2.0.0.tgz#6f4e5cdb71af02793072822a90bc44de901a92c3"
 
-it-first@^1.0.6:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/it-first/-/it-first-1.0.7.tgz#a4bef40da8be21667f7d23e44dae652f5ccd7ab1"
+it-first@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/it-first/-/it-first-2.0.0.tgz#b0bba28414caa2b27b807ac15e897d4a9526940d"
 
 it-glob@^1.0.1:
   version "1.0.2"
@@ -11290,17 +11290,17 @@ it-glob@^1.0.1:
     "@types/minimatch" "^3.0.4"
     minimatch "^3.0.4"
 
-it-last@^1.0.4:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/it-last/-/it-last-1.0.6.tgz#4106232e5905ec11e16de15a0e9f7037eaecfc45"
+it-last@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/it-last/-/it-last-2.0.0.tgz#0784b37e6dcac880ae7b446c77d44a66ea4cc44d"
 
-it-map@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/it-map/-/it-map-1.0.6.tgz#6aa547e363eedcf8d4f69d8484b450bc13c9882c"
+it-map@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/it-map/-/it-map-2.0.0.tgz#4fd20dfae9eeb21b3dac812774c09d490ee5b691"
 
-it-peekable@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/it-peekable/-/it-peekable-1.0.3.tgz#8ebe933767d9c5aa0ae4ef8e9cb3a47389bced8c"
+it-peekable@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/it-peekable/-/it-peekable-2.0.0.tgz#fbcbd17ec4c2d219f5db4b6afc8861a0e1be051d"
 
 it-pushable@^3.0.0:
   version "3.1.0"
@@ -13264,7 +13264,11 @@ multicodec@^1.0.0, multicodec@^1.0.1:
     buffer "^5.6.0"
     varint "^5.0.0"
 
-multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.5.1, multiformats@^9.5.4, multiformats@^9.6.3, multiformats@^9.6.4:
+multiformats@^10.0.0, multiformats@^10.0.1, multiformats@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-10.0.2.tgz#e549ae833dac77edb534bece4adf1d1a214879f0"
+
+multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.6.3:
   version "9.8.1"
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.8.1.tgz#0e5f2910cf0c34f55adf0602f920775f9622552a"
 
@@ -18252,6 +18256,12 @@ uint8arrays@^3.0.0, uint8arrays@^3.1.0:
   resolved "https://registry.yarnpkg.com/uint8arrays/-/uint8arrays-3.1.0.tgz#8186b8eafce68f28bd29bd29d683a311778901e2"
   dependencies:
     multiformats "^9.4.2"
+
+uint8arrays@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/uint8arrays/-/uint8arrays-4.0.2.tgz#163bdbcf3f7403b0781754e0436c268548b237c2"
+  dependencies:
+    multiformats "^10.0.0"
 
 ultron@~1.1.0:
   version "1.1.1"
