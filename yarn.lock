@@ -1611,9 +1611,9 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@graphiql/react@^0.13.4":
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.13.4.tgz#885d2ef80283926fa85a1372a52b1374529f13ef"
+"@graphiql/react@^0.13.6":
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.13.6.tgz#bb989bf220e1c4d8e6217b4fa3328990a9e91bba"
   dependencies:
     "@graphiql/toolkit" "^0.8.0"
     "@reach/combobox" "^0.17.0"
@@ -1623,7 +1623,7 @@
     "@reach/tooltip" "^0.17.0"
     "@reach/visually-hidden" "^0.17.0"
     codemirror "^5.65.3"
-    codemirror-graphql "^2.0.0"
+    codemirror-graphql "^2.0.1"
     copy-to-clipboard "^3.2.0"
     graphql-language-service "^5.1.0"
     markdown-it "^12.2.0"
@@ -6214,11 +6214,11 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
 
-codemirror-graphql@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-2.0.0.tgz#0705da4e179f0708b249d4460b231598cebaa696"
+codemirror-graphql@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-2.0.1.tgz#1e6b21e251efaeabbb1b38699caa9bd0f45e9fd1"
   dependencies:
-    graphql-language-service "^5.1.0"
+    graphql-language-service "5.0.6"
 
 codemirror@^5.65.3:
   version "5.65.3"
@@ -9766,15 +9766,22 @@ grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
 
-graphiql@^2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.10.tgz#e66a6ef6dd69a7397796f4267e21ae07900082d9"
+graphiql@^2.0.12:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.12.tgz#a15797a3917aec51aa5b837952cc059800027383"
   dependencies:
-    "@graphiql/react" "^0.13.4"
+    "@graphiql/react" "^0.13.6"
     "@graphiql/toolkit" "^0.8.0"
     entities "^2.0.0"
     graphql-language-service "^5.1.0"
     markdown-it "^12.2.0"
+
+graphql-language-service@5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.0.6.tgz#7fd1e6479e5c3074b070c760fa961d9ad1ed7c72"
+  dependencies:
+    nullthrows "^1.0.0"
+    vscode-languageserver-types "^3.15.1"
 
 graphql-language-service@^5.1.0:
   version "5.1.0"
@@ -18676,7 +18683,7 @@ vinyl@^2.0.0:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
-vscode-languageserver-types@^3.17.1:
+vscode-languageserver-types@^3.15.1, vscode-languageserver-types@^3.17.1:
   version "3.17.2"
   resolved "https://registry.yarnpkg.com/vscode-languageserver-types/-/vscode-languageserver-types-3.17.2.tgz#b2c2e7de405ad3d73a883e91989b850170ffc4f2"
 
