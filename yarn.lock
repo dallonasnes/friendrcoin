@@ -1615,9 +1615,9 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@graphiql/react@^0.13.7":
-  version "0.13.7"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.13.7.tgz#23c41d0326893c336942d80e1e6cfb32eb7eac3b"
+"@graphiql/react@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.14.0.tgz#a3beb5bf2967d5085f306c8fcb953a1a95b4e41b"
   dependencies:
     "@graphiql/toolkit" "^0.8.0"
     "@reach/combobox" "^0.17.0"
@@ -9892,11 +9892,11 @@ grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
 
-graphiql@^2.0.13:
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.13.tgz#2734382a66e77a8a9232540a1a1da5bbe3e9e8bb"
+graphiql@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.1.0.tgz#2c67dd5121e120e30fc4e37ce2b776b7a12d2a76"
   dependencies:
-    "@graphiql/react" "^0.13.7"
+    "@graphiql/react" "^0.14.0"
     "@graphiql/toolkit" "^0.8.0"
     entities "^2.0.0"
     graphql-language-service "^5.1.0"
