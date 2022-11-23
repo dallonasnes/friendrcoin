@@ -18,9 +18,9 @@
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
-"@ant-design/cssinjs@^0.0.0-alpha.44":
-  version "0.0.0-alpha.60"
-  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-0.0.0-alpha.60.tgz#17998ea8da0ca734747876045e455e0c28f19a97"
+"@ant-design/cssinjs@^1.0.0":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.0.2.tgz#9eab8a44358209c988c706bbad200fb5763b7815"
   dependencies:
     "@babel/runtime" "^7.11.1"
     "@emotion/hash" "^0.8.0"
@@ -4088,12 +4088,12 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
 
-antd@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-5.0.0.tgz#bc8cb87931fa832dd664c4bec8b7047310a7d9ab"
+antd@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-5.0.1.tgz#c4fd63034131947d1d55f37f7695c19fe201c3dd"
   dependencies:
     "@ant-design/colors" "^6.0.0"
-    "@ant-design/cssinjs" "^0.0.0-alpha.44"
+    "@ant-design/cssinjs" "^1.0.0"
     "@ant-design/icons" "^4.7.0"
     "@ant-design/react-slick" "~0.29.1"
     "@babel/runtime" "^7.18.3"
@@ -4118,7 +4118,7 @@ antd@5.0.0:
     rc-motion "^2.6.1"
     rc-notification "~5.0.0-alpha.9"
     rc-pagination "~3.2.0"
-    rc-picker "~3.0.0-4"
+    rc-picker "~3.1.1"
     rc-progress "~3.4.1"
     rc-rate "~2.9.0"
     rc-resize-observer "^1.2.0"
@@ -6975,11 +6975,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns@2.x:
-  version "2.23.0"
-  resolved "https://registry.npmjs.org/date-fns/-/date-fns-2.23.0.tgz"
-
-dayjs@1.x, dayjs@^1.11.1:
+dayjs@^1.11.1:
   version "1.11.6"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.6.tgz#2e79a226314ec3ec904e3ee1dd5a4f5e5b1c7afb"
 
@@ -13482,10 +13478,6 @@ module-error@^1.0.1, module-error@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/module-error/-/module-error-1.0.2.tgz#8d1a48897ca883f47a45816d4fb3e3c6ba404d86"
 
-moment@^2.24.0:
-  version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
-
 moniker@0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/moniker/-/moniker-0.1.2.tgz"
@@ -15773,15 +15765,12 @@ rc-pagination@~3.2.0:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"
 
-rc-picker@~3.0.0-4:
-  version "3.0.0-4"
-  resolved "https://registry.yarnpkg.com/rc-picker/-/rc-picker-3.0.0-4.tgz#08a77f05be3cd51971ad9352df030fe96e264de1"
+rc-picker@~3.1.1:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/rc-picker/-/rc-picker-3.1.2.tgz#fac85964007bdc906d33a8400f53798744ab440f"
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"
-    date-fns "2.x"
-    dayjs "1.x"
-    moment "^2.24.0"
     rc-trigger "^5.0.4"
     rc-util "^5.4.0"
     shallowequal "^1.1.0"
