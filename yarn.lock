@@ -19495,9 +19495,9 @@ web3@1.2.11:
     web3-shh "1.2.11"
     web3-utils "1.2.11"
 
-web3modal@^1.9.8, web3modal@^1.9.9:
-  version "1.9.9"
-  resolved "https://registry.yarnpkg.com/web3modal/-/web3modal-1.9.9.tgz#1a09771e1b9264842ab98d42c620568f470ff96b"
+web3modal@^1.9.10, web3modal@^1.9.8:
+  version "1.9.10"
+  resolved "https://registry.yarnpkg.com/web3modal/-/web3modal-1.9.10.tgz#ab7836ff27c6a16b9ca881ba0e8008bd33cb0dff"
   dependencies:
     detect-browser "^5.1.0"
     prop-types "^15.7.2"
