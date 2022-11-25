@@ -1640,9 +1640,9 @@
     js-yaml "^4.1.0"
     rescript "^9.1.4"
 
-"@graphiql/react@^0.14.0":
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.14.0.tgz#a3beb5bf2967d5085f306c8fcb953a1a95b4e41b"
+"@graphiql/react@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.15.0.tgz#b10fc40c5a85e7b5b845907d57bfd8be92753037"
   dependencies:
     "@graphiql/toolkit" "^0.8.0"
     "@reach/combobox" "^0.17.0"
@@ -9987,11 +9987,11 @@ grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
 
-graphiql@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.1.0.tgz#2c67dd5121e120e30fc4e37ce2b776b7a12d2a76"
+graphiql@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.2.0.tgz#406b9b28bca130ae9ece892826c1d60958c1ac13"
   dependencies:
-    "@graphiql/react" "^0.14.0"
+    "@graphiql/react" "^0.15.0"
     "@graphiql/toolkit" "^0.8.0"
     entities "^2.0.0"
     graphql-language-service "^5.1.0"
