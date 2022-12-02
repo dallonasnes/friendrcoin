@@ -5491,21 +5491,22 @@ bn.js@^5.0.0, bn.js@^5.1.1, bn.js@^5.1.2, bn.js@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.1.tgz#0bc527a6a0d18d0aa8d5b0538ce4a77dccfa7b70"
 
-bnc-notify@^1.9.6:
-  version "1.9.6"
-  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-1.9.6.tgz#9ec6e5583f0485c1efee6373957963ebff171c36"
+bnc-notify@^1.9.7:
+  version "1.9.7"
+  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-1.9.7.tgz#22a6327561a4734905a8ab595105b77c8051da02"
   dependencies:
     bignumber.js "^9.0.0"
-    bnc-sdk "4.1.0"
+    bnc-sdk "4.6.3"
     lodash.debounce "^4.0.8"
     regenerator-runtime "^0.13.3"
     uuid "^3.3.3"
 
-bnc-sdk@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.1.0.tgz#b7bd280a2e0d218b003ed9d227bcc36593bd6f04"
+bnc-sdk@4.6.3:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.3.tgz#c852f091a5e84bb77864543b0775b35ebdbb1724"
   dependencies:
     crypto-es "^1.2.2"
+    nanoid "^3.3.1"
     rxjs "^6.6.3"
     sturdy-websocket "^0.1.12"
 
@@ -13623,7 +13624,7 @@ nanoid@3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
 
-nanoid@^3.0.2, nanoid@^3.1.20, nanoid@^3.3.4:
+nanoid@^3.0.2, nanoid@^3.1.20, nanoid@^3.3.1, nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
 
@@ -16246,13 +16247,9 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz"
 
-regenerator-runtime@^0.13.10:
+regenerator-runtime@^0.13.10, regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
   version "0.13.10"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
-
-regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
-  version "0.13.9"
-  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz"
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
