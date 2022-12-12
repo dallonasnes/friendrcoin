@@ -12,15 +12,15 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@ant-design/colors@^6.0.0":
+"@ant-design/colors@^6", "@ant-design/colors@^6.0.0":
   version "6.0.0"
   resolved "https://registry.npmjs.org/@ant-design/colors/-/colors-6.0.0.tgz"
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
-"@ant-design/cssinjs@^1.0.0":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.0.2.tgz#9eab8a44358209c988c706bbad200fb5763b7815"
+"@ant-design/cssinjs@^1", "@ant-design/cssinjs@^1.0.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.1.1.tgz#4c93a0c13828d2ede00b51f97703c52bb0e1b38c"
   dependencies:
     "@babel/runtime" "^7.11.1"
     "@emotion/hash" "^0.8.0"
@@ -34,7 +34,7 @@
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@ant-design/icons-svg/-/icons-svg-4.2.1.tgz#8630da8eb4471a4aabdaed7d1ff6a97dcb2cf05a"
 
-"@ant-design/icons@^4.7.0", "@ant-design/icons@^4.8.0":
+"@ant-design/icons@^4", "@ant-design/icons@^4.7.0", "@ant-design/icons@^4.8.0":
   version "4.8.0"
   resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-4.8.0.tgz#3084e2bb494cac3dad6c0392f77c1efc90ee1fa4"
   dependencies:
@@ -103,6 +103,12 @@
   resolved "https://registry.npmjs.org/@apollo/react-hooks/-/react-hooks-4.0.0.tgz"
   dependencies:
     "@apollo/client" latest
+
+"@arvinxu/layout-kit@^1":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@arvinxu/layout-kit/-/layout-kit-1.4.0.tgz#8bcb4328a19b76a1aed2614730c330616b6ca29f"
+  dependencies:
+    styled-components "^5.3.3"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.14.5", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.8.3":
   version "7.16.7"
@@ -1075,11 +1081,11 @@
     core-js-pure "^3.15.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
-  version "7.20.1"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.1.tgz#1148bb33ab252b165a06698fde7576092a78b4a9"
+"@babel/runtime@^7", "@babel/runtime@^7.0.0", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+  version "7.20.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
   dependencies:
-    regenerator-runtime "^0.13.10"
+    regenerator-runtime "^0.13.11"
 
 "@babel/template@^7.16.7":
   version "7.16.7"
@@ -4087,9 +4093,25 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
 
-antd@5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-5.0.5.tgz#16f0ade8b2d2ea9f7bd47a8e0af81884dc504a7d"
+antd-token-previewer@^1.1.0-21:
+  version "1.1.0-22"
+  resolved "https://registry.yarnpkg.com/antd-token-previewer/-/antd-token-previewer-1.1.0-22.tgz#186da88e944c231b80071f13d7fe00174829bf7f"
+  dependencies:
+    "@ant-design/colors" "^6"
+    "@ant-design/cssinjs" "^1"
+    "@ant-design/icons" "^4"
+    "@arvinxu/layout-kit" "^1"
+    "@babel/runtime" "^7"
+    antd "^5"
+    classnames "^2.3.1"
+    rc-util "^5.21.5"
+    react-colorful "^5.5.1"
+    tinycolor2 "^1.4.2"
+    use-debouncy "^4.3.0"
+
+antd@5.0.6, antd@^5:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-5.0.6.tgz#254f69019429357bc4204f94ffa2916bb0fed3c5"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/cssinjs" "^1.0.0"
@@ -4098,6 +4120,7 @@ antd@5.0.5:
     "@babel/runtime" "^7.18.3"
     "@ctrl/tinycolor" "^3.4.0"
     "@rc-component/tour" "~1.0.1-2"
+    antd-token-previewer "^1.1.0-21"
     classnames "^2.2.6"
     copy-to-clipboard "^3.2.0"
     dayjs "^1.11.1"
@@ -15733,9 +15756,9 @@ rc-upload@~4.3.0:
     classnames "^2.2.5"
     rc-util "^5.2.0"
 
-rc-util@^5.0.1, rc-util@^5.0.6, rc-util@^5.0.7, rc-util@^5.12.0, rc-util@^5.15.0, rc-util@^5.16.0, rc-util@^5.16.1, rc-util@^5.17.0, rc-util@^5.18.1, rc-util@^5.19.2, rc-util@^5.2.0, rc-util@^5.2.1, rc-util@^5.20.1, rc-util@^5.21.0, rc-util@^5.21.2, rc-util@^5.22.5, rc-util@^5.23.0, rc-util@^5.24.2, rc-util@^5.24.4, rc-util@^5.25.2, rc-util@^5.3.0, rc-util@^5.4.0, rc-util@^5.5.1, rc-util@^5.6.1, rc-util@^5.7.0, rc-util@^5.8.0, rc-util@^5.9.4:
-  version "5.25.2"
-  resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-5.25.2.tgz#09fd3ce88da7d2149427d51e40a84e3527f5a263"
+rc-util@^5.0.1, rc-util@^5.0.6, rc-util@^5.0.7, rc-util@^5.12.0, rc-util@^5.15.0, rc-util@^5.16.0, rc-util@^5.16.1, rc-util@^5.17.0, rc-util@^5.18.1, rc-util@^5.19.2, rc-util@^5.2.0, rc-util@^5.2.1, rc-util@^5.20.1, rc-util@^5.21.0, rc-util@^5.21.2, rc-util@^5.21.5, rc-util@^5.22.5, rc-util@^5.23.0, rc-util@^5.24.2, rc-util@^5.24.4, rc-util@^5.25.2, rc-util@^5.3.0, rc-util@^5.4.0, rc-util@^5.5.1, rc-util@^5.6.1, rc-util@^5.7.0, rc-util@^5.8.0, rc-util@^5.9.4:
+  version "5.25.3"
+  resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-5.25.3.tgz#7f6a5895e4edc5acdf5f73e90e1c031f3b67257d"
   dependencies:
     "@babel/runtime" "^7.18.3"
     react-is "^16.12.0"
@@ -15779,6 +15802,10 @@ react-clientside-effect@^1.2.6:
   resolved "https://registry.yarnpkg.com/react-clientside-effect/-/react-clientside-effect-1.2.6.tgz#29f9b14e944a376b03fb650eed2a754dd128ea3a"
   dependencies:
     "@babel/runtime" "^7.12.13"
+
+react-colorful@^5.5.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.6.1.tgz#7dc2aed2d7c72fac89694e834d179e32f3da563b"
 
 react-css-theme-switcher@^0.3.0:
   version "0.3.0"
@@ -16136,7 +16163,11 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz"
 
-regenerator-runtime@^0.13.10, regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
+regenerator-runtime@^0.13.11:
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+
+regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
   version "0.13.10"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
 
@@ -18109,6 +18140,10 @@ tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
 
+tinycolor2@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
+
 tmp-promise@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/tmp-promise/-/tmp-promise-3.0.2.tgz#6e933782abff8b00c3119d63589ca1fb9caaa62a"
@@ -18683,6 +18718,10 @@ use-callback-ref@^1.3.0:
 use-debounce@^8.0.3:
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-8.0.3.tgz#2b4d7d7307a9397acb6520b7a1dea14c2c3d108c"
+
+use-debouncy@^4.3.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/use-debouncy/-/use-debouncy-4.4.0.tgz#b04907e74f3e681beb74cd49784f93376a6511f2"
 
 use-sidecar@^1.1.2:
   version "1.1.2"
