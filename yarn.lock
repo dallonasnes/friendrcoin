@@ -2873,9 +2873,9 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tenderly/hardhat-tenderly@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@tenderly/hardhat-tenderly/-/hardhat-tenderly-1.3.3.tgz#40ee09ef81ef563c1cc37bf43449d340220944a3"
+"@tenderly/hardhat-tenderly@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@tenderly/hardhat-tenderly/-/hardhat-tenderly-1.4.1.tgz#1dee0f28de8351caa33c32c9b44ba1c6d654811c"
   dependencies:
     "@ethersproject/bignumber" "^5.7.0"
     "@nomiclabs/hardhat-ethers" "^2.1.1"
@@ -2885,7 +2885,8 @@
     hardhat "^2.10.2"
     hardhat-deploy "^0.11.14"
     js-yaml "^4.1.0"
-    tenderly "^0.0.3"
+    tenderly "^0.2.0"
+    tslog "^4.3.1"
 
 "@testing-library/dom@^8.19.0", "@testing-library/dom@^8.5.0":
   version "8.19.0"
@@ -17954,9 +17955,9 @@ tempy@^0.6.0:
     type-fest "^0.16.0"
     unique-string "^2.0.0"
 
-tenderly@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/tenderly/-/tenderly-0.0.3.tgz#8c85e287e080073502420d5c6f13f4762d0f59cd"
+tenderly@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/tenderly/-/tenderly-0.2.0.tgz#614027ce58e2465c7707b5815d44c9d6ee92ab9e"
   dependencies:
     axios "^0.27.2"
     cli-table3 "^0.6.2"
@@ -17966,6 +17967,7 @@ tenderly@^0.0.3:
     js-yaml "^4.1.0"
     open "^8.4.0"
     prompts "^2.4.2"
+    tslog "^4.4.0"
 
 terminal-link@^2.0.0:
   version "2.1.1"
@@ -18315,6 +18317,10 @@ tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
 tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+
+tslog@^4.3.1, tslog@^4.4.0:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/tslog/-/tslog-4.4.4.tgz#ec121512a0094c4b9fe16ce8170d578a46be12af"
 
 tsort@0.0.1:
   version "0.0.1"
