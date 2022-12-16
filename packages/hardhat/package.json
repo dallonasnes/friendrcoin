@@ -16,7 +16,7 @@
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.8.0",
     "@openzeppelin/contracts-upgradeable": "^4.8.0",
-    "@openzeppelin/hardhat-upgrades": "^1.21.0",
+    "@openzeppelin/hardhat-upgrades": "^1.22.0",
     "@tenderly/hardhat-tenderly": "^1.4.1",
     "chai": "^4.3.7",
     "chalk": "^5.2.0",
