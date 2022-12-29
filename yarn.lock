@@ -2296,9 +2296,9 @@
   version "0.3.0-beta.13"
   resolved "https://registry.yarnpkg.com/hardhat-deploy-ethers/-/hardhat-deploy-ethers-0.3.0-beta.13.tgz#b96086ff768ddf69928984d5eb0a8d78cfca9366"
 
-"@nomiclabs/hardhat-etherscan@^3.1.3":
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/@nomiclabs/hardhat-etherscan/-/hardhat-etherscan-3.1.3.tgz#c9dbaa4174edfa075a464a0e9142bc8710a2c4e2"
+"@nomiclabs/hardhat-etherscan@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@nomiclabs/hardhat-etherscan/-/hardhat-etherscan-3.1.4.tgz#970e57fabc6060489c93b3f646ca790db36ffee0"
   dependencies:
     "@ethersproject/abi" "^5.1.2"
     "@ethersproject/address" "^5.0.2"
