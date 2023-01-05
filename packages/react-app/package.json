@@ -42,7 +42,7 @@
     "graphql": "^16.2.0",
     "isomorphic-fetch": "^3.0.0",
     "node-watch": "^0.7.3",
-    "postcss": "^8.2.6",
+    "postcss": "^8.4.20",
     "qrcode.react": "^1.0.0",
     "react": "^17.0.2",
     "react-blockies": "^1.4.1",
