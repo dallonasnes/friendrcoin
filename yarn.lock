@@ -1755,9 +1755,9 @@
     which "2.0.2"
     yaml "^1.5.1"
 
-"@graphprotocol/graph-ts@^0.22.1":
-  version "0.22.1"
-  resolved "https://registry.npmjs.org/@graphprotocol/graph-ts/-/graph-ts-0.22.1.tgz"
+"@graphprotocol/graph-ts@^0.29.2":
+  version "0.29.2"
+  resolved "https://registry.yarnpkg.com/@graphprotocol/graph-ts/-/graph-ts-0.29.2.tgz#aee9c5717d005145a11b5bc21b1ad3967e7f339a"
   dependencies:
     assemblyscript "0.19.10"
 
